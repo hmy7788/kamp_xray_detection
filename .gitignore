@@ -1,0 +1,96 @@
+# =============================================================================
+# 원본 데이터/실습 폴더 (약 3GB, 원본 이미지·라벨·가중치 포함). 저장소에 올리지 않는다.
+# =============================================================================
+/4. X-ray 검사장비 AI 데이터셋/
+
+# =============================================================================
+# 가중치 / 체크포인트 (GitHub 파일당 100MB 제한 초과: 각 35~500MB)
+# =============================================================================
+*.pt
+*.pth
+*.weights
+*.onnx
+weights/*
+!weights/.gitkeep
+
+# =============================================================================
+# 학습용 데이터 (KAMP 데이터셋: 재배포 조건을 확인하기 전에는 올리지 않는다)
+#   올리는 것: classes.names, manifest.csv, splits/split.csv (파일명·메타데이터만)
+#   올리지 않는 것: 이미지와 라벨 (README의 안내대로 KAMP에서 받아 data/ 에 배치)
+# =============================================================================
+data/samples/images/
+data/samples/labels/
+data/subsets/
+*.bmp
+
+# 실행할 때마다 재생성되는 파일 (이 PC의 절대경로 포함)
+data/splits/*.txt
+data/splits/*.data
+data/samples/train.txt
+data/samples/test.txt
+data/samples/custom.data
+*.shapes
+*.cache
+
+# =============================================================================
+# 실험 산출물: 가중치·로그·설정(절대경로 포함)은 제외, 지표/곡선만 포함
+# =============================================================================
+outputs/runs/*/*
+!outputs/runs/*/metrics.json
+!outputs/runs/*/results.txt
+!outputs/runs/*/results.png
+# 중단/불완전 실행(`_aborted_*`, `_incomplete_*`)은 결과가 무효라 전부 제외
+outputs/runs/_*/
+
+# yolov3 학습/검증 중 코드가 현재 폴더에 만드는 파일
+third_party/yolov3/runs/
+third_party/yolov3/results.txt
+third_party/yolov3/results.png
+third_party/yolov3/*_batch*.jpg
+
+# 라벨링 도구 입출력 (이미지/라벨링 결과)
+third_party/OpenLabeling/main/input/*
+third_party/OpenLabeling/main/output/*
+
+# 진행 중인 제출물 (소속·팀 정보 확인 전 업로드 방지). 폴더만 유지
+submission/*
+!submission/.gitkeep
+
+# =============================================================================
+# Python / Jupyter
+# =============================================================================
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# 가상환경 / 환경 변수 / 비밀 값
+.venv/
+venv/
+env/
+.env
+.env.*
+*.key
+*.pem
+
+# TensorBoard 이벤트 파일
+events.out.tfevents.*
+
+# 로그
+*.log
+
+# =============================================================================
+# 에디터 / OS / 도구
+# =============================================================================
+.vscode/
+.idea/
+.claude/
+.DS_Store
+Thumbs.db
+desktop.ini
+~$*
