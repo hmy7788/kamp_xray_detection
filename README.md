@@ -79,10 +79,11 @@ pip install torch==2.6.0 torchvision==0.21.0
 ### 3-4. 나머지 라이브러리 설치
 
 ```bash
-pip install -r third_party/yolov3/requirements.txt
-pip install jupyter ipykernel
+pip install -r requirements.txt
 python -m ipykernel install --user --name kamp --display-name KAMP
 ```
+
+루트의 `requirements.txt`는 검증한 버전으로 고정되어 있고 Jupyter(`jupyter`, `ipykernel`)도 포함합니다. 3-3에서 PyTorch를 먼저 설치했다면 `torch`/`torchvision`은 "이미 설치됨"으로 건너뜁니다. (`third_party/yolov3/requirements.txt`는 원본 yolov3의 느슨한 버전 조건(`>=`)이라 재현에는 위 파일을 쓰세요.)
 
 ### 3-5. 설치 확인
 
@@ -327,7 +328,7 @@ KAMP/
 | 3 | 호기·크기·날짜별 FN/FP 집계와 시각화 (**AI 미탐지 조건 분석**) | 오류분석(15) | |
 | 4 | 묶음 기준 5-fold 교차검증 | 모델 개발(40) | |
 | 5 | 개선 실험(해상도 확대, 타일링, 의사라벨, 앙상블 등 — 효과는 미검증) | 모델·창의성 | |
-| 6 | `environment.yml`, 한 번에 도는 실행 스크립트, 테스트 예측결과 CSV | 재현성(10) | |
+| 6 | 한 번에 도는 실행 스크립트, 테스트 예측결과 CSV (`requirements.txt`는 완료, `environment.yml`은 선택) | 재현성(10) | |
 | 7 | 보고서(KAMP 제공 양식), 발표자료 | 전 항목 | |
 
 **먼저 확인할 것**
