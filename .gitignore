@@ -33,14 +33,20 @@ data/samples/custom.data
 *.cache
 
 # =============================================================================
-# 실험 산출물: 가중치·로그·설정(절대경로 포함)은 제외, 지표/곡선만 포함
+# 실험 산출물: 가중치(파일당 70~490MB, GitHub 100MB 초과)와 결과 이미지는 제외하고
+# 지표·설정·로그·곡선은 포함한다. 로그/설정의 로컬 경로는 <KAMP>로 치환해 두었다.
+# 새 실험을 올리기 전에 경로가 남아 있지 않은지 확인할 것.
 # =============================================================================
+# 일반 로그는 제외하되 아래 실험 폴더의 로그는 예외로 포함한다 (이 규칙이 더 뒤에 있어야 예외가 적용됨)
+*.log
 outputs/runs/*/*
 !outputs/runs/*/metrics.json
+!outputs/runs/*/config.json
 !outputs/runs/*/results.txt
 !outputs/runs/*/results.png
-# 중단/불완전 실행(`_aborted_*`, `_incomplete_*`)은 결과가 무효라 전부 제외
-outputs/runs/_*/
+!outputs/runs/*/train.log
+!outputs/runs/*/val_eval.log
+!outputs/runs/*/test_eval.log
 
 # yolov3 학습/검증 중 코드가 현재 폴더에 만드는 파일
 third_party/yolov3/runs/
@@ -80,9 +86,6 @@ env/
 
 # TensorBoard 이벤트 파일
 events.out.tfevents.*
-
-# 로그
-*.log
 
 # =============================================================================
 # 에디터 / OS / 도구
