@@ -182,8 +182,8 @@ curl.exe -L -o weights/pretrained/yolov3-tiny.pt https://github.com/ultralytics/
 학습 → val/test 평가 → 결과 저장까지 한 번에 실행합니다. 분할도 자동으로 다시 만듭니다.
 
 ```bash
-# 베이스라인: YOLOv3-SPP (GPU 6GB 기준 batch 4)
-python scripts/run_experiment.py --name 01_yolov3spp_coco --cfg yolov3-spp.cfg --weights weights/pretrained/yolov3-spp-ultralytics.pt --epochs 100 --batch-size 4
+# 베이스라인: YOLOv3-SPP (GPU 6GB 기준 batch 3 권장. batch 4는 메모리 한계에 가까움)
+python scripts/run_experiment.py --name 01_yolov3spp_coco --cfg yolov3-spp.cfg --weights weights/pretrained/yolov3-spp-ultralytics.pt --epochs 100 --batch-size 3
 
 # 비교 모델: YOLOv3-tiny
 python scripts/run_experiment.py --name 02_yolov3tiny_coco --cfg yolov3-tiny.cfg --weights weights/pretrained/yolov3-tiny.pt --epochs 100 --batch-size 8
@@ -200,6 +200,18 @@ python scripts/run_experiment.py --name 02_yolov3tiny_coco --cfg yolov3-tiny.cfg
 | `--device` | `cpu` 또는 GPU 번호. 비워 두면 GPU 자동 사용 |
 | `--extra ...` | `train.py`에 그대로 넘길 추가 인자 (**맨 뒤에** 둠) |
 
+**진행 상황 보기 (백그라운드로 돌려도 확인 가능)**
+
+실험은 단계와 epoch마다 한 줄씩 출력하고(`progress.log`), 10초마다 `status.json`을 갱신합니다. 별도 터미널에서 요약을 볼 수 있습니다.
+
+```bash
+python scripts/watch_experiment.py                   # 가장 최근 실험
+python scripts/watch_experiment.py 01_yolov3spp_coco # 이름 지정
+python scripts/watch_experiment.py --follow          # 10초마다 갱신 (Ctrl+C로 종료)
+```
+
+단계, epoch, 경과·남은 시간, 최근 val 지표, 최고 F1을 보여 주고, **5분 넘게 갱신이 없으면 "멈춘 것 같음"** 경고를 냅니다. 창 없이 백그라운드로 실행하려면 PowerShell에서 `Start-Process`를 쓰면 됩니다. 실행 중에는 Windows 절전 진입을 스크립트가 막습니다(시스템 설정은 바꾸지 않음).
+
 **결과 위치** `outputs/runs/<실험명>/`
 
 | 파일 | 내용 |
@@ -207,6 +219,7 @@ python scripts/run_experiment.py --name 02_yolov3tiny_coco --cfg yolov3-tiny.cfg
 | `weights/best.pt`, `last.pt` | 가중치 (Git 제외) |
 | `results.txt`, `results.png` | epoch별 손실과 val 지표, 곡선 |
 | `train.log`, `val_eval.log`, `test_eval.log` | 로그 |
+| `progress.log`, `status.json` | 진행 상황 (Git 제외) |
 | `metrics.json` | val/test의 P, R, mAP@0.5, F1 |
 | `config.json` | 실행 설정 |
 
@@ -253,7 +266,8 @@ KAMP/
 ├─ data/                         # classes.names, manifest.csv, splits/ (이미지·라벨은 각자 배치)
 ├─ src/                          # 재사용 코드: data / models / evaluation (예정)
 ├─ scripts/
-│  ├─ run_experiment.py          # 학습 → 평가 → 결과 저장 (실험 1건)
+│  ├─ run_experiment.py          # 학습 → 평가 → 결과 저장 (실험 1건, 진행 상황 출력)
+│  ├─ watch_experiment.py        # 실험 진행 상황 보기 (멈춤 경고 포함)
 │  ├─ make_split.py              # 호기 층화 + 묶음 단위 8:1:1 분할
 │  ├─ build_manifest.py          # 원본 폴더가 있을 때만: 이미지별 호기 판별
 │  └─ check_data.py              # 데이터 배치 점검
@@ -319,12 +333,12 @@ KAMP/
 
 ## 9. 현재 상태와 할 일
 
-> 2026-10-01 기준. 새 분할로 시작한 실험은 **아직 하나도 끝까지 완료하지 못했습니다**(SPP는 19/100 epoch에서 원인 불명 종료, tiny는 46/100 epoch에서 멈춤). 따라서 **n400 기준 최종 성능 수치는 아직 없습니다.** 처음 15장으로 환경 동작만 확인한 결과는 [docs/experiment_results.md](docs/experiment_results.md)에 있습니다(성능 지표로 쓰기에는 표본이 너무 작음).
+> 2026-10-01 기준. **베이스라인 2개(YOLOv3-SPP, YOLOv3-tiny)를 새 분할로 완주**했습니다(각 100 epoch). 다만 `test.py`의 P/R/F1은 신뢰도 0.1 한 지점 값이라 같은 가중치도 평가 해상도에 따라 크게 달라지므로(SPP test F1 0.70~0.92), 지금은 **mAP@0.5(SPP 0.92~0.97, tiny 0.90~0.99)만 신뢰할 수 있고 두 모델의 우열은 결론 내릴 수 없습니다.** 자세한 내용은 [docs/experiment_results.md](docs/experiment_results.md).
 
 | 우선순위 | 할 일 | 평가 항목 | 담당 |
 |---|---|---|---|
-| 1 | YOLOv3-SPP, YOLOv3-tiny를 새 분할로 끝까지 학습·평가 (베이스라인) | 모델 개발(40) | |
-| 2 | 이미지 단위·bbox 단위 평가 스크립트(임계값 고정 F1) | 모델 개발(40) | |
+| 1 | ~~YOLOv3-SPP, YOLOv3-tiny 베이스라인 학습·평가~~ (완료, 해석은 2번 이후 확정) | 모델 개발(40) | |
+| 2 | **이미지 단위·bbox 단위 평가 스크립트(val에서 임계값을 정해 고정한 F1) — 지표 신뢰성 확보를 위해 가장 먼저** | 모델 개발(40) | |
 | 3 | 호기·크기·날짜별 FN/FP 집계와 시각화 (**AI 미탐지 조건 분석**) | 오류분석(15) | |
 | 4 | 묶음 기준 5-fold 교차검증 | 모델 개발(40) | |
 | 5 | 개선 실험(해상도 확대, 타일링, 의사라벨, 앙상블 등 — 효과는 미검증) | 모델·창의성 | |

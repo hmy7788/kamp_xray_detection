@@ -121,7 +121,24 @@
 - **원인(추정, 미확인)**: PC 절전/대기 모드 진입. 절전에서 깨어난 뒤 CUDA 컨텍스트와 DataLoader 워커가 복구되지 않은 것으로 보인다. SPP 19/100 종료(`troubleshooting.md` 18)가 같은 원인인지는 모른다.
 - **조치**: 멈춘 프로세스를 수동 종료. 폴더 이름 변경은 "다른 프로세스가 사용 중" 오류(WinError 32)로 실패해 `outputs/runs/02_yolov3tiny_coco`로 남아 있음(원인 미확인, 재부팅 후 재시도). **긴 학습 전에 전원 설정에서 절전/최대 절전을 끄고(전원 연결 시), 덮개를 닫지 않는다.** `run_experiment.py`의 epoch 수 검사는 조기 종료를 감지하지만 "멈춤"은 감지하지 못하므로 로그 갱신 시간을 확인한다.
 
-## 20. 참고: 남아 있는 경고 (동작에는 영향 없음)
+## 20. 최종 평가 해상도가 학습 중 검증과 달랐음
+
+- **관찰**: `run_experiment.py`가 `test.py`를 `--img-size` 없이 실행해 기본값 512로 평가했는데, 학습 중 검증과 `best.pt` 선택은 640이었다(`Image sizes 320 - 640 train, 640 test`). 선택 조건과 보고 조건이 달랐다.
+- **조치**: 평가 때 `--img-size <학습 --img-size의 마지막 값>`을 넘기도록 수정하고 `metrics.json`에 `eval_img_size`를 기록. 끝난 실험은 `scripts/reeval_experiment.py <이름>`으로 학습 없이 다시 평가할 수 있다(기존 결과는 `*_img512.*`로 보존).
+- **남은 문제**: 640으로 맞춰도 SPP의 val F1이 학습 중 0.976 → 단독 평가 0.693으로 재현되지 않는다(원인 미확인). 21 참고.
+
+## 21. test.py의 P/R/F1이 신뢰도 0.1 한 지점 값임
+
+- `utils/utils.py` `ap_per_class`의 `pr_score = 0.1`에서만 P, R을 읽고 F1을 만든다. mAP만 전 구간. 그래서 모델의 신뢰도 보정이 조금만 달라도 R/F1이 크게 변한다(SPP 같은 가중치에서 평가 해상도에 따라 test F1 0.92 ↔ 0.70).
+- **조치 예정**: val에서 F1이 최대인 신뢰도 임계값을 정해 고정하고, 그 임계값에서 bbox 단위 P/R/F1과 이미지 단위 검출 F1을 직접 계산하는 평가 스크립트를 만든다. 이전까지는 mAP@0.5를 주 지표로, P/R/F1은 "conf 0.1 기준"으로 표기한다.
+
+## 22. watch_experiment.py가 프로세스 종료 후 오류
+
+- **증상**: 실험이 끝난 뒤 `UnicodeDecodeError`와 `TypeError: argument of type 'NoneType'`.
+- **원인**: `tasklist`가 프로세스가 없을 때 한글(cp949) 메시지를 내는데 `PYTHONUTF8=1`에서 UTF-8로 디코딩하려다 실패.
+- **해결**: 출력을 디코딩하지 않고 바이트로 PID를 찾도록 수정.
+
+## 23. 참고: 남아 있는 경고 (동작에는 영향 없음)
 
 - `torch.cuda.*DtypeTensor constructors are no longer recommended` (`utils/utils.py:355`)
 - `Conversion of an array with ndim > 0 to a scalar is deprecated` (`test.py:228`)
