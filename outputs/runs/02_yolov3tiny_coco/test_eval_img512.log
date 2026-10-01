@@ -1,0 +1,24 @@
+Namespace(cfg='yolov3-tiny.cfg', data='<KAMP>\\data\\splits\\test.data', weights='<KAMP>\\outputs\\runs\\02_yolov3tiny_coco\\weights\\best.pt', batch_size=8, img_size=512, conf_thres=0.001, iou_thres=0.6, save_json=False, task='test', device='', single_cls=False, augment=False)
+Using CUDA device0 _CudaDeviceProperties(name='NVIDIA GeForce RTX 4050 Laptop GPU', total_memory=6140MB)
+
+WARNING: smart bias initialization failure.
+WARNING: smart bias initialization failure.
+Model Summary: 37 layers, 8.66988e+06 parameters, 8.66988e+06 gradients
+Fusing layers...
+Model Summary: 26 layers, 8.66669e+06 parameters, 8.66669e+06 gradients
+
+  0%|          | 0/42 [00:00<?, ?it/s]
+Caching labels <KAMP>\data\splits\test.txt (42 found, 0 missing, 0 empty, 0 duplicate, for 42 images): 100%|██████████| 42/42 [00:00<00:00, 1550.38it/s]
+C:\Anaconda\envs\KAMP\lib\site-packages\torch\functional.py:539: UserWarning: torch.meshgrid: in an upcoming release, it will be required to pass the indexing argument. (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\TensorShape.cpp:3638.)
+  return _VF.meshgrid(tensors, **kwargs)  # type: ignore[attr-defined]
+
+               Class    Images   Targets         P         R   mAP@0.5        F1:   0%|          | 0/6 [00:00<?, ?it/s]
+               Class    Images   Targets         P         R   mAP@0.5        F1:  17%|█▋        | 1/6 [00:24<02:00, 24.13s/it]
+               Class    Images   Targets         P         R   mAP@0.5        F1:  50%|█████     | 3/6 [00:24<00:19,  6.34s/it]
+               Class    Images   Targets         P         R   mAP@0.5        F1:  67%|██████▋   | 4/6 [00:24<00:08,  4.22s/it]
+               Class    Images   Targets         P         R   mAP@0.5        F1:  83%|████████▎ | 5/6 [00:24<00:02,  2.87s/it]
+               Class    Images   Targets         P         R   mAP@0.5        F1: 100%|██████████| 6/6 [00:28<00:00,  4.80s/it]
+                 all        42       111     0.923     0.867     0.899     0.895
+Speed: 12.2/15.6/27.7 ms inference/NMS/total per 512x512 image at batch-size 8
+<KAMP>\third_party\yolov3\test.py:228: DeprecationWarning: Conversion of an array with ndim > 0 to a scalar is deprecated, and will error in future. Ensure you extract a single element from your array before performing this operation. (Deprecated NumPy 1.25.)
+  maps[c] = ap[i]
