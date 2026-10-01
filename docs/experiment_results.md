@@ -1,0 +1,109 @@
+# 실험 결과
+
+X선 이물 검출(단일 클래스 `defect`) YOLOv3-SPP 학습/추론/평가 실행 결과입니다. 목적은 **최신 환경에서의 파이프라인 동작 검증**이며, 성능 비교 실험이 아닙니다.
+
+## 설정
+
+| 항목 | 값 |
+|---|---|
+| 모델 | YOLOv3-SPP (`yolov3-spp.cfg`, 62.6M 파라미터, 225 layers) |
+| 시작 가중치 | `weights/last.pt` (기존 806 epoch 학습본) |
+| 데이터 | 이미지 15장 / 라벨 15개 (총 bbox 23개), 클래스 1개 |
+| 분할 | train 12 / test 3 (80:20, `seed=42`) |
+| 학습 인자 | `--epochs 2 --batch-size 3 --nosave` (GPU, 이미지 크기 320~640) |
+| 장비 | RTX 4050 Laptop 6GB, PyTorch 2.6.0+cu124 |
+
+## 학습
+
+- 기존 806 epoch 이후 **2 epoch 추가 미세조정** (807 → 808), 소요 약 0.007시간(약 25초)
+- 마지막 epoch 손실: GIoU 1.02 / obj 0.019 / cls 0 / total 1.04
+- GPU 메모리: 최대 약 3.1GB
+
+## 평가
+
+| 실행 | Images | Targets | Precision | Recall | mAP@0.5 | F1 |
+|---|---|---|---|---|---|---|
+| 학습 중 검증 (808 epoch) | 3 | 7 | 0.532 | 0.571 | 0.478 | 0.551 |
+| `test.py` 단독 실행 | 3 | 7 | 0.751 | 0.571 | 0.575 | 0.649 |
+
+- 속도: 추론 29.9 ms / NMS 38.9 ms / 합계 68.8 ms (512x512, batch 3)
+- 두 결과가 다른 이유: 학습 중 검증과 `test.py`는 confidence/NMS 임계값 기본값이 달라 같은 가중치라도 수치가 다름.
+
+## 추론 (`detect.py`)
+
+- 입력 `images/` 15장, 출력 `result/`
+- 512x512 기준 장당 약 0.014~0.022초
+- `defect`가 검출된 이미지는 3장 (나머지는 검출 없음)
+
+## 해석 및 한계
+
+- **테스트셋이 3장 / 7개 객체로 매우 작아** mAP, P, R 수치는 통계적 의미가 거의 없음. 객체 1개 차이로 Recall이 크게 변동함 (R=0.571 = 4/7).
+- 학습 데이터도 12장뿐이라 과적합 가능성이 큼. 의미 있는 성능 평가에는 `라벨링 6종 세트`(50~400장)와 `실습별 가중치파일`의 `last15~400.pt`를 사용한 이미지 수별 비교가 필요.
+- 이번 결과는 "환경/코드 호환 문제를 해결하고 학습→추론→평가가 끝까지 실행됨"을 확인한 것이며, 수정 내역은 [troubleshooting.md](troubleshooting.md) 참고.
+- 재현 시 주의: `last.pt`가 덮어써지므로 동일 수치를 다시 얻으려면 원본 806 epoch 가중치가 필요함.
+
+## 재현 명령 (`dataset/test1/yolov3`에서, conda `KAMP` 환경)
+
+```
+set PYTHONUTF8=1
+python train.py --epochs 2 --weights weights/last.pt --batch-size 3 --cfg yolov3-spp.cfg --data custom.data --nosave
+python detect.py --weights weights/last.pt --source images --cfg yolov3-spp.cfg --names classes.names --output result
+python test.py --cfg yolov3-spp.cfg --batch-size 3 --data custom.data --weights weights/last.pt
+```
+
+
+---
+
+# 실험 2: n400 묶음 분할 (8:1:1) 모델 비교
+
+> 상태: **진행 중** (2026-09-30 재분할 후 재시작. 이전 분할로 시작했던 실행은 중단, 아래 "중단된 실행" 참고). 완료 후 `outputs/runs/<실험명>/metrics.json` 값으로 이 표를 채운다.
+
+## 설정
+
+| 항목 | 값 |
+|---|---|
+| 데이터 | `data/subsets/n400` (고유 이미지 400장, bbox 1,047개) |
+| 분할 | 촬영 묶음(호기 동일·60초 이내) 단위, train 320 / val 40 / test 40 (seed 42) |
+| 분할별 bbox | train 832 / val 104 / test 111 |
+| 시작 가중치 | COCO 사전학습 (`weights/pretrained/`), 누수 방지를 위해 `weights/legacy`는 사용하지 않음 |
+| 학습 | 100 epoch, 학습 중 val로 fitness(0.1·mAP + 0.9·F1) 최고 epoch를 `best.pt`로 저장 |
+| 평가 | `best.pt`를 val/test에서 `test.py`로 평가 (conf 0.001 기본값) |
+| 실행 | `scripts/run_experiment.py` |
+
+## 실험 목록
+
+| 실험 | 모델 | batch | 상태 | val P / R / mAP@0.5 / F1 | test P / R / mAP@0.5 / F1 | 학습 시간 |
+|---|---|---|---|---|---|---|
+| `01_yolov3spp_coco` | YOLOv3-SPP (62.6M) | 4 | **재실행 필요** (19/100 epoch에서 원인 불명 종료, `troubleshooting.md` 18) | - | - | - |
+| `02_yolov3tiny_coco` | YOLOv3-tiny | 8 | **재실행 필요** (46/100 epoch에서 멈춤, 평가 미실행. 폴더 `outputs/runs/02_yolov3tiny_coco`는 불완전 실행이며 사용 중이라 이름을 바꾸지 못함) | - | - | - |
+
+- 초기 관찰(SPP, epoch 1~2): val precision 1.0, recall 0.017, F1 0.033. 학습 초기라 정상적인 저조 수치이며 결과로 사용하지 않는다.
+- 사전 점검(tiny, 2 epoch): val mAP@0.5 0.018, P=R=0. 파이프라인 동작 확인용.
+
+## 해석 시 유의
+
+- val 104개 / test 111개 bbox뿐이라 F1이 몇 개 차이로 크게 변한다. 모델 간 작은 차이는 통계적으로 구분되지 않는다.
+- 학습 12장 묶음(이미지당 bbox 3개)이 다수라 train의 실질 다양성이 낮다.
+- 분할은 호기별로 층화되어 있다(`dataset.md` 6절): val 12 / 10 / 16, test 13 / 12 / 17장(1·2·3호기). 호기마다 해상도가 다르므로 호기별 성능도 함께 본다.
+- test는 최종 1회 평가용이다. 모델·임계값 선택은 val로만 한다.
+- 공식 지표(이미지 단위인지 bbox 단위인지)는 확인되지 않았다.
+
+## 불완전 실행 (참고용, 최종 결과 아님)
+
+새 분할(호기 층화)로 시작했으나 끝까지 돌지 못한 실행.
+
+| 실행 | 진행 | 종료 사유 |
+|---|---|---|
+| `outputs/runs/_incomplete_01_yolov3spp_coco_19of100` | 19/100 epoch | 원인 불명(오류 없이 종료, `troubleshooting.md` 18). 스크립트가 기록한 F1 0.10은 무효 |
+| `outputs/runs/02_yolov3tiny_coco` (이름 변경 예정: `_incomplete_..._46of100`) | 46/100 epoch | 2026-09-30 17:49에 진행이 멈춤(프로세스는 남아 있고 GPU 사용 없음). PC 절전이 원인으로 추정, 미확인. 다음 날 아침 수동 종료 (`troubleshooting.md` 19) |
+
+tiny의 **학습 중 val 곡선**(매 epoch val로 평가, conf 0.001): epoch 9 F1 0.02 → 18 F1 0.26 → 27 F1 0.69 → 36 **P 0.999 / R 0.875 / mAP 0.961 / F1 0.933**(최고) → 45 F1 0.81. 학습이 진행되며 val 성능이 빠르게 오르는 것을 확인했다. 단 (1) 이 수치는 best 선택에 쓴 val 자체의 값이라 낙관적이고 (2) val이 38장/104 bbox라 epoch 간 변동이 크며 (3) 미완성 실행이라 **최종 결과로 인용하지 않는다**. test 평가는 하지 않았다.
+
+## 중단된 실행 (기록)
+
+- 처음 시작한 `01_yolov3spp_coco`(약 12 epoch까지), `02_yolov3tiny_coco`(초기)는 **파일명 접두 기준 분할**이라 호기 균형이 나빠 재분할과 함께 중단했다. 로그는 `outputs/runs/_aborted_oldsplit_*`에 있으며 결과로 사용하지 않는다. 그 시점 관찰: SPP는 초기 epoch에서 val P 1.0 / R 0.017로 정상적인 학습 초기 수치였고, 12 epoch 근처에서도 손실이 감소 중이었다(최종 성능 아님).
+- 이번 재실험은 같은 이름(`01_…`, `02_…`)으로 새 분할에서 다시 실행한다.
+
+## 이전 실험(실험 1)과의 관계
+
+실험 1은 15장(train 12/test 3) 기반의 **환경 검증**이었고, 이번 실험과 수치를 비교하지 않는다.
