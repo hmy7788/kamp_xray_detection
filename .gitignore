@@ -47,6 +47,9 @@ outputs/runs/*/*
 !outputs/runs/*/train.log
 !outputs/runs/*/val_eval.log
 !outputs/runs/*/test_eval.log
+!outputs/runs/*/metrics_img*.json
+!outputs/runs/*/val_eval_img*.log
+!outputs/runs/*/test_eval_img*.log
 
 # yolov3 학습/검증 중 코드가 현재 폴더에 만드는 파일
 third_party/yolov3/runs/
