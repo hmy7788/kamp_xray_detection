@@ -1,0 +1,20 @@
+{
+  "checkpoint": "best.pt",
+  "train_hours": 0.275,
+  "val": {
+    "images": 38,
+    "targets": 104,
+    "precision": 1.0,
+    "recall": 0.0527,
+    "mAP@0.5": 0.883,
+    "F1": 0.1
+  },
+  "test": {
+    "images": 42,
+    "targets": 111,
+    "precision": 1.0,
+    "recall": 0.051,
+    "mAP@0.5": 0.841,
+    "F1": 0.0971
+  }
+}
