@@ -31,18 +31,21 @@ def main():
     env = {**os.environ, "PYTHONUTF8": "1", "YOLO_SAVE_DIR": str(out)}
     dev = ["--device", cfg["device"]] if cfg.get("device") else []
 
-    old = json.loads((out / "metrics.json").read_text(encoding="utf-8"))
-    old_img = old.get("eval_img_size", 512)  # 이 필드가 없는 옛 결과는 test.py 기본값(512)으로 평가된 것
-    if old_img == img:
-        sys.exit(f"이미 {img} 해상도로 평가된 결과입니다.")
-    shutil.copy2(out / "metrics.json", out / f"metrics_img{old_img}.json")
+    if (out / "metrics.json").exists():
+        old = json.loads((out / "metrics.json").read_text(encoding="utf-8"))
+        old_img = old.get("eval_img_size", 512)  # 이 필드가 없는 옛 결과는 test.py 기본값(512)으로 평가된 것
+        if old_img == img:
+            sys.exit(f"이미 {img} 해상도로 평가된 결과입니다.")
+        shutil.copy2(out / "metrics.json", out / f"metrics_img{old_img}.json")
+    else:  # 기록용 프로세스가 중간에 죽어 평가가 안 된 실험을 마무리하는 경우
+        old, old_img = {}, None
 
     metrics = {"checkpoint": ckpt.name, "train_hours": old.get("train_hours"), "eval_img_size": img}
     for split in ("val", "test"):
-        if (out / f"{split}_eval.log").exists():
+        if old_img is not None and (out / f"{split}_eval.log").exists():
             shutil.move(str(out / f"{split}_eval.log"), out / f"{split}_eval_img{old_img}.log")
         rc = run_eval([sys.executable, "-u", "test.py", "--cfg", cfg["cfg"], "--batch-size", str(cfg["batch_size"]),
-                       "--img-size", str(img), "--data", str(ROOT / "data" / "splits" / f"{split}.data"),
+                       "--img-size", str(img), "--data", str(ROOT / "data" / ("splits_nomark" if cfg.get("dataset") == "nomark" else "splits") / f"{split}.data"),
                        "--weights", str(ckpt), *dev], out / f"{split}_eval.log", env)
         metrics[split] = parse_metrics(out / f"{split}_eval.log")
         m = metrics[split]

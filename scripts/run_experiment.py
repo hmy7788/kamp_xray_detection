@@ -64,9 +64,21 @@ class Progress:
         self.state.update(kw)
         self.state["elapsed_sec"] = int(time.time() - self.t0)
         self.state["updated_at"] = datetime.now().isoformat(timespec="seconds")
+        # 상태 파일은 보조 정보다. OneDrive 동기화나 다른 프로세스가 파일을 잡고 있어 교체가 거부(WinError 5)돼도
+        # 실험이 죽으면 안 되므로 재시도하고, 끝내 실패하면 이번 갱신만 건너뛴다.
+        text = json.dumps(self.state, ensure_ascii=False, indent=2)
         tmp = self.out / "status.json.tmp"
-        tmp.write_text(json.dumps(self.state, ensure_ascii=False, indent=2), encoding="utf-8")
-        os.replace(tmp, self.out / "status.json")
+        for _ in range(5):
+            try:
+                tmp.write_text(text, encoding="utf-8")
+                os.replace(tmp, self.out / "status.json")
+                return
+            except OSError:
+                time.sleep(0.5)
+        try:
+            (self.out / "status.json").write_text(text, encoding="utf-8")  # 교체가 안 되면 직접 덮어쓰기
+        except OSError:
+            pass
 
 
 def read_epochs(results_txt):
@@ -152,6 +164,8 @@ def _main():
     ap.add_argument("--epochs", type=int, default=100)
     ap.add_argument("--batch-size", type=int, default=8)
     ap.add_argument("--img-size", type=int, nargs="+", default=[320, 640])
+    ap.add_argument("--dataset", default="n500", choices=["n500", "nomark"],
+                    help="n500: 장비 표시(색 박스)가 있는 원본, nomark: 표시를 지운 데이터(data/nomark)")
     ap.add_argument("--device", default="")
     ap.add_argument("--extra", nargs=argparse.REMAINDER, default=[], help="train.py 에 그대로 전달할 추가 인자")
     a = ap.parse_args()
@@ -167,13 +181,18 @@ def _main():
 
     pg = Progress(out, a.name, a.epochs)
     try:
-        pg.say(f"실험 시작: {a.name} | cfg {a.cfg} | batch {a.batch_size} | epochs {a.epochs} | img-size {a.img_size}")
+        pg.say(f"실험 시작: {a.name} | 데이터 {a.dataset} | cfg {a.cfg} | batch {a.batch_size} | epochs {a.epochs} | img-size {a.img_size}")
         pg.say("진행 확인: python scripts/watch_experiment.py " + a.name)
 
         pg.update(stage="분할 생성")
         pg.say("[1/4] train/val/test 분할 생성")
-        splits = ROOT / "data" / "splits"
-        subprocess.run([sys.executable, str(ROOT / "scripts" / "make_split.py")], check=True, capture_output=True)
+        if a.dataset == "nomark":
+            splits = ROOT / "data" / "splits_nomark"
+            split_args = ["--src", "data/nomark", "--out", "data/splits_nomark"]
+        else:
+            splits = ROOT / "data" / "splits"
+            split_args = []
+        subprocess.run([sys.executable, str(ROOT / "scripts" / "make_split.py"), *split_args], check=True, capture_output=True)
 
         pg.say(f"[2/4] 학습 시작 (최대 {a.epochs} epoch, val 지표는 epoch 마다 출력)")
         t0 = time.time()
