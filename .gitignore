@@ -21,11 +21,16 @@ weights/*
 data/samples/images/
 data/samples/labels/
 data/subsets/
+# 표시 제거 미리보기/제거 결과 이미지 (KAMP 이미지 파생물)
+data/preview_nomark/
+data/nomark/
 *.bmp
 
 # 실행할 때마다 재생성되는 파일 (이 PC의 절대경로 포함)
 data/splits/*.txt
 data/splits/*.data
+data/splits_nomark/*.txt
+data/splits_nomark/*.data
 data/samples/train.txt
 data/samples/test.txt
 data/samples/custom.data
@@ -50,6 +55,9 @@ outputs/runs/*/*
 !outputs/runs/*/metrics_img*.json
 !outputs/runs/*/val_eval_img*.log
 !outputs/runs/*/test_eval_img*.log
+!outputs/runs/*/eval_report_img*.json
+!outputs/runs/*/ring_cue_check_img*.json
+# preds_*.json 은 정답 bbox 좌표(KAMP 라벨)를 포함하므로 올리지 않는다
 
 # yolov3 학습/검증 중 코드가 현재 폴더에 만드는 파일
 third_party/yolov3/runs/
