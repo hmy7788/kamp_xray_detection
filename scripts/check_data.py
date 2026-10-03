@@ -1,6 +1,6 @@
-"""data/subsets/n400 에 이미지·라벨이 올바르게 배치되었는지 점검한다.
+"""data/subsets/n500 에 이미지·라벨이 올바르게 배치되었는지 점검한다.
 
-manifest.csv(저장소에 포함)에 적힌 400장과 대조해 누락/초과 파일, 빈 라벨, bbox 합계를 확인한다.
+manifest.csv(저장소에 포함)에 적힌 500장과 대조해 누락/초과 파일, 빈 라벨, bbox 합계를 확인한다.
 실행: python scripts/check_data.py
 """
 import csv
@@ -8,8 +8,8 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-SRC = ROOT / "data" / "subsets" / "n400"
-EXPECT_BOX = 1047  # 라벨된 400장의 bbox 합계
+SRC = ROOT / "data" / "subsets" / "n500"
+EXPECT_BOX = 1147  # 라벨된 500장의 bbox 합계
 
 
 def main():

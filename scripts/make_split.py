@@ -1,4 +1,4 @@
-"""n400 을 호기별로 층화하고 촬영 묶음(group) 단위로 train/val/test = 8:1:1 로 분할한다.
+"""n500 을 호기별로 층화하고 촬영 묶음(group) 단위로 train/val/test = 8:1:1 로 분할한다.
 
 - 호기는 data/manifest.csv 의 unit(파일명 접두가 아니라 원본 폴더 기준 실제 호기)을 쓴다.
 - 같은 호기에서 GAP_SEC 초 이내로 연속 촬영된 이미지는 한 묶음으로 보고 같은 분할에 넣어
@@ -10,7 +10,9 @@
   train.txt val.txt test.txt   YOLO 이미지 목록 (이 PC 의 절대경로, 실행 시 재생성)
   val.data test.data   train.py / test.py 용 데이터 설정 (valid= 가 val / test)
 실행: python scripts/make_split.py   (먼저 manifest.csv 필요: scripts/build_manifest.py)
+표시 제거본: python scripts/make_split.py --src data/nomark --out data/splits_nomark  (분할 배정은 동일, 목록의 이미지 경로만 다름)
 """
+import argparse
 import csv
 import random
 import re
@@ -18,7 +20,7 @@ from datetime import datetime
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-SRC = ROOT / "data" / "subsets" / "n400"
+SRC = ROOT / "data" / "subsets" / "n500"
 OUT = ROOT / "data" / "splits"
 GAP_SEC = 60
 RATIO = {"train": 0.8, "val": 0.1, "test": 0.1}
@@ -69,6 +71,17 @@ def cost(groups, assignment):
 
 
 def main():
+    global SRC, OUT
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--src", default=None, help="이미지/라벨 폴더 (기본 data/subsets/n500). 표시 제거본이면 data/nomark")
+    ap.add_argument("--out", default=None, help="목록 출력 폴더 (기본 data/splits)")
+    a = ap.parse_args()
+    if a.src:
+        SRC = ROOT / a.src
+    if a.out:
+        OUT = ROOT / a.out
+    # manifest 의 이름(확장자 포함)과 SRC 안의 실제 파일명(확장자가 다를 수 있음: 제거본은 .png)을 stem 으로 연결
+    files = {p.stem: p.name for p in (SRC / "images").iterdir()}
     rows = load()
     rng = random.Random(SEED)
     best_all = {}
@@ -91,7 +104,7 @@ def main():
 
     for s in RATIO:
         names = [r["name"] for r in rows if best_all[r["group"]] == s]
-        (OUT / f"{s}.txt").write_text("".join(f"{(SRC / 'images' / n).as_posix()}\n" for n in names), encoding="utf-8")
+        (OUT / f"{s}.txt").write_text("".join(f"{(SRC / 'images' / files[Path(n).stem]).as_posix()}\n" for n in names), encoding="utf-8")
     names_file = (ROOT / "data" / "classes.names").as_posix()
     for s in ("val", "test"):
         (OUT / f"{s}.data").write_text(
