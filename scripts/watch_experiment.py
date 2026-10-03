@@ -60,10 +60,16 @@ def show(run, stale_min):
         v, b = st["last_val"], st["best_val"]
         print(f"최근 val : P {v['P']:.3f} R {v['R']:.3f} mAP {v['mAP']:.3f} F1 {v['F1']:.3f}  (epoch {v['epoch']})")
         print(f"최고 F1  : {b['F1']:.3f}  (epoch {b['epoch']}, P {b['P']:.3f} R {b['R']:.3f} mAP {b['mAP']:.3f})")
-    print(f"마지막 갱신: {fmt_time(age)} 전 | 프로세스(pid {st['pid']}): {'실행 중' if alive else '없음'}")
+    log = run / "train.log"
+    log_age = (now - datetime.fromtimestamp(log.stat().st_mtime)).total_seconds() if log.exists() else None
+    print(f"마지막 갱신: {fmt_time(age)} 전 | 프로세스(pid {st['pid']}): {'실행 중' if alive else '없음'}"
+          + (f" | train.log 갱신 {fmt_time(log_age)} 전" if log_age is not None else ""))
 
     if stage not in FINISHED:
-        if not alive:
+        if not alive and log_age is not None and log_age < 120:
+            print("⚠ 기록용 프로세스(run_experiment)는 종료됐지만 train.log 가 계속 갱신되고 있어 학습은 진행 중입니다. "
+                  "위의 epoch/지표는 오래된 값일 수 있습니다. 학습이 끝나면 evaluate.py 로 평가하세요.")
+        elif not alive:
             print("⚠ 프로세스가 종료됐는데 완료/실패로 기록되지 않았습니다. 강제 종료됐을 수 있습니다. train.log 를 확인하세요.")
         elif age > stale_min * 60:
             print(f"⚠ {stale_min}분 넘게 갱신이 없습니다. 멈춘 것 같습니다 (절전/GPU 문제 의심). train.log 갱신 시각: {st.get('log_mtime')}")
