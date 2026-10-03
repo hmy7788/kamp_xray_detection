@@ -125,12 +125,12 @@
 
 - **관찰**: `run_experiment.py`가 `test.py`를 `--img-size` 없이 실행해 기본값 512로 평가했는데, 학습 중 검증과 `best.pt` 선택은 640이었다(`Image sizes 320 - 640 train, 640 test`). 선택 조건과 보고 조건이 달랐다.
 - **조치**: 평가 때 `--img-size <학습 --img-size의 마지막 값>`을 넘기도록 수정하고 `metrics.json`에 `eval_img_size`를 기록. 끝난 실험은 `scripts/reeval_experiment.py <이름>`으로 학습 없이 다시 평가할 수 있다(기존 결과는 `*_img512.*`로 보존).
-- **남은 문제**: 640으로 맞춰도 SPP의 val F1이 학습 중 0.976 → 단독 평가 0.693으로 재현되지 않는다(원인 미확인). 21 참고.
+- **남은 문제**: 640으로 맞춰도 SPP의 val F1(신뢰도 0.1)이 학습 중 0.976 → 저장된 `best.pt` 단독 평가 0.693~0.712로 재현되지 않는다(원인 미확인). `best.pt`가 epoch 60의 가중치가 맞는지 확인하지 못했다. `evaluate.py`는 val에서 임계값을 다시 정하므로 영향이 작지만 미해결이다. 24 참고.
 
 ## 21. test.py의 P/R/F1이 신뢰도 0.1 한 지점 값임
 
 - `utils/utils.py` `ap_per_class`의 `pr_score = 0.1`에서만 P, R을 읽고 F1을 만든다. mAP만 전 구간. 그래서 모델의 신뢰도 보정이 조금만 달라도 R/F1이 크게 변한다(SPP 같은 가중치에서 평가 해상도에 따라 test F1 0.92 ↔ 0.70).
-- **조치 예정**: val에서 F1이 최대인 신뢰도 임계값을 정해 고정하고, 그 임계값에서 bbox 단위 P/R/F1과 이미지 단위 검출 F1을 직접 계산하는 평가 스크립트를 만든다. 이전까지는 mAP@0.5를 주 지표로, P/R/F1은 "conf 0.1 기준"으로 표기한다.
+- **조치(완료)**: `scripts/evaluate.py`가 val에서 F1이 최대인 신뢰도 임계값을 정해 고정하고 bbox/이미지 단위 P/R/F1을 직접 계산한다. 신뢰도 0.1 지점에서는 `test.py`의 수치를 재현해 계산이 맞음을 확인했다. 원인은 두 모델의 **신뢰도 보정이 낮은 것**이었다(신뢰도 0.5 이상에서 검출 0개). 결과: `experiment_results.md`.
 
 ## 22. watch_experiment.py가 프로세스 종료 후 오류
 
@@ -138,7 +138,27 @@
 - **원인**: `tasklist`가 프로세스가 없을 때 한글(cp949) 메시지를 내는데 `PYTHONUTF8=1`에서 UTF-8로 디코딩하려다 실패.
 - **해결**: 출력을 디코딩하지 않고 바이트로 PID를 찾도록 수정.
 
-## 23. 참고: 남아 있는 경고 (동작에는 영향 없음)
+## 24. 신뢰도가 매우 낮게 나옴 (보정 문제)
+
+- **관찰**: 두 베이스라인 모두 신뢰도 0.25에서 F1이 0.02(SPP)~0.49(tiny), 0.5 이상에서는 검출이 하나도 없다. 가장 좋은 임계값은 SPP 0.05, tiny 0.09.
+- **영향**: `detect.py` 기본값(0.3)이나 일반적인 0.25~0.5로 추론하면 대부분 놓친다. 이 임계값에 의존하는 모든 하위 코드(`detect.py`, 현장 적용)는 val에서 정한 임계값을 써야 한다.
+- **원인(미확인)**: 단일 클래스에서 obj 손실이 우세한 학습 특성 등이 의심되나 확인하지 않았다.
+- **대응 후보(미검증)**: 확률 보정(온도 스케일링 등), 학습 설정 조정.
+
+## 25. 표시 제거본의 파일명 확장자 불일치 (분할 목록, 호기 매핑)
+
+- **증상 1**: `make_split.py --src data/nomark`가 만든 목록이 존재하지 않는 `.jpg` 경로를 가리킴(제거본은 `.png`). **증상 2**: `evaluate.py`의 호기별 표가 전부 `?`.
+- **원인**: `manifest.csv`의 `name`은 원본 확장자(.jpg/.bmp)를 포함하는데, 제거본 파일은 `.png`라 이름이 다름.
+- **해결**: 두 곳 모두 확장자를 뺀 stem으로 연결하도록 수정(목록 작성 시 `files[stem]`, 호기 매핑 시 `Path(name).stem`).
+
+## 26. 기록용 프로세스가 status.json 교체 거부(WinError 5)로 죽음 (학습은 계속됨)
+
+- **관찰**: `04_yolov3spp_nomark` 74/100 epoch 즈음 `watch_experiment.py`가 "프로세스 없음, 완료/실패 기록 없음"을 표시. 실제로는 학습 프로세스(`train.py`)는 계속 돌아 100 epoch를 마쳤고, 죽은 것은 `run_experiment.py`(기록·평가 담당)였다. 콘솔 로그에 `PermissionError: [WinError 5] ... status.json.tmp -> status.json`.
+- **원인(추정)**: 프로젝트가 OneDrive 폴더 안이라 동기화 또는 다른 프로세스가 `status.json`을 열고 있는 순간 `os.replace`가 거부되고, 예외 처리 안에서 다시 같은 갱신을 시도하다 한 번 더 실패해 종료. 학습 자식 프로세스는 부모가 죽어도 남았다. 확정하지는 못했다.
+- **조치**: 상태 갱신을 5회 재시도 후 직접 덮어쓰기, 끝내 실패하면 그 갱신만 건너뛰도록 수정(상태 파일이 실험을 죽이지 않음). `watch_experiment.py`는 `train.log` 갱신 시각을 함께 보여 주고, 기록 쪽만 죽고 학습은 도는 경우를 따로 안내한다. `reeval_experiment.py`는 `metrics.json`이 없어도 동작해 평가가 안 끝난 실험을 마무리할 수 있다. 이번 실험은 이 경로로 평가를 마쳤다.
+- **교훈**: 앞선 SPP 조기 종료 의심(`troubleshooting.md` 18)이 이와 같은 원인인지는 알 수 없다(그때는 상태 파일 기능이 없었음).
+
+## 27. 참고: 남아 있는 경고 (동작에는 영향 없음)
 
 - `torch.cuda.*DtypeTensor constructors are no longer recommended` (`utils/utils.py:355`)
 - `Conversion of an array with ndim > 0 to a scalar is deprecated` (`test.py:228`)

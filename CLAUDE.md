@@ -16,7 +16,7 @@ KAMP "X-ray 검사장비 AI 데이터셋" 프로젝트. X선 이물 검출기 �
 - **모든 제출물에 소속(기업·학교명)·로고 등 식별 정보 기재 금지**, 성명/팀명만 허용. 소스·README·문서 작성 시 소속을 넣지 말 것.
 - 개발환경: 자체(Python/Anaconda-Jupyter), KAMP-NOTE, KAMP AI-PaaS 중 선택.
 - 서면평가 배점(100점): 데이터 이해·진단 15 / AI 모델 개발 **40**(베이스라인 포함 2개 이상 비교, F1 등) / 영향요인·오류분석 15(FN·FP 집중 조건) / 현장 활용방안 10 / 창의성 10 / 코드·재현성 10(전처리→학습→추론→결과 자동 실행). 상세와 현재 상태는 `docs/evaluation.md`. 이 표가 X-ray 전용인지는 확인되지 않았다.
-- 이 저장소의 라벨된 데이터(고유 이미지 400장 등)는 실습용 소규모 세트이며, 대회 본 데이터(약 1.8GB)와 동일한지는 확인되지 않았다. "AI 미탐지 조건 분석"은 아직 구현되어 있지 않다.
+- 이 저장소의 라벨된 데이터(고유 이미지 500장 등)는 실습용 소규모 세트이며, 대회 본 데이터(약 1.8GB)와 동일한지는 확인되지 않았다. "AI 미탐지 조건 분석"은 아직 구현되어 있지 않다.
 
 ## 환경
 
@@ -25,7 +25,7 @@ KAMP "X-ray 검사장비 AI 데이터셋" 프로젝트. X선 이물 검출기 �
 
 ## 디렉터리 구조 (상세: `docs/structure.md`)
 
-- `data/` — 정리된 데이터 사본. `manifest.csv`(이미지별 실제 호기·원본 폴더·크기·bbox 수). `samples/`(실습 15장), `subsets/n015~n400`(**서로 중첩: n015⊂…⊂n400, 고유 이미지는 400장뿐**), `splits/`(n400을 실제 호기별 층화 + 촬영 묶음 단위로 나눈 train/val/test = 320/38/42, bbox 832/104/111, `scripts/make_split.py` 산출물), `splits_old_prefix/`(폐기한 접두 기준 분할, 참고용), `classes.names`.
+- `data/` — 정리된 데이터 사본. `manifest.csv`(이미지별 실제 호기·원본 폴더·크기·bbox 수). `samples/`(실습 15장), `subsets/n015~n400`(서로 중첩, 이전 세트), `subsets/n500`(**현재 사용: n400 + 원본 폴더에서 찾은 추가 100장, 라벨 500개 모두 대응**), `splits/`(n500을 실제 호기별 층화 + 촬영 묶음 단위로 나눈 train/val/test = 400/51/49, bbox 914/117/116, `scripts/make_split.py` 산출물), `splits_n400/`(이전 n400 기준 분할·매니페스트, 참고용), `splits_old_prefix/`(폐기한 접두 기준 분할, 참고용), `classes.names`.
 - `third_party/yolov3/` — 호환성 수정을 거친 학습/추론/평가 코드 (`train.py`, `test.py`, `detect.py`, `models.py`, `utils/`, `yolov3-spp.cfg`). 데이터·가중치는 포함하지 않는다.
 - `third_party/OpenLabeling/` — 라벨링 도구 코드 (`main/input`, `main/output`은 비어 있음).
 - `notebooks/` — `yolov3_refactored.ipynb`(경로를 설정 셀 한 곳에서 관리, `run_script()`로 KAMP 파이썬 사용, GPU 유무에 따라 `--device` 자동), `yolov3_20201200_original.ipynb`(원본, 하드코딩 경로라 그대로는 실행 불가).

@@ -27,7 +27,7 @@ KAMP(K-인공지능 제조 플랫폼) **X-ray 검사장비 AI 데이터셋**으�
 
 ```text
 ① conda 환경 KAMP 만들기 + 라이브러리 설치        (3장)
-② KAMP 데이터를 data/subsets/n400 에 배치        (4장)   → python scripts/check_data.py 로 확인
+② KAMP 데이터를 data/subsets/n500 에 배치        (4장)   → python scripts/check_data.py 로 확인
 ③ 사전학습 가중치를 weights/pretrained 에 저장    (5장)
 ④ python scripts/run_experiment.py ... 로 실험 1건 실행   (6장)
 ```
@@ -111,23 +111,27 @@ $env:PYTHONUTF8 = "1"
 
 | 저장소에 있는 것 | 설명 |
 |---|---|
-| `data/manifest.csv` | 라벨된 400장의 이미지별 실제 호기, 해상도, bbox 수 |
+| `data/manifest.csv` | 라벨된 500장의 이미지별 실제 호기, 해상도, bbox 수 |
 | `data/splits/split.csv` | train/val/test 분할 기록 |
 | `data/classes.names` | 클래스 이름 (`defect` 1개) |
 
 ### 4-1. 필요한 데이터
 
-KAMP "X-ray 검사장비 AI 데이터셋"의 **라벨링 세트 400장과 라벨**입니다. (원본 구성: `라벨링 6종 세트/images 400/` 이미지 400장, `라벨링 6종 세트/labels/` YOLO 라벨 txt)
+KAMP "X-ray 검사장비 AI 데이터셋"의 **라벨된 이미지 500장과 라벨**입니다. 이미지가 두 곳에 나뉘어 있습니다.
+
+- 400장: `라벨링 6종 세트/images 400/` (확장자 jpg, 실제 내용은 BMP)
+- 100장: 원본 폴더 `test1/yolov3/X선이물검출기(06.23_09.22)/` 안의 bmp (라벨 이름과 같은 파일명으로 찾음)
+- 라벨 500개: `라벨링 6종 세트/labels/` (YOLO txt 한 폴더에 모두 있음)
 
 다음처럼 배치합니다. 파일명은 `data/manifest.csv`와 같아야 합니다.
 
 ```text
-data/subsets/n400/
-├─ images/   001_20200622_203305(8).jpg ...   (400장. 확장자만 jpg이고 실제 내용은 BMP)
+data/subsets/n500/
+├─ images/   001_20200622_203305(8).jpg ...   (500장. 400장은 확장자만 jpg이고 실제 내용은 BMP, 추가 100장은 .bmp)
 └─ labels/   001_20200622_203305(8).txt ...   (이미지와 같은 이름, YOLO 포맷)
 ```
 
-- 공용 라벨 폴더에는 어떤 400장에도 속하지 않는 라벨이 섞여 있습니다(500개 중 100개). **400장에 해당하는 것만** `labels/`에 넣으세요.
+- 라벨 500개를 모두 `labels/`에 넣고, 이미지 500장의 이름과 1:1로 맞아야 합니다. (`scripts/check_data.py`가 확인)
 - 라벨 포맷: 한 줄에 `class x_center y_center width height`(0~1 정규화). 클래스는 0(`defect`) 하나입니다.
 
 ### 4-2. 배치 확인
@@ -136,20 +140,20 @@ data/subsets/n400/
 python scripts/check_data.py
 ```
 
-`OK: 데이터 배치가 올바릅니다.`가 나오면 됩니다. 누락/초과 파일과 bbox 합계(1,047)를 점검해 문제를 알려 줍니다.
+`OK: 데이터 배치가 올바릅니다.`가 나오면 됩니다. 누락/초과 파일과 bbox 합계(1,147)를 점검해 문제를 알려 줍니다.
 
 ### 4-3. 데이터에 대해 알아둘 것
 
-- 라벨된 400장은 **1호기 124 / 2호기 109 / 3호기 167장**이고 호기마다 해상도가 다릅니다(352x332 / 316x332 / 576x444).
+- 라벨된 500장은 **1호기 156 / 2호기 177 / 3호기 167장**이고 호기마다 해상도가 다릅니다(352x332 / 316x332 / 576x444).
 - **파일명 접두(001/002)는 호기가 아닙니다.** 002 = 1·2호기, 001 = 3호기입니다. 호기는 `data/manifest.csv`의 `unit` 열을 쓰세요.
 - 결함은 이미지의 1~5%인 **매우 작은 객체**이고, 모든 이미지가 NG 판정이라 **정상(결함 없음) 이미지는 없습니다**.
-- 서브셋(n015~n400)은 서로 포함 관계라 합쳐도 고유 이미지는 400장뿐입니다.
+- 이전 서브셋(n015~n400)은 서로 포함 관계이고 `n400`이 최대입니다. 현재는 추가 100장을 합친 `n500`을 씁니다.
 
 자세한 수치는 [docs/dataset.md](docs/dataset.md), 원본 폴더 조사는 [docs/original_folder_inventory.md](docs/original_folder_inventory.md)를 참고하세요.
 
 ### 4-4. train/val/test 분할
 
-호기별로 층화하고, 같은 호기에서 60초 이내 연속 촬영된 이미지는 같은 분할에 넣어 누수를 막습니다(seed 42). 결과는 train 320 / val 38 / test 42장입니다.
+호기별로 층화하고, 같은 호기에서 60초 이내 연속 촬영된 이미지는 같은 분할에 넣어 누수를 막습니다(seed 42). 결과는 train 400 / val 51 / test 49장입니다.
 
 ```bash
 python scripts/make_split.py
@@ -229,6 +233,14 @@ python scripts/watch_experiment.py --follow          # 10초마다 갱신 (Ctrl+
 - 소요 시간: 개발 PC에서 epoch당 약 1분(tiny)~50초(SPP)로 관찰했고 100 epoch에 1시간 이상 걸릴 수 있습니다(`persistent_workers` 적용 후 속도는 아직 측정하지 못함).
 - **긴 학습 전에 PC의 절전/최대 절전을 끄세요.** 절전에 들어가며 학습이 멈춘 사례가 있습니다([docs/troubleshooting.md](docs/troubleshooting.md) 19).
 
+**평가 (권장)**: 학습이 끝난 실험을 val에서 정한 신뢰도 임계값으로 평가합니다.
+
+```bash
+python scripts/evaluate.py 01_yolov3spp_coco
+```
+
+val에서 bbox F1이 최대인 임계값을 고르고 같은 값을 test에 적용해 P/R/F1, TP/FP/FN, AP@0.5, 이미지 검출률, 호기별 F1을 출력하고 `eval_report_img<해상도>.json`을 저장합니다. 검출 결과는 `preds_*.json`에 캐시됩니다(정답 좌표 포함이라 Git 제외).
+
 ### 6-2. 학습/추론/평가를 따로 실행
 
 `third_party/yolov3`에서 실행합니다. 데이터·가중치는 **절대경로**로 넘기세요(아래 `<KAMP>`는 저장소 루트의 절대경로).
@@ -268,6 +280,8 @@ KAMP/
 ├─ scripts/
 │  ├─ run_experiment.py          # 학습 → 평가 → 결과 저장 (실험 1건, 진행 상황 출력)
 │  ├─ watch_experiment.py        # 실험 진행 상황 보기 (멈춤 경고 포함)
+│  ├─ evaluate.py                # val에서 임계값을 고정해 bbox/이미지 단위 P/R/F1 계산
+│  ├─ reeval_experiment.py       # 끝난 실험을 다른 해상도로 재평가
 │  ├─ make_split.py              # 호기 층화 + 묶음 단위 8:1:1 분할
 │  ├─ build_manifest.py          # 원본 폴더가 있을 때만: 이미지별 호기 판별
 │  └─ check_data.py              # 데이터 배치 점검
@@ -333,12 +347,12 @@ KAMP/
 
 ## 9. 현재 상태와 할 일
 
-> 2026-10-01 기준. **베이스라인 2개(YOLOv3-SPP, YOLOv3-tiny)를 새 분할로 완주**했습니다(각 100 epoch). 다만 `test.py`의 P/R/F1은 신뢰도 0.1 한 지점 값이라 같은 가중치도 평가 해상도에 따라 크게 달라지므로(SPP test F1 0.70~0.92), 지금은 **mAP@0.5(SPP 0.92~0.97, tiny 0.90~0.99)만 신뢰할 수 있고 두 모델의 우열은 결론 내릴 수 없습니다.** 자세한 내용은 [docs/experiment_results.md](docs/experiment_results.md).
+> 2026-10-02 기준. **⚠ 지금까지의 베이스라인 수치(test F1 0.95~0.97)는 결함 검출 성능이 아닙니다.** 모든 이미지에 장비가 그린 색 박스(표시)가 찍혀 있고, 두 모델은 이를 보고 맞혔습니다. 표시를 지운 입력에서는 두 모델 모두 TP 0입니다([docs/experiment_results.md](docs/experiment_results.md), [docs/dataset.md](docs/dataset.md) 8절). **표시를 제거한 이미지로 다시 학습·평가해야 합니다.**
 
 | 우선순위 | 할 일 | 평가 항목 | 담당 |
 |---|---|---|---|
-| 1 | ~~YOLOv3-SPP, YOLOv3-tiny 베이스라인 학습·평가~~ (완료, 해석은 2번 이후 확정) | 모델 개발(40) | |
-| 2 | **이미지 단위·bbox 단위 평가 스크립트(val에서 임계값을 정해 고정한 F1) — 지표 신뢰성 확보를 위해 가장 먼저** | 모델 개발(40) | |
+| 1 | **장비 표시(색 박스) 제거 이미지 만들기 → 두 베이스라인 재학습·재평가** (기존 결과는 표시를 본 것이라 무효) | 모델 개발(40) | |
+| 2 | ~~이미지 단위·bbox 단위 평가 스크립트(val 임계값 고정)~~ (완료: `scripts/evaluate.py`) | 모델 개발(40) | |
 | 3 | 호기·크기·날짜별 FN/FP 집계와 시각화 (**AI 미탐지 조건 분석**) | 오류분석(15) | |
 | 4 | 묶음 기준 5-fold 교차검증 | 모델 개발(40) | |
 | 5 | 개선 실험(해상도 확대, 타일링, 의사라벨, 앙상블 등 — 효과는 미검증) | 모델·창의성 | |
