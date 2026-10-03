@@ -1,4 +1,4 @@
-"""n400 이미지별 메타데이터(data/manifest.csv)를 만든다.
+"""n500 이미지별 메타데이터(data/manifest.csv)를 만든다.
 
 파일명 접두(001/002)는 호기가 아니므로, 원본 bmp 폴더(호기별/NgImage)와 내용(MD5)을 대조해
 실제 호기를 찾는다. 원본 폴더가 있는 PC에서만 실행 가능하며, 결과 csv 는 저장소에 보관한다.
@@ -14,7 +14,7 @@ from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
 RAW = ROOT / "4. X-ray 검사장비 AI 데이터셋" / "dataset" / "test1" / "yolov3" / "X선이물검출기(06.23_09.22)"
-SRC = ROOT / "data" / "subsets" / "n400"
+SRC = ROOT / "data" / "subsets" / "n500"
 
 
 def md5(p):
