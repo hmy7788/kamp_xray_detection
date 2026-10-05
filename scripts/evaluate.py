@@ -6,7 +6,7 @@
 
   python scripts/evaluate.py 01_yolov3spp_coco [--img-size 640] [--iou 0.5]
 
-산출물(outputs/runs/<name>/): preds_<split>_img<크기>.json(검출 캐시, 로컬 경로 없음),
+산출물(runs/<name>/): preds_<split>_img<크기>.json(검출 캐시, 로컬 경로 없음),
                               eval_report_img<크기>.json
 지표 정의
   - bbox 단위: 검출을 신뢰도 순으로 IoU>=iou 인 미매칭 정답과 짝지음(TP), 짝이 없으면 FP, 못 찾은 정답은 FN.
@@ -26,7 +26,7 @@ from pathlib import Path
 import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
-YOLO = ROOT / "third_party" / "yolov3"
+YOLO = ROOT / "src" / "yolov3"
 SPLITS = ("val", "test")
 CONF_FLOOR = 0.001
 
@@ -41,7 +41,7 @@ def predict(name, split, img_size, device_arg, list_dir=None):
     from utils.datasets import LoadImages  # noqa: E402
     from utils.utils import non_max_suppression, scale_coords  # noqa: E402
 
-    run = ROOT / "outputs" / "runs" / name
+    run = ROOT / "runs" / name
     cfg = json.loads((run / "config.json").read_text(encoding="utf-8"))
     ckpt = run / "weights" / ("best.pt" if (run / "weights" / "best.pt").exists() else "last.pt")
     device = torch_utils.select_device(device=device_arg or cfg.get("device") or "")
@@ -177,7 +177,7 @@ def main():
     ap.add_argument("--tag", default="", help="산출물 이름에 붙일 꼬리표 (예: _nomark)")
     a = ap.parse_args()
 
-    run = ROOT / "outputs" / "runs" / a.name
+    run = ROOT / "runs" / a.name
     cfg = json.loads((run / "config.json").read_text(encoding="utf-8"))
     img = a.img_size or cfg["img_size"][-1]
     if not a.list_dir and cfg.get("dataset") == "nomark":

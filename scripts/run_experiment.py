@@ -1,15 +1,15 @@
-"""실험 1건 실행: 학습 -> val/test 평가 -> outputs/runs/<name>/ 에 결과 저장.
+"""실험 1건 실행: 학습 -> val/test 평가 -> runs/<name>/ 에 결과 저장.
 
 예)
   python scripts/run_experiment.py --name 01_yolov3spp_coco --cfg yolov3-spp.cfg \
       --weights weights/pretrained/yolov3-spp-ultralytics.pt --epochs 100 --batch-size 3
 
 진행 상황 (백그라운드로 돌려도 확인 가능)
-  - 콘솔과 outputs/runs/<name>/progress.log 에 단계와 epoch 마다 한 줄씩 출력한다.
-  - outputs/runs/<name>/status.json 은 10초마다 갱신된다 (단계, epoch, 경과/남은 시간, 최근 val 지표).
+  - 콘솔과 runs/<name>/progress.log 에 단계와 epoch 마다 한 줄씩 출력한다.
+  - runs/<name>/status.json 은 10초마다 갱신된다 (단계, epoch, 경과/남은 시간, 최근 val 지표).
   - 요약 보기:  python scripts/watch_experiment.py [<name>] [--follow]
 
-산출물(outputs/runs/<name>/): weights/{last,best}.pt, results.txt, results.png,
+산출물(runs/<name>/): weights/{last,best}.pt, results.txt, results.png,
   train.log, val_eval.log, test_eval.log, metrics.json, config.json, progress.log, status.json
 """
 import argparse
@@ -24,7 +24,7 @@ from datetime import datetime
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-YOLO = ROOT / "third_party" / "yolov3"
+YOLO = ROOT / "src" / "yolov3"
 POLL_SEC = 10  # 진행 상황 갱신 주기
 
 
@@ -170,9 +170,9 @@ def _main():
     ap.add_argument("--extra", nargs=argparse.REMAINDER, default=[], help="train.py 에 그대로 전달할 추가 인자")
     a = ap.parse_args()
 
-    out = ROOT / "outputs" / "runs" / a.name
+    out = ROOT / "runs" / a.name
     if out.exists():
-        sys.exit(f"이미 존재하는 실험 폴더입니다(덮어쓰기 방지): outputs/runs/{a.name}")
+        sys.exit(f"이미 존재하는 실험 폴더입니다(덮어쓰기 방지): runs/{a.name}")
     (out / "weights").mkdir(parents=True)
     weights = Path(a.weights) if Path(a.weights).is_absolute() else ROOT / a.weights
     env = {**os.environ, "PYTHONUTF8": "1", "YOLO_SAVE_DIR": str(out)}
@@ -201,7 +201,7 @@ def _main():
                         "--img-size", *map(str, a.img_size), *dev, *a.extra], out, env, pg, a.epochs)
         hours = (time.time() - t0) / 3600
         if rc != 0:
-            sys.exit(f"학습 실패(rc={rc}). outputs/runs/{a.name}/train.log 확인")
+            sys.exit(f"학습 실패(rc={rc}). runs/{a.name}/train.log 확인")
         if (YOLO / "results.png").exists():
             shutil.move(str(YOLO / "results.png"), out / "results.png")
         for f in YOLO.glob("test_batch*.jpg"):
@@ -209,7 +209,7 @@ def _main():
 
         n_done = len(read_epochs(out / "results.txt"))
         if n_done < a.epochs:  # 오류 없이 중간에 끝난 경우도 걸러낸다
-            sys.exit(f"학습이 {n_done}/{a.epochs} epoch에서 끝났습니다(불완전). outputs/runs/{a.name}/train.log 확인")
+            sys.exit(f"학습이 {n_done}/{a.epochs} epoch에서 끝났습니다(불완전). runs/{a.name}/train.log 확인")
         pg.say(f"학습 완료: {n_done} epoch, {fmt_time(hours * 3600)}")
 
         ckpt = out / "weights" / ("best.pt" if (out / "weights" / "best.pt").exists() else "last.pt")
@@ -230,7 +230,7 @@ def _main():
             f.unlink()
         (out / "metrics.json").write_text(json.dumps(metrics, ensure_ascii=False, indent=2), encoding="utf-8")
         pg.update(stage="완료", message="metrics.json 저장됨")
-        pg.say("완료: 결과는 outputs/runs/" + a.name + "/metrics.json")
+        pg.say("완료: 결과는 runs/" + a.name + "/metrics.json")
     except SystemExit as e:
         pg.update(stage="실패", message=str(e))
         pg.say(f"실패: {e}")

@@ -9,7 +9,7 @@
 # torch / torchvision 은 GPU 빌드(+cu124)와 CPU 빌드가 다르므로 아래에서는 버전만 고정한다.
 # 이미 1)로 설치했다면 이 파일은 "이미 설치됨"으로 처리하고 건너뛴다.
 
-# --- 딥러닝 (third_party/yolov3 가 요구) ---
+# --- 딥러닝 (src/yolov3 가 요구) ---
 torch==2.6.0
 torchvision==0.21.0
 numpy==2.2.6
