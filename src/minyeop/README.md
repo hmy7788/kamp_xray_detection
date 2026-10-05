@@ -28,15 +28,15 @@ torchvision Faster R-CNN ResNet-50 FPN (COCO 사전학습), 결함 1클래스, �
 
 실행 (`PYTHONUTF8=1`을 설정하고 프로젝트 루트에서):
 ```bash
-python src/minyeop/faster_rcnn/train.py   --name 01_frcnn_r50fpn_min640 --epochs 20 --batch-size 4
-python src/minyeop/faster_rcnn/watch.py   --name 01_frcnn_r50fpn_min640 --follow      # 다른 터미널에서
-python src/minyeop/faster_rcnn/predict.py --name 01_frcnn_r50fpn_min640 --split val  --ckpt best
-python src/minyeop/faster_rcnn/predict.py --name 01_frcnn_r50fpn_min640 --split test --ckpt best   # 최종 후보만 한 번
-python src/minyeop/faster_rcnn/report.py  --name 01_frcnn_r50fpn_min640 --infer-ms 31
-python src/minyeop/faster_rcnn/visualize.py --name 01_frcnn_r50fpn_min640 --split test
+python src/minyeop/faster_rcnn/train.py   --name 01_frcnn_r50fpn_min640_v1 --epochs 20 --batch-size 4
+python src/minyeop/faster_rcnn/watch.py   --name 01_frcnn_r50fpn_min640_v1 --follow      # 다른 터미널에서
+python src/minyeop/faster_rcnn/predict.py --name 01_frcnn_r50fpn_min640_v1 --split val  --ckpt best
+python src/minyeop/faster_rcnn/predict.py --name 01_frcnn_r50fpn_min640_v1 --split test --ckpt best   # 최종 후보만 한 번
+python src/minyeop/faster_rcnn/report.py  --name 01_frcnn_r50fpn_min640_v1 --infer-ms 31
+python src/minyeop/faster_rcnn/visualize.py --name 01_frcnn_r50fpn_min640_v1 --split test
 ```
 - 주요 옵션: `--min-size`, `--anchor-sizes 8,16,32,64,128`(작은 앵커, **아직 시험하지 않음**), `--batch-size`, `--epochs`, `--no-amp`, 점검용 `--limit-train`/`--limit-val`
 - `predict.py --split test`는 같은 체크포인트(`--ckpt`)로 만든 val 결과(`preds_val.json`)로 임계값을 정합니다. 체크포인트를 바꿨다면 먼저 `--split val`을 다시 실행하세요.
 - 실험 폴더가 이미 있으면 `train.py`는 덮어쓰지 않고 중단합니다.
 - 사전학습 가중치는 첫 실행 때 자동으로 내려받습니다 (약 160MB). 6GB GPU에서 batch 4, AMP 기준 메모리 약 3.3GB를 썼습니다.
-- 결과: `runs/minyeop/01_frcnn_r50fpn_min640/` (test F1 0.989, 공식 라벨만 0.964). 점수 해석 주의는 [docs/README.md](../../docs/README.md)의 "보고할 때의 주의".
+- 결과: `runs/minyeop/01_frcnn_r50fpn_min640_v1/` (test F1 0.989, 공식 라벨만 0.964). 점수 해석 주의는 [docs/README.md](../../docs/README.md)의 "보고할 때의 주의".

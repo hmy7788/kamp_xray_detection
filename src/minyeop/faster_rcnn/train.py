@@ -1,7 +1,7 @@
 """Faster R-CNN (ResNet-50 FPN) 학습. 결과는 runs/minyeop/<name>/ 에 저장된다.
 
 예)
-  python src/minyeop/faster_rcnn/train.py --name 01_frcnn_r50fpn_min640 --epochs 20 --batch-size 4
+  python src/minyeop/faster_rcnn/train.py --name 01_frcnn_r50fpn_min640_v1 --epochs 20 --batch-size 4
 
 진행 상황은 콘솔과 runs/minyeop/<name>/progress.log 에 epoch 마다 한 줄씩 남고, status.json 이 갱신된다.
 epoch 마다 val 로 AP@0.5 를 재고 가장 높은 epoch 의 가중치를 best.pt 로 저장한다. **test 는 쓰지 않는다**

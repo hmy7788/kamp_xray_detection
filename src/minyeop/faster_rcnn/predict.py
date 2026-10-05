@@ -1,7 +1,7 @@
 """학습된 Faster R-CNN 으로 val 또는 test 를 추론해 검출 결과 기록(preds_<split>.json)을 저장하고 지표를 출력한다.
 
-  python src/minyeop/faster_rcnn/predict.py --name 01_frcnn_r50fpn_min640 --split val
-  python src/minyeop/faster_rcnn/predict.py --name 01_frcnn_r50fpn_min640 --split test    # 최종 후보만, 한 번만
+  python src/minyeop/faster_rcnn/predict.py --name 01_frcnn_r50fpn_min640_v1 --split val
+  python src/minyeop/faster_rcnn/predict.py --name 01_frcnn_r50fpn_min640_v1 --split test    # 최종 후보만, 한 번만
 
 - 신뢰도 임계값은 **val 에서 F1 이 최대인 값**을 쓰고 test 에 그대로 적용한다 (test 에서 정하지 않음).
 - 기록 형식은 metrics.py 의 설명을 보세요 (다른 모델과 같은 평가 코드로 채점하기 위한 공통 형식).

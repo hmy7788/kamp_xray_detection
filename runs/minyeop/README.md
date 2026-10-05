@@ -11,4 +11,4 @@
 ## 실험 목록
 | 실험 | 모델 / 설정 | 결과 (val에서 임계값 고정) | 비고 |
 |---|---|---|---|
-| `01_frcnn_r50fpn_min640` | Faster R-CNN R50-FPN, COCO 사전학습, 입력 640, 기본 앵커, 20 epoch(선택 epoch 7) | test F1 0.989, 공식 라벨만 0.964 (val F1 0.992), 임계값 0.95 | 표: [docs/experiments.md](../../docs/experiments.md), 그림: `01_frcnn_r50fpn_min640/figures/` |
+| `01_frcnn_r50fpn_min640_v1` | Faster R-CNN R50-FPN, COCO 사전학습, 입력 640, 기본 앵커, 20 epoch(선택 epoch 7) | test F1 0.989, 공식 라벨만 0.964 (val F1 0.992), 임계값 0.95 | 표: [docs/experiments.md](../../docs/experiments.md), 그림: `01_frcnn_r50fpn_min640_v1/figures/` |

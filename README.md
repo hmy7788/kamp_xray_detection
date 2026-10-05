@@ -26,7 +26,7 @@ KAMP(K-인공지능 제조 플랫폼) **X-ray 검사장비 AI 데이터셋**으�
 | 데이터 | **확정 v2 완료**: 2,532장 전부 라벨 있음, train / val / test 분할 포함 (`data/`, 아래 "데이터") |
 | `scripts/` (공유 파이프라인) | 비어 있음. 공통 평가 코드 역할은 임시로 `src/minyeop/faster_rcnn/report.py`가 함 (이관은 팀 확인 후) |
 | 학습·평가 코드 | Faster R-CNN 학습·예측·보고 코드 완성 (`src/minyeop/faster_rcnn/`). YOLOv3(`src/yolov3`)는 새 데이터로 돌려 보지 않음 |
-| 실험 결과 | Faster R-CNN 1개 (`runs/minyeop/01_frcnn_r50fpn_min640`): test F1 0.989, 공식 라벨만 0.964. `runs/baseline`은 비어 있음 |
+| 실험 결과 | Faster R-CNN 1개 (`runs/minyeop/01_frcnn_r50fpn_min640_v1`): test F1 0.989, 공식 라벨만 0.964. `runs/baseline`은 비어 있음 |
 | `docs/` | `metrics.md`(성능 지표 정리), `experiments.md`(모델 공통 결과 표), `README.md`(결과 기록 가이드) |
 | 시작하지 않은 평가 항목 | 오류분석(15점), 현장 활용방안(10점), 보고서 |
 
@@ -146,7 +146,7 @@ data/
 - val(369장)은 F1 0.992로 test와 비슷해 val에 과하게 맞춘 흔적은 보이지 않습니다.
 - 오류 7건은 모두 공식 라벨 이미지이고, 같은 점을 중심 1.2px 이내에서 신뢰도 0.95 이상으로 찾았지만 박스 크기가 달라 IoU가 0.42~0.50이었습니다(중심 3px 이내로 짝지으면 FN 0). 빈 라벨 27장은 오검출 0입니다(쉬운 사진이라 정상 제품의 오경보율로 해석하지 말 것).
 - **모델이 하나뿐이라 모델 비교는 아직 아닙니다.** 위 함정 8·9 때문에 이 점수를 일반 성능으로 읽으면 안 됩니다.
-- 코드와 결과는 `src/minyeop/faster_rcnn/`, `runs/minyeop/01_frcnn_r50fpn_min640/`(그림은 `figures/`)에 있고, 브랜치 `feat/minyeop-faster-rcnn`에서 PR 전입니다.
+- 코드와 결과는 `src/minyeop/faster_rcnn/`, `runs/minyeop/01_frcnn_r50fpn_min640_v1/`(그림은 `figures/`)에 있고, 브랜치 `feat/minyeop-faster-rcnn`에서 PR 전입니다.
 
 ## 이전 시도의 참고값 (삭제된 결과, 이전 데이터·분할 기준이라 새 결과와 직접 비교하지 않음)
 표시를 지운 라벨 500장 데이터, COCO 사전학습에서 시작, 100 epoch, 신뢰도 임계값은 val에서 정함, IoU 0.5, 640px 기준입니다.
