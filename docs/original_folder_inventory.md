@@ -50,12 +50,12 @@
 
 | 종류 | 위치(`dataset/test1/yolov3/`) | 내용 |
 |---|---|---|
-| 코드 수정 | `train.py`, `test.py`, `detect.py`, `models.py`, `utils/utils.py`, `utils/datasets.py` | 호환성 수정(`docs/troubleshooting.md`). `train.py`의 `YOLO_SAVE_DIR`, `datasets.py`의 `imread`/`imwrite`는 `third_party/`에만 있음 |
+| 코드 수정 | `train.py`, `test.py`, `detect.py`, `models.py`, `utils/utils.py`, `utils/datasets.py` | 호환성 수정(`docs/troubleshooting.md`). `train.py`의 `YOLO_SAVE_DIR`, `datasets.py`의 `imread`/`imwrite`는 `src/yolov3/`(이전 이름 `third_party/yolov3`)에만 있음 |
 | 덮어씀 | `weights/last.pt` | 806 epoch → 학습 검증으로 변경됨 (**원본 소실**) |
 | 덮어씀 | `train.txt`, `test.txt`, `custom.data`, `results.txt` | 노트북 분할/학습 실행 결과. 원래 내용은 `C:/test1/...` 경로 |
 | 생성 | `X선이물검출기/` (2,532장, 약 375MB), `runs/`(TensorBoard 로그 10개), `result/` 갱신, `results.png`, `train.shapes`, `test.shapes`, `__pycache__` | 실행 부산물 |
 
-- 새 작업은 모두 `data/`, `third_party/`, `outputs/`에서 하고 있으며, 원본 폴더는 더 이상 수정하지 않습니다.
+- 새 작업은 모두 `data/`, `src/`, `runs/`에서 하고 있으며, 원본 폴더는 더 이상 수정하지 않습니다.
 - 원본 데이터(bmp, 라벨링 세트, 원래 가중치 6개)는 **변경되지 않았습니다**(라벨 400장은 원본 bmp와 MD5 일치).
 - 정리(삭제)할 후보: `X선이물검출기/`, `runs/`, `__pycache__`. 사용자 확인 후 진행.
 

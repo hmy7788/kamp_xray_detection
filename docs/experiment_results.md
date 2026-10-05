@@ -93,7 +93,7 @@ python test.py --cfg yolov3-spp.cfg --batch-size 3 --data custom.data --weights 
 
 # 실험 2: n400 묶음 분할 (8:1:1) 모델 비교
 
-> 상태: **베이스라인 2건 완료** (2026-09-30 재분할 후 재실행, 2026-10-01 완료. 지표 해석에 주의: 아래 "베이스라인 결과". 이전 분할로 시작했던 실행은 중단, 아래 "중단된 실행" 참고). 완료 후 `outputs/runs/<실험명>/metrics.json` 값으로 이 표를 채운다.
+> 상태: **베이스라인 2건 완료** (2026-09-30 재분할 후 재실행, 2026-10-01 완료. 지표 해석에 주의: 아래 "베이스라인 결과". 이전 분할로 시작했던 실행은 중단, 아래 "중단된 실행" 참고). 완료 후 `runs/<실험명>/metrics.json` 값으로 이 표를 채운다.
 
 ## 설정
 
@@ -127,7 +127,7 @@ python test.py --cfg yolov3-spp.cfg --batch-size 3 --data custom.data --weights 
 
 ## 베이스라인 결과 (2026-10-01)
 
-위 표의 수치는 **640 해상도(학습 중 검증과 같은 조건)로 `best.pt`를 평가한 값**이다. 두 실행 모두 `outputs/runs/<이름>/metrics.json`.
+위 표의 수치는 **640 해상도(학습 중 검증과 같은 조건)로 `best.pt`를 평가한 값**이다. 두 실행 모두 `runs/<이름>/metrics.json`.
 
 | 실행 | best epoch (학습 중 val F1) | 평가 해상도 | val P/R/mAP@0.5/F1 | test P/R/mAP@0.5/F1 |
 |---|---|---|---|---|
@@ -182,14 +182,14 @@ val에서 bbox 단위 F1이 최대인 신뢰도 임계값을 정해 **고정**�
 
 | 실행 | 진행 | 종료 사유 |
 |---|---|---|
-| `outputs/runs/_incomplete_01_yolov3spp_coco_19of100` | 19/100 epoch | 원인 불명(오류 없이 종료, `troubleshooting.md` 18). 스크립트가 기록한 F1 0.10은 무효 |
-| `outputs/runs/02_yolov3tiny_coco` (이름 변경 예정: `_incomplete_..._46of100`) | 46/100 epoch | 2026-09-30 17:49에 진행이 멈춤(프로세스는 남아 있고 GPU 사용 없음). PC 절전이 원인으로 추정, 미확인. 다음 날 아침 수동 종료 (`troubleshooting.md` 19) |
+| `runs/baseline/_invalid/_incomplete_01_yolov3spp_coco_19of100` | 19/100 epoch | 원인 불명(오류 없이 종료, `troubleshooting.md` 18). 스크립트가 기록한 F1 0.10은 무효 |
+| `runs/baseline/02_yolov3tiny_coco` (이름 변경 예정: `_incomplete_..._46of100`) | 46/100 epoch | 2026-09-30 17:49에 진행이 멈춤(프로세스는 남아 있고 GPU 사용 없음). PC 절전이 원인으로 추정, 미확인. 다음 날 아침 수동 종료 (`troubleshooting.md` 19) |
 
 tiny의 **학습 중 val 곡선**(매 epoch val로 평가, conf 0.001): epoch 9 F1 0.02 → 18 F1 0.26 → 27 F1 0.69 → 36 **P 0.999 / R 0.875 / mAP 0.961 / F1 0.933**(최고) → 45 F1 0.81. 학습이 진행되며 val 성능이 빠르게 오르는 것을 확인했다. 단 (1) 이 수치는 best 선택에 쓴 val 자체의 값이라 낙관적이고 (2) val이 38장/104 bbox라 epoch 간 변동이 크며 (3) 미완성 실행이라 **최종 결과로 인용하지 않는다**. test 평가는 하지 않았다.
 
 ## 중단된 실행 (기록)
 
-- 처음 시작한 `01_yolov3spp_coco`(약 12 epoch까지), `02_yolov3tiny_coco`(초기)는 **파일명 접두 기준 분할**이라 호기 균형이 나빠 재분할과 함께 중단했다. 로그는 `outputs/runs/_aborted_oldsplit_*`에 있으며 결과로 사용하지 않는다. 그 시점 관찰: SPP는 초기 epoch에서 val P 1.0 / R 0.017로 정상적인 학습 초기 수치였고, 12 epoch 근처에서도 손실이 감소 중이었다(최종 성능 아님).
+- 처음 시작한 `01_yolov3spp_coco`(약 12 epoch까지), `02_yolov3tiny_coco`(초기)는 **파일명 접두 기준 분할**이라 호기 균형이 나빠 재분할과 함께 중단했다. 로그는 `runs/baseline/_invalid/_aborted_oldsplit_*`에 있으며 결과로 사용하지 않는다. 그 시점 관찰: SPP는 초기 epoch에서 val P 1.0 / R 0.017로 정상적인 학습 초기 수치였고, 12 epoch 근처에서도 손실이 감소 중이었다(최종 성능 아님).
 - 이번 재실험은 같은 이름(`01_…`, `02_…`)으로 새 분할에서 다시 실행한다.
 
 ## 이전 실험(실험 1)과의 관계
