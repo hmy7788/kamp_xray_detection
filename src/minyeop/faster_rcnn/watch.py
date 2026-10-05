@@ -1,7 +1,7 @@
 """학습 진행 상태를 보여준다 (학습 프로세스와 별개로 실행하며, 파일만 읽으므로 학습에 영향이 없다).
 
-  python src/minyeop/faster_rcnn/watch.py --name 01_frcnn_r50fpn_min640            # 한 번 출력
-  python src/minyeop/faster_rcnn/watch.py --name 01_frcnn_r50fpn_min640 --follow    # 5초마다 갱신 (Ctrl+C 로 종료)
+  python src/minyeop/faster_rcnn/watch.py --name 01_frcnn_r50fpn_min640_v1            # 한 번 출력
+  python src/minyeop/faster_rcnn/watch.py --name 01_frcnn_r50fpn_min640_v1 --follow    # 5초마다 갱신 (Ctrl+C 로 종료)
 
 읽는 파일: runs/<owner>/<name>/ 의 status.json(현재 상태), results.csv(epoch별 지표), progress.log(최근 로그)
 """
@@ -55,7 +55,8 @@ def render(run, tail):
     rows = []
     try:
         with open(run / "results.csv", encoding="utf-8") as f:
-            rows = list(csv.DictReader(f))
+            # 편집기가 열을 맞추려고 쉼표 뒤에 공백을 넣어 저장해도 읽도록 키와 값의 공백을 지운다
+            rows = [{k.strip(): (v or "").strip() for k, v in r.items()} for r in csv.DictReader(f)]
     except OSError:
         pass
 

@@ -1,7 +1,7 @@
 """검출 결과 기록(preds_*.json)으로 docs/experiments.md 의 보고 표 한 줄을 계산한다. 모델과 무관하다.
 
   python src/minyeop/faster_rcnn/report.py --preds-val runs/<이름>/<실험>/preds_val.json --preds-test runs/<이름>/<실험>/preds_test.json
-  python src/minyeop/faster_rcnn/report.py --name 01_frcnn_r50fpn_min640            # runs/minyeop/<name>/ 의 두 파일을 사용
+  python src/minyeop/faster_rcnn/report.py --name 01_frcnn_r50fpn_min640_v1            # runs/minyeop/<name>/ 의 두 파일을 사용
 
 - 신뢰도 임계값은 **val 에서 F1 이 최대인 값**으로 정해 test 에 그대로 적용한다 (--threshold 로 직접 지정 가능).
 - 기록 형식은 metrics.py 첫머리의 설명을 보세요. 추론 시간은 기록에 없으므로 --infer-ms 로 직접 넘긴다.

@@ -34,14 +34,14 @@ KAMP "X-ray 검사장비 AI 데이터셋" 프로젝트. X선 이물 검출기 �
 - `data/` — 확정 데이터 v2(이미지, 라벨, 분할, 매니페스트, 조건 파일). 저장소를 **비공개로 두는 전제**로 Git에 둔다(공개로 바꾸면 KAMP 데이터가 공개됨, 재배포 조건 미확인).
 - `scripts/` — 전처리·학습 실행·평가 파이프라인 (현재 비어 있음, 새로 작성).
 - `src/yolov3/` — 호환성 수정을 거친 YOLOv3 코드(`train.py`, `test.py`, `detect.py`, `models.py`, `utils/`, `yolov3-spp.cfg`, `yolov3-tiny.cfg`). 데이터·가중치는 포함하지 않는다. 출처·수정 내역은 `src/yolov3/README.md`.
-- `src/minyeop/faster_rcnn/` — 허민엽의 Faster R-CNN(torchvision, ResNet-50 FPN) 학습·예측·보고·시각화 코드. 결과는 `runs/minyeop/01_frcnn_r50fpn_min640/`.
+- `src/minyeop/faster_rcnn/` — 허민엽의 Faster R-CNN(torchvision, ResNet-50 FPN) 학습·예측·보고·시각화 코드. 결과는 `runs/minyeop/01_frcnn_r50fpn_min640_v1/`.
 - `notebooks/shared/` — 원본 실습 노트북 2개(경로 하드코딩, 장비 표시가 있는 이미지로 학습하는 흐름이라 참고용).
 - `weights/` — Git 제외. COCO 사전학습 가중치는 `weights/README.md`의 방법으로 받는다.
 - 원본 `4. X-ray 검사장비 AI 데이터셋/dataset/` — 수정하지 않는 읽기 전용 출처(있는 PC에서만). 원본 bmp 2,809장은 `test1/yolov3/X선이물검출기(06.23_09.22)/`에 있다. 탐색 시 제외할 것.
 - 폴더마다 README가 있어 역할과 규칙을 설명한다(`data/`는 `README.txt`).
 
 ## 데이터 (확정 v2, 2026-10-05 직접 검증, 설명 원문은 `data/README.txt`)
-- 구조: `data/{train,val,test}/{images/*.png, labels/*.txt}`, `manifest.csv`, `conditions.csv`, `conditions_thresholds.json`, `split_info.json`, `manifest.sha256`, `PASS`, `README.txt`.
+- 구조: `data/{train,val,test}/{images/*.png, labels/*.txt}`, `manifest.csv`, `conditions.csv`, `conditions_thresholds.json`, `split_info.json`, `manifest.sha256`, `PASS`, `README.md`.
 - 이미지 2,532장 전부 라벨 있음. **train 1,767 / val 369 / test 396**, 박스 4,494개(3,225 / 606 / 663). 이미지는 **회색조 PNG**이고 장비 색 박스(표시)가 지워져 있다(표본 300장에서 색 픽셀 0).
 - 라벨: YOLO txt `0 cx cy w h`(0~1 비율), 클래스 0 = defect. 코드가 이미지 경로의 `/images/`를 `/labels/`로 바꿔 라벨을 찾으므로 **`images/`와 `labels/`는 형제 폴더**여야 한다.
 - **버전**: `manifest.csv`의 sha256 = `1942bf3452defc08022b11f464092d46b095ea2bb31961b15b072bc9d623c623`(`PASS`에 기록). 다른 값이면 다른 버전이다.
@@ -61,7 +61,7 @@ KAMP "X-ray 검사장비 AI 데이터셋" 프로젝트. X선 이물 검출기 �
 ## Faster R-CNN (`src/minyeop/faster_rcnn/`, 허민엽)
 - 파일: `dataset.py`(YOLO txt → xyxy, 회색조 3채널, 빈 라벨 포함), `model.py`(COCO 사전학습, 2클래스 헤드, `--min-size`/`--anchor-sizes`), `metrics.py`(AP·P/R/F1), `train.py`, `predict.py`, `report.py`(보고 표 계산), `watch.py`(진행 모니터), `visualize.py`(그림).
 - 실행(`PYTHONUTF8=1`): `train.py --name <실험> --epochs 20 --batch-size 4`, `watch.py --name <실험> --follow`, `predict.py --name <실험> --split val|test --ckpt best`, `report.py --name <실험>`, `visualize.py --name <실험> --split val|test`. 결과는 `runs/minyeop/<실험>/`. `train.py`는 test를 쓰지 않고, 실험 폴더가 이미 있으면 중단한다. `predict.py --split test`는 같은 체크포인트의 val 결과로 임계값을 정하므로 먼저 val을 같은 `--ckpt`로 돌릴 것(이전 체크포인트의 `preds_val.json`이 남아 있으면 임계값이 어긋남).
-- 결과(`01_frcnn_r50fpn_min640`, 입력 640, epoch 7): test F1 0.989(공식 라벨만 0.964, 팀 라벨 1.000), val F1 0.992, 임계값 0.95, 추론 약 31ms/장, 학습 1시간 07분.
+- 결과(`01_frcnn_r50fpn_min640_v1`, 입력 640, epoch 7): test F1 0.989(공식 라벨만 0.964, 팀 라벨 1.000), val F1 0.992, 임계값 0.95, 추론 약 31ms/장, 학습 1시간 07분.
 - **점수 해석 주의**: 팀 라벨이 고정 크기라 IoU 0.5 기준이 쉽게 포화된다. 오류는 대부분 크기 차이로 인한 IoU 미달이고(같은 점을 중심 1.2px 이내로 찾음) 진짜 미탐지가 아니다. 결함이 막대 끝에 있는 규칙성, 표시 흔적을 모델이 지름길로 쓰는지는 검증하지 않았다.
 - 가중치(`weights/`), 예측 결과(`preds_*.json`, 정답 좌표 포함), `status.json`, `progress.log`는 Git에 올리지 않는다. 그림(`figures/`)에는 데이터 이미지가 그려져 있어 비공개 저장소에서만 올린다.
 

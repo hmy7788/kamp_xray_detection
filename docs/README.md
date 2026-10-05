@@ -79,21 +79,21 @@
 
 | 실험 이름 | 담당 | 브랜치 | 모델 / 사전학습 | 입력 크기 | 배치 | epoch (선택된 epoch) | 옵티마이저 / lr | 증강 | 시드 | 학습 시간 | 가중치 크기 | 비고 |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
-| `01_frcnn_r50fpn_min640` | minyeop | `feat/minyeop-faster-rcnn` | torchvision Faster R-CNN ResNet-50 FPN / COCO | 짧은 변 640 (최대 1000), 기본 앵커 32~512 | 4 | 20 (**7**, val AP 최대) | SGD(모멘텀 0.9, wd 5e-4) lr 0.005, 워밍업 후 코사인 | 좌우 반전 | 0 | 1시간 07분 (RTX 4050 6GB, AMP) | 166MB | 빈 라벨 이미지도 학습에 사용 |
+| `01_frcnn_r50fpn_min640_v1` | minyeop | `feat/minyeop-faster-rcnn` | torchvision Faster R-CNN ResNet-50 FPN / COCO | 짧은 변 640 (최대 1000), 기본 앵커 32~512 | 4 | 20 (**7**, val AP 최대) | SGD(모멘텀 0.9, wd 5e-4) lr 0.005, 워밍업 후 코사인 | 좌우 반전 | 0 | 1시간 07분 (RTX 4050 6GB, AMP) | 166MB | 빈 라벨 이미지도 학습에 사용 |
 | | | | | | | | | | | | | |
 
 재현 명령 (Faster R-CNN):
 ```bash
-PYTHONUTF8=1 python src/minyeop/faster_rcnn/train.py --name 01_frcnn_r50fpn_min640 --epochs 20 --batch-size 4
-PYTHONUTF8=1 python src/minyeop/faster_rcnn/predict.py --name 01_frcnn_r50fpn_min640 --split val  --ckpt best
-PYTHONUTF8=1 python src/minyeop/faster_rcnn/predict.py --name 01_frcnn_r50fpn_min640 --split test --ckpt best   # 한 번만
-PYTHONUTF8=1 python src/minyeop/faster_rcnn/report.py  --name 01_frcnn_r50fpn_min640 --infer-ms 31
+PYTHONUTF8=1 python src/minyeop/faster_rcnn/train.py --name 01_frcnn_r50fpn_min640_v1 --epochs 20 --batch-size 4
+PYTHONUTF8=1 python src/minyeop/faster_rcnn/predict.py --name 01_frcnn_r50fpn_min640_v1 --split val  --ckpt best
+PYTHONUTF8=1 python src/minyeop/faster_rcnn/predict.py --name 01_frcnn_r50fpn_min640_v1 --split test --ckpt best   # 한 번만
+PYTHONUTF8=1 python src/minyeop/faster_rcnn/report.py  --name 01_frcnn_r50fpn_min640_v1 --infer-ms 31
 ```
 
 ### 아직 없는 것
 - **조건별 재현율** (호기·해상도·대비·배경·크기): `data/conditions.csv`로 계산해야 하지만 아직 계산 코드가 없음. 크기 구간은 공식 라벨 박스만 사용할 것 ([metrics.md](metrics.md) 참고)
 - **중심 거리 기준 매칭**: IoU 0.5는 작은 박스에서 크기 차이에 민감해 점수가 포화된다. 중심 거리로 보는 평가를 병행할지는 팀 결정이 필요하다 (미정)
-- **오류 사례 분석** (FN/FP 이미지 모음): Faster R-CNN은 `runs/minyeop/01_frcnn_r50fpn_min640/figures/{val,test}/`에 그림이 있음
+- **오류 사례 분석** (FN/FP 이미지 모음): Faster R-CNN은 `runs/minyeop/01_frcnn_r50fpn_min640_v1/figures/{val,test}/`에 그림이 있음
 - 모델 간 차이의 **쌍체 부트스트랩** (같은 이미지에서 두 모델의 차이를 재표집): 모델이 둘 이상 생기면 추가
 
 ## 이전 문서 복구

@@ -1,5 +1,5 @@
 {
-  "name": "01_frcnn_r50fpn_min640",
+  "name": "01_frcnn_r50fpn_min640_v1",
   "owner": "minyeop",
   "epochs": 20,
   "batch_size": 4,

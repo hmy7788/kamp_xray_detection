@@ -1,6 +1,6 @@
 """preds_<split>.json 의 검출 결과를 이미지에 그려 runs/<owner>/<name>/figures/<split>/ 에 저장한다.
 
-  python src/minyeop/faster_rcnn/visualize.py --name 01_frcnn_r50fpn_min640 --split val
+  python src/minyeop/faster_rcnn/visualize.py --name 01_frcnn_r50fpn_min640_v1 --split val
 
 정답은 초록, 예측은 빨강(신뢰도 표기). 만드는 그림:
   samples_ok.png     정상 검출 예시 (호기·라벨 출처를 섞어서)
