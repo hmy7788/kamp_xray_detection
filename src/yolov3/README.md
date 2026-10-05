@@ -14,4 +14,4 @@
 - `utils/datasets.py`: 한글 경로용 `imread`/`imwrite` 헬퍼, `detect.py`도 이를 사용
 - `yolov3-tiny.cfg`를 1클래스(`filters=18`, `classes=1`)로 변환
 
-자세한 원인과 해결은 [docs/troubleshooting.md](../../docs/troubleshooting.md)에 있습니다.
+자세한 원인과 해결은 지운 문서에 있고 Git 이력에서 볼 수 있습니다: `git show d151bfa:docs/troubleshooting.md`
