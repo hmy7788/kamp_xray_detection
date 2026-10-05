@@ -1,0 +1,17 @@
+{
+  "name": "01_frcnn_r50fpn_min640",
+  "owner": "minyeop",
+  "epochs": 20,
+  "batch_size": 4,
+  "lr": 0.005,
+  "min_size": 640,
+  "max_size": 1000,
+  "anchor_sizes": null,
+  "workers": 4,
+  "no_amp": false,
+  "seed": 0,
+  "limit_train": null,
+  "limit_val": null,
+  "anchor_sizes_list": null,
+  "model": "fasterrcnn_resnet50_fpn(COCO_V1)"
+}
