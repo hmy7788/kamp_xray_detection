@@ -1,17 +1,0 @@
-Namespace(cfg='yolov3-spp.cfg', data='<KAMP>\\data\\splits\\val.data', weights='<KAMP>\\outputs\\runs\\01_yolov3spp_coco\\weights\\best.pt', batch_size=4, img_size=512, conf_thres=0.001, iou_thres=0.6, save_json=False, task='test', device='', single_cls=False, augment=False)
-Using CUDA device0 _CudaDeviceProperties(name='NVIDIA GeForce RTX 4050 Laptop GPU', total_memory=6140MB)
-
-WARNING: smart bias initialization failure.
-WARNING: smart bias initialization failure.
-WARNING: smart bias initialization failure.
-Model Summary: 225 layers, 6.25733e+07 parameters, 6.25733e+07 gradients
-Fusing layers...
-Model Summary: 152 layers, 6.25465e+07 parameters, 6.25465e+07 gradients
-  0%|          | 0/38 [00:00<?, ?it/s]Caching labels <KAMP>\data\splits\val.txt (38 found, 0 missing, 0 empty, 0 duplicate, for 38 images): 100%|██████████| 38/38 [00:00<00:00, 2093.38it/s]
-C:\Anaconda\envs\KAMP\lib\site-packages\torch\functional.py:539: UserWarning: torch.meshgrid: in an upcoming release, it will be required to pass the indexing argument. (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\native\TensorShape.cpp:3638.)
-  return _VF.meshgrid(tensors, **kwargs)  # type: ignore[attr-defined]
-               Class    Images   Targets         P         R   mAP@0.5        F1:   0%|          | 0/10 [00:00<?, ?it/s]               Class    Images   Targets         P         R   mAP@0.5        F1:  10%|█         | 1/10 [00:11<01:45, 11.75s/it]               Class    Images   Targets         P         R   mAP@0.5        F1:  30%|███       | 3/10 [00:11<00:21,  3.11s/it]               Class    Images   Targets         P         R   mAP@0.5        F1:  50%|█████     | 5/10 [00:12<00:07,  1.56s/it]               Class    Images   Targets         P         R   mAP@0.5        F1:  70%|███████   | 7/10 [00:12<00:02,  1.07it/s]               Class    Images   Targets         P         R   mAP@0.5        F1:  90%|█████████ | 9/10 [00:12<00:00,  1.62it/s]               Class    Images   Targets         P         R   mAP@0.5        F1: 100%|██████████| 10/10 [00:13<00:00,  1.30s/it]
-                 all        38       104         1    0.0527     0.883       0.1
-Speed: 27.2/4.8/32.0 ms inference/NMS/total per 512x512 image at batch-size 4
-<KAMP>\third_party\yolov3\test.py:228: DeprecationWarning: Conversion of an array with ndim > 0 to a scalar is deprecated, and will error in future. Ensure you extract a single element from your array before performing this operation. (Deprecated NumPy 1.25.)
-  maps[c] = ap[i]
