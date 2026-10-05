@@ -38,36 +38,26 @@ data/samples/custom.data
 *.cache
 
 # =============================================================================
-# 실험 산출물: 가중치(파일당 70~490MB, GitHub 100MB 초과)와 결과 이미지는 제외하고
-# 지표·설정·로그·곡선은 포함한다. 로그/설정의 로컬 경로는 <KAMP>로 치환해 두었다.
-# 새 실험을 올리기 전에 경로가 남아 있지 않은지 확인할 것.
+# 실험 산출물(runs/<이름>/<실험>/): 가중치, 진행 파일, 검출 캐시(정답 bbox 좌표 = KAMP 라벨 포함),
+# 결과 이미지만 제외하고 설정·로그·지표·곡선은 포함한다. 로그/설정의 로컬 경로는 <KAMP>로 치환해 둔다.
+# 새 실험을 올리기 전에 경로가 남아 있지 않은지 확인할 것 (README "협업 가이드").
 # =============================================================================
-# 일반 로그는 제외하되 아래 실험 폴더의 로그는 예외로 포함한다 (이 규칙이 더 뒤에 있어야 예외가 적용됨)
+# 일반 로그는 제외하되 runs 아래 로그는 예외로 포함한다 (뒤에 있는 규칙이 우선)
 *.log
-outputs/runs/*/*
-!outputs/runs/*/metrics.json
-!outputs/runs/*/config.json
-!outputs/runs/*/results.txt
-!outputs/runs/*/results.png
-!outputs/runs/*/train.log
-!outputs/runs/*/val_eval.log
-!outputs/runs/*/test_eval.log
-!outputs/runs/*/metrics_img*.json
-!outputs/runs/*/val_eval_img*.log
-!outputs/runs/*/test_eval_img*.log
-!outputs/runs/*/eval_report_img*.json
-!outputs/runs/*/ring_cue_check_img*.json
-# preds_*.json 은 정답 bbox 좌표(KAMP 라벨)를 포함하므로 올리지 않는다
+!runs/**/*.log
+runs/**/progress.log
+runs/**/weights/
+runs/**/preds_*.json
+runs/**/status.json
+runs/**/status.json.tmp
+runs/**/result/
+runs/**/_smoke*/
 
 # yolov3 학습/검증 중 코드가 현재 폴더에 만드는 파일
-third_party/yolov3/runs/
-third_party/yolov3/results.txt
-third_party/yolov3/results.png
-third_party/yolov3/*_batch*.jpg
-
-# 라벨링 도구 입출력 (이미지/라벨링 결과)
-third_party/OpenLabeling/main/input/*
-third_party/OpenLabeling/main/output/*
+src/yolov3/runs/
+src/yolov3/results.txt
+src/yolov3/results.png
+src/yolov3/*_batch*.jpg
 
 # 진행 중인 제출물 (소속·팀 정보 확인 전 업로드 방지). 폴더만 유지
 submission/*

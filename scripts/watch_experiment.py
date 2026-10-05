@@ -16,7 +16,7 @@ from datetime import datetime
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-RUNS = ROOT / "outputs" / "runs"
+RUNS = ROOT / "runs"
 FINISHED = {"완료", "실패"}
 
 
@@ -40,7 +40,7 @@ def pid_alive(pid):
 
 
 def latest_run():
-    cands = [p for p in RUNS.glob("*/status.json")]
+    cands = [p for p in RUNS.rglob("status.json") if "_invalid" not in p.parts]  # runs/<이름>/<실험>/status.json
     return max(cands, key=lambda p: p.stat().st_mtime).parent if cands else None
 
 
@@ -79,7 +79,7 @@ def show(run, stale_min):
             if m.get(sp):
                 x = m[sp]
                 print(f"{sp:5s}: P {x['precision']:.3f} R {x['recall']:.3f} mAP@0.5 {x['mAP@0.5']:.3f} F1 {x['F1']:.3f}")
-    print(f"진행 로그 : outputs/runs/{st['name']}/progress.log")
+    print(f"진행 로그 : runs/{st['name']}/progress.log")
     return stage in FINISHED
 
 

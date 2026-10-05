@@ -59,7 +59,7 @@ def main():
     ap.add_argument("--seed", type=int, default=0)
     a = ap.parse_args()
 
-    run = ROOT / "outputs" / "runs" / a.name
+    run = ROOT / "runs" / a.name
     cfg = json.loads((run / "config.json").read_text(encoding="utf-8"))
     img = a.img_size or cfg["img_size"][-1]
     rep = json.loads((run / f"eval_report_img{img}.json").read_text(encoding="utf-8"))

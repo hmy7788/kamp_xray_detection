@@ -24,7 +24,7 @@ def main():
     ap.add_argument("--img-size", type=int, default=None)
     a = ap.parse_args()
 
-    out = ROOT / "outputs" / "runs" / a.name
+    out = ROOT / "runs" / a.name
     cfg = json.loads((out / "config.json").read_text(encoding="utf-8"))
     img = a.img_size or cfg["img_size"][-1]
     ckpt = out / "weights" / ("best.pt" if (out / "weights" / "best.pt").exists() else "last.pt")
@@ -50,7 +50,7 @@ def main():
         metrics[split] = parse_metrics(out / f"{split}_eval.log")
         m = metrics[split]
         print(f"{a.name} {split} @{img}: " + (f"P {m['precision']:.3f} R {m['recall']:.3f} mAP@0.5 {m['mAP@0.5']:.3f} F1 {m['F1']:.3f}" if m else f"실패(rc={rc})"), flush=True)
-    for f in (ROOT / "third_party" / "yolov3").glob("test_batch*.jpg"):
+    for f in (ROOT / "src" / "yolov3").glob("test_batch*.jpg"):
         f.unlink()
     (out / "metrics.json").write_text(json.dumps(metrics, ensure_ascii=False, indent=2), encoding="utf-8")
 
