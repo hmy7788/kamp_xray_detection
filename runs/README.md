@@ -18,6 +18,8 @@ runs/
 | `train.log`, `*_eval.log` | 로그 | 포함 |
 | `results.txt`, `results.png` | epoch별 학습 곡선 | 포함 |
 | `metrics.json`, `eval_report_*.json` | 평가 지표 | 포함 |
+| `results.csv`, `report_<split>.json` | epoch별 지표, 보고 표 계산 결과 (부트스트랩 구간 등) | 포함 |
+| `figures/` | 검출 결과 그림 (데이터 이미지가 그려져 있어 저장소가 비공개인 동안에만 올림) | 포함 |
 | `weights/` | 가중치 (`*.pt`, 수십~수백 MB) | **제외** |
 | `preds_*.json` | 검출 결과 캐시 (정답 bbox 좌표 = KAMP 라벨 포함) | **제외** |
 | `status.json`, `progress.log` | 진행 상황 | **제외** |
