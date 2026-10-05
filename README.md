@@ -76,7 +76,7 @@ python -c "import torch; print(torch.__version__, 'CUDA:', torch.cuda.is_availab
 사전학습 가중치(COCO)는 [weights/README.md](weights/README.md)의 방법으로 받습니다.
 
 ## 데이터 (확정 v2, 2026-10-05)
-설명 원문은 `data/README.txt`에 있습니다. 아래는 직접 검증한 요약입니다.
+설명 원문은 `data/README.md`에 있습니다. 아래는 직접 검증한 요약입니다.
 
 **구성**
 ```text
@@ -87,7 +87,7 @@ data/
 ├─ manifest.csv        사진 목록 (split, source, labeler, machine, 크기, 촬영 시각, burst_id, 경로)
 ├─ conditions.csv      박스별 조건 (오류분석용, 4,494행)
 ├─ conditions_thresholds.json   조건 구간의 경계값
-├─ split_info.json  manifest.sha256  PASS  README.txt
+├─ split_info.json  manifest.sha256  PASS  README.md
 ```
 - 이미지: **회색조 PNG**. 장비가 그린 색 박스(표시)를 지운 상태입니다(표본 300장에서 색 픽셀이 남은 이미지 0장).
 - 라벨: YOLO txt, 한 줄에 박스 하나 `0 cx cy w h`(0~1 비율), 클래스 0 = defect. 이미지와 같은 이름이고 `images/`와 `labels/`가 형제 폴더입니다.
@@ -118,7 +118,7 @@ data/
 - `size_bin`(small 2,731 / mid 277 / large 1,486)은 팀 라벨이 고정 크기라 크기보다 **호기를 반영**합니다.
 - `contrast_bin`, `bg_bin`은 3등분(각 1,498)이고, `edge_dist_bin`은 center 4,486 / near 8개라 가장자리 분석은 사실상 불가능합니다.
 
-**데이터 계보** (`data/README.txt` 기준): KAMP 원본 BMP → 중복 제거 → 장비 색상 박스 제거(주변 회색으로 메움) → 회색조 PNG. 이 가공을 한 코드는 이 저장소에 없습니다.
+**데이터 계보** (`data/README.md` 기준): KAMP 원본 BMP → 중복 제거 → 장비 색상 박스 제거(주변 회색으로 메움) → 회색조 PNG. 이 가공을 한 코드는 이 저장소에 없습니다.
 
 ## 전처리와 모델링에서 알아야 할 것 (이전 시도에서 겪은 함정)
 1~7번은 이전 시도에서, 8·9번은 v2 실험에서 확인한 사실입니다. 1~7번의 근거는 지운 문서(`git show d151bfa:docs/dataset.md`, `docs/troubleshooting.md`)에 있습니다.
