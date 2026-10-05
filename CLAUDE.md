@@ -38,9 +38,9 @@ KAMP "X-ray 검사장비 AI 데이터셋" 프로젝트. X선 이물 검출기 �
 - `notebooks/shared/` — 원본 실습 노트북 2개(경로 하드코딩, 장비 표시가 있는 이미지로 학습하는 흐름이라 참고용).
 - `weights/` — Git 제외. COCO 사전학습 가중치는 `weights/README.md`의 방법으로 받는다.
 - 원본 `4. X-ray 검사장비 AI 데이터셋/dataset/` — 수정하지 않는 읽기 전용 출처(있는 PC에서만). 원본 bmp 2,809장은 `test1/yolov3/X선이물검출기(06.23_09.22)/`에 있다. 탐색 시 제외할 것.
-- 폴더마다 README가 있어 역할과 규칙을 설명한다(`data/`는 `README.txt`).
+- 폴더마다 README가 있어 역할과 규칙을 설명한다(`data/`는 `README.md`).
 
-## 데이터 (확정 v2, 2026-10-05 직접 검증, 설명 원문은 `data/README.txt`)
+## 데이터 (확정 v2, 2026-10-05 직접 검증, 설명 원문은 `data/README.md`)
 - 구조: `data/{train,val,test}/{images/*.png, labels/*.txt}`, `manifest.csv`, `conditions.csv`, `conditions_thresholds.json`, `split_info.json`, `manifest.sha256`, `PASS`, `README.md`.
 - 이미지 2,532장 전부 라벨 있음. **train 1,767 / val 369 / test 396**, 박스 4,494개(3,225 / 606 / 663). 이미지는 **회색조 PNG**이고 장비 색 박스(표시)가 지워져 있다(표본 300장에서 색 픽셀 0).
 - 라벨: YOLO txt `0 cx cy w h`(0~1 비율), 클래스 0 = defect. 코드가 이미지 경로의 `/images/`를 `/labels/`로 바꿔 라벨을 찾으므로 **`images/`와 `labels/`는 형제 폴더**여야 한다.
