@@ -83,7 +83,7 @@
 ## 12. 공용 `last.pt` 덮어쓰기 방지 (`YOLO_SAVE_DIR`)
 
 - 원본 `train.py`는 `weights/last.pt`, `results.txt`를 현재 폴더에 고정 저장. `--nosave`여도 마지막 epoch는 저장되어 덮어씀(806 epoch 원본 소실 사례).
-- **해결**: `train.py`에 환경변수 `YOLO_SAVE_DIR`를 도입해 `wdir`, `results_file` 위치를 실험 폴더로 지정. `scripts/run_experiment.py`가 `outputs/runs/<실험명>/`으로 지정하고, 폴더가 이미 있으면 실행을 거부.
+- **해결**: `train.py`에 환경변수 `YOLO_SAVE_DIR`를 도입해 `wdir`, `results_file` 위치를 실험 폴더로 지정. `scripts/run_experiment.py`가 `runs/<실험명>/`으로 지정하고, 폴더가 이미 있으면 실행을 거부.
 
 ## 13. 지표 파싱 실패 (지수 표기)
 
@@ -112,14 +112,14 @@
 ## 18. 학습이 오류 없이 19/100 epoch에서 끝남 (원인 미확인)
 
 - **관찰**: `01_yolov3spp_coco`가 epoch 18에서 예고 없이 종료. 트레이스백과 "epochs completed" 메시지가 없고 프로세스 종료 코드가 0이라 `run_experiment.py`는 정상 완료로 보고 평가까지 진행해 `metrics.json`(val F1 0.10, test F1 0.097)을 기록했다. 이 수치는 19 epoch짜리 미완성 모델의 것이라 **사용하지 않는다**.
-- **조치**: `run_experiment.py`가 `results.txt`의 epoch 수가 `--epochs`보다 적으면 불완전으로 종료하도록 검사 추가. 문제 폴더는 `outputs/runs/_incomplete_01_yolov3spp_coco_19of100`으로 이름을 바꿔 보관.
+- **조치**: `run_experiment.py`가 `results.txt`의 epoch 수가 `--epochs`보다 적으면 불완전으로 종료하도록 검사 추가. 문제 폴더는 `runs/baseline/_invalid/_incomplete_01_yolov3spp_coco_19of100`으로 이름을 바꿔 보관.
 - **미확인**: 종료 원인. GPU 메모리가 6.1GB로 한계에 가까운 SPP(batch 4)에서만 발생했는지, 다시 재현되는지는 재실행으로 확인해야 한다.
 
 ## 19. 학습이 중간에 멈춘 채 프로세스만 남음 (절전 추정)
 
 - **관찰**: `02_yolov3tiny_coco`가 2026-09-30 17:49에 epoch 46에서 진행을 멈췄다. 다음 날 08:51에 확인하니 `run_experiment.py`/`train.py` 프로세스는 살아 있지만 로그·`results.txt`가 15시간째 갱신되지 않았고 GPU 사용률 0%, 메모리 거의 0이었다. 같은 시점에 백그라운드 작업이 "2시간 시간 제한으로 종료"로 보고됨(벽시계 기준으로 제한에 걸린 것으로 보임).
 - **원인(추정, 미확인)**: PC 절전/대기 모드 진입. 절전에서 깨어난 뒤 CUDA 컨텍스트와 DataLoader 워커가 복구되지 않은 것으로 보인다. SPP 19/100 종료(`troubleshooting.md` 18)가 같은 원인인지는 모른다.
-- **조치**: 멈춘 프로세스를 수동 종료. 폴더 이름 변경은 "다른 프로세스가 사용 중" 오류(WinError 32)로 실패해 `outputs/runs/02_yolov3tiny_coco`로 남아 있음(원인 미확인, 재부팅 후 재시도). **긴 학습 전에 전원 설정에서 절전/최대 절전을 끄고(전원 연결 시), 덮개를 닫지 않는다.** `run_experiment.py`의 epoch 수 검사는 조기 종료를 감지하지만 "멈춤"은 감지하지 못하므로 로그 갱신 시간을 확인한다.
+- **조치**: 멈춘 프로세스를 수동 종료. 폴더 이름 변경은 "다른 프로세스가 사용 중" 오류(WinError 32)로 실패해 `runs/baseline/02_yolov3tiny_coco`로 남아 있음(원인 미확인, 재부팅 후 재시도). **긴 학습 전에 전원 설정에서 절전/최대 절전을 끄고(전원 연결 시), 덮개를 닫지 않는다.** `run_experiment.py`의 epoch 수 검사는 조기 종료를 감지하지만 "멈춤"은 감지하지 못하므로 로그 갱신 시간을 확인한다.
 
 ## 20. 최종 평가 해상도가 학습 중 검증과 달랐음
 

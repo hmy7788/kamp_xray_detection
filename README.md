@@ -83,7 +83,7 @@ pip install -r requirements.txt
 python -m ipykernel install --user --name kamp --display-name KAMP
 ```
 
-루트의 `requirements.txt`는 검증한 버전으로 고정되어 있고 Jupyter(`jupyter`, `ipykernel`)도 포함합니다. 3-3에서 PyTorch를 먼저 설치했다면 `torch`/`torchvision`은 "이미 설치됨"으로 건너뜁니다. (`third_party/yolov3/requirements.txt`는 원본 yolov3의 느슨한 버전 조건(`>=`)이라 재현에는 위 파일을 쓰세요.)
+루트의 `requirements.txt`는 검증한 버전으로 고정되어 있고 Jupyter(`jupyter`, `ipykernel`)도 포함합니다. 3-3에서 PyTorch를 먼저 설치했다면 `torch`/`torchvision`은 "이미 설치됨"으로 건너뜁니다. (`src/yolov3/requirements.txt`는 원본 yolov3의 느슨한 버전 조건(`>=`)이라 재현에는 위 파일을 쓰세요.)
 
 ### 3-5. 설치 확인
 
@@ -185,18 +185,23 @@ curl.exe -L -o weights/pretrained/yolov3-tiny.pt https://github.com/ultralytics/
 
 학습 → val/test 평가 → 결과 저장까지 한 번에 실행합니다. 분할도 자동으로 다시 만듭니다.
 
-```bash
-# 베이스라인: YOLOv3-SPP (GPU 6GB 기준 batch 3 권장. batch 4는 메모리 한계에 가까움)
-python scripts/run_experiment.py --name 01_yolov3spp_coco --cfg yolov3-spp.cfg --weights weights/pretrained/yolov3-spp-ultralytics.pt --epochs 100 --batch-size 3
+`--name`에는 **내 폴더 이름을 앞에 붙입니다**(허민엽 `minyeop`, 정연창 `yeonchang`, 이총 `chong`). 결과는 `runs/<내 폴더>/<실험>/`에 저장됩니다. **표시(색 박스)를 지운 데이터(`--dataset nomark`)로 학습해야 합니다**(`docs/dataset.md` 8절).
 
-# 비교 모델: YOLOv3-tiny
-python scripts/run_experiment.py --name 02_yolov3tiny_coco --cfg yolov3-tiny.cfg --weights weights/pretrained/yolov3-tiny.pt --epochs 100 --batch-size 8
+```bash
+# 예: 베이스라인 YOLOv3-SPP를 재현 (GPU 6GB 기준 batch 3 권장. batch 4는 메모리 한계에 가까움)
+python scripts/run_experiment.py --name minyeop/01_yolov3spp_nomark --dataset nomark --cfg yolov3-spp.cfg --weights weights/pretrained/yolov3-spp-ultralytics.pt --epochs 100 --batch-size 3
+
+# 예: YOLOv3-tiny
+python scripts/run_experiment.py --name minyeop/02_yolov3tiny_nomark --dataset nomark --cfg yolov3-tiny.cfg --weights weights/pretrained/yolov3-tiny.pt --epochs 100 --batch-size 8
 ```
+
+팀의 기준 베이스라인 결과는 `runs/baseline/`에 있습니다(`03_yolov3tiny_nomark`, `04_yolov3spp_nomark`).
 
 | 인자 | 의미 |
 |---|---|
-| `--name` | 실험 이름(폴더명). **이미 있는 이름이면 덮어쓰지 않고 종료**합니다. |
-| `--cfg` | 모델 정의. `yolov3-spp.cfg`, `yolov3-tiny.cfg` (`third_party/yolov3/`, 1클래스로 설정됨) |
+| `--name` | `<내 폴더>/<번호>_<모델>_<설정>`. **이미 있는 이름이면 덮어쓰지 않고 종료**합니다. |
+| `--dataset` | `nomark`(표시를 지운 데이터, 사용) 또는 `n500`(표시가 있는 원본, 학습에 쓰지 않음) |
+| `--cfg` | 모델 정의. `yolov3-spp.cfg`, `yolov3-tiny.cfg` (`src/yolov3/`, 1클래스로 설정됨) |
 | `--weights` | 시작 가중치 (저장소 루트 기준 상대경로 또는 절대경로) |
 | `--epochs` | 학습 epoch. 체크포인트가 이미 N epoch 학습된 것이면 거기서 **추가로 N epoch**입니다. COCO 사전학습본은 0부터 시작합니다. |
 | `--batch-size` | 6GB GPU에서 SPP는 4 이하, tiny는 8 정도. 메모리 부족이면 줄이세요. |
@@ -210,13 +215,13 @@ python scripts/run_experiment.py --name 02_yolov3tiny_coco --cfg yolov3-tiny.cfg
 
 ```bash
 python scripts/watch_experiment.py                   # 가장 최근 실험
-python scripts/watch_experiment.py 01_yolov3spp_coco # 이름 지정
+python scripts/watch_experiment.py minyeop/01_yolov3spp_nomark # 이름 지정
 python scripts/watch_experiment.py --follow          # 10초마다 갱신 (Ctrl+C로 종료)
 ```
 
 단계, epoch, 경과·남은 시간, 최근 val 지표, 최고 F1을 보여 주고, **5분 넘게 갱신이 없으면 "멈춘 것 같음"** 경고를 냅니다. 창 없이 백그라운드로 실행하려면 PowerShell에서 `Start-Process`를 쓰면 됩니다. 실행 중에는 Windows 절전 진입을 스크립트가 막습니다(시스템 설정은 바꾸지 않음).
 
-**결과 위치** `outputs/runs/<실험명>/`
+**결과 위치** `runs/<실험명>/`
 
 | 파일 | 내용 |
 |---|---|
@@ -236,17 +241,17 @@ python scripts/watch_experiment.py --follow          # 10초마다 갱신 (Ctrl+
 **평가 (권장)**: 학습이 끝난 실험을 val에서 정한 신뢰도 임계값으로 평가합니다.
 
 ```bash
-python scripts/evaluate.py 01_yolov3spp_coco
+python scripts/evaluate.py baseline/04_yolov3spp_nomark   # 내 실험이면 minyeop/<실험>
 ```
 
 val에서 bbox F1이 최대인 임계값을 고르고 같은 값을 test에 적용해 P/R/F1, TP/FP/FN, AP@0.5, 이미지 검출률, 호기별 F1을 출력하고 `eval_report_img<해상도>.json`을 저장합니다. 검출 결과는 `preds_*.json`에 캐시됩니다(정답 좌표 포함이라 Git 제외).
 
 ### 6-2. 학습/추론/평가를 따로 실행
 
-`third_party/yolov3`에서 실행합니다. 데이터·가중치는 **절대경로**로 넘기세요(아래 `<KAMP>`는 저장소 루트의 절대경로).
+`src/yolov3`에서 실행합니다. 데이터·가중치는 **절대경로**로 넘기세요(아래 `<KAMP>`는 저장소 루트의 절대경로). 표시를 지운 데이터를 쓰려면 `data/splits_nomark/`의 `val.data`, `test.data`를 쓰세요(`python scripts/make_split.py --src data/nomark --out data/splits_nomark`로 생성).
 
 ```bash
-cd third_party/yolov3
+cd src/yolov3
 
 # 학습 (val.data로 매 epoch 검증)
 python train.py --epochs 100 --weights <KAMP>/weights/pretrained/yolov3-tiny.pt --batch-size 8 --cfg yolov3-tiny.cfg --data <KAMP>/data/splits/val.data
@@ -259,11 +264,11 @@ python test.py --cfg yolov3-tiny.cfg --batch-size 8 --data <KAMP>/data/splits/te
 ```
 
 - `train.py`의 `--data`/`--cfg` 기본값은 COCO용이라 **항상 명시**해야 합니다.
-- 학습 결과는 기본적으로 `third_party/yolov3/weights/last.pt`에 저장되어 **덮어써집니다**(`--nosave`를 써도 마지막 epoch는 저장됨). 실험 폴더에 저장하려면 환경 변수 `YOLO_SAVE_DIR=<폴더>`를 지정하거나 `run_experiment.py`를 쓰세요.
+- 학습 결과는 기본적으로 `src/yolov3/weights/last.pt`에 저장되어 **덮어써집니다**(`--nosave`를 써도 마지막 epoch는 저장됨). 실험 폴더에 저장하려면 환경 변수 `YOLO_SAVE_DIR=<폴더>`를 지정하거나 `run_experiment.py`를 쓰세요.
 
 ### 6-3. 노트북
 
-`notebooks/yolov3_refactored.ipynb`는 원본 실습의 흐름(데이터 확인 → 분할 → 학습 → 추론 → 평가)을 경로 하드코딩 없이 재구성한 것입니다. 커널을 **KAMP**로 선택해 위에서부터 실행합니다.
+`notebooks/shared/yolov3_refactored.ipynb`는 원본 실습의 흐름(데이터 확인 → 분할 → 학습 → 추론 → 평가)을 경로 하드코딩 없이 재구성한 것입니다. 커널을 **KAMP**로 선택해 위에서부터 실행합니다.
 
 - 원본 폴더(`4. X-ray 검사장비 AI 데이터셋/`)가 없으면 ②의 데이터 확인·재정리 셀만 "원본 폴더 없음"을 출력하고 건너뜁니다.
 - 그 뒤 셀들은 실습 세트 `data/samples/{images,labels}`(실습용 15장)를 사용하는데, 이 폴더는 Git에 없습니다. 없으면 오류가 납니다. 노트북을 돌려 보려면 `data/subsets/n400`에서 이미지·라벨 15쌍을 `data/samples/`로 복사해 쓰세요(수치는 달라집니다).
@@ -273,27 +278,30 @@ python test.py --cfg yolov3-tiny.cfg --batch-size 8 --data <KAMP>/data/splits/te
 
 ```text
 KAMP/
-├─ README.md  CLAUDE.md          # 협업 안내 / AI 코딩 도구용 저장소 가이드
-├─ configs/                      # 실험 설정 (예정)
-├─ data/                         # classes.names, manifest.csv, splits/ (이미지·라벨은 각자 배치)
-├─ src/                          # 재사용 코드: data / models / evaluation (예정)
-├─ scripts/
-│  ├─ run_experiment.py          # 학습 → 평가 → 결과 저장 (실험 1건, 진행 상황 출력)
-│  ├─ watch_experiment.py        # 실험 진행 상황 보기 (멈춤 경고 포함)
-│  ├─ evaluate.py                # val에서 임계값을 고정해 bbox/이미지 단위 P/R/F1 계산
-│  ├─ reeval_experiment.py       # 끝난 실험을 다른 해상도로 재평가
-│  ├─ make_split.py              # 호기 층화 + 묶음 단위 8:1:1 분할
-│  ├─ build_manifest.py          # 원본 폴더가 있을 때만: 이미지별 호기 판별
-│  └─ check_data.py              # 데이터 배치 점검
-├─ notebooks/                    # 리팩토링 노트북, 원본 노트북
-├─ third_party/
-│  ├─ yolov3/                    # 호환성 수정본 YOLOv3 (train/test/detect.py)
-│  └─ OpenLabeling/              # 라벨링 도구
-├─ weights/                      # 사전학습 가중치 (Git 제외)
-├─ outputs/runs/<실험명>/        # 실험 산출물 (가중치 제외하고 Git 포함)
-├─ reports/  submission/         # 보고서용 그림·표 / 제출물
-└─ docs/                         # 문서 (아래)
+├─ README.md  CONTRIBUTING.md  CLAUDE.md  requirements.txt
+├─ data/                         [공유·고정] 바꾸려면 PR + 팀 합의
+│  ├─ manifest.csv  classes.names    이미지별 실제 호기·크기·bbox 수 / 클래스
+│  ├─ splits/  splits_nomark/        train·val·test 분할 (split.csv만 Git, 목록 txt는 각자 생성)
+│  └─ archive/                       이전 분할 (n400, 접두 기준)
+├─ scripts/                      [공유] 데이터 준비·학습·평가 파이프라인
+│  ├─ make_split.py  build_manifest.py  check_data.py  remove_marks.py
+│  ├─ run_experiment.py  watch_experiment.py  reeval_experiment.py
+│  └─ evaluate.py  check_ring_cue.py
+├─ src/
+│  ├─ yolov3/                    [공유] 호환성 수정본 YOLOv3 베이스라인 (출처·라이선스 README 포함)
+│  └─ minyeop/  yeonchang/  chong/   [개인] 각자의 모델 코드
+├─ notebooks/
+│  ├─ shared/                    기존 노트북 2개
+│  └─ minyeop/  yeonchang/  chong/   [개인] 탐색용
+├─ runs/                         실험 결과 (가중치·검출 캐시 제외하고 Git 포함)
+│  ├─ baseline/                  [공유] 팀 기준 베이스라인 + _invalid/(무효 실험)
+│  └─ minyeop/  yeonchang/  chong/   [개인] <번호>_<모델>_<설정>/
+├─ docs/                         문서 (아래)
+└─ weights/                      사전학습 가중치 (Git 제외)
 ```
+
+**작업 규칙**: `src/<이름>/`, `notebooks/<이름>/`, `runs/<이름>/`은 본인만 수정합니다. `data/`, `scripts/`, `src/yolov3/`, `runs/baseline/`은 공유 영역이라 PR로 바꾸고 나머지 2명이 확인합니다. 자세한 규칙은 [CONTRIBUTING.md](CONTRIBUTING.md)를 보세요.
+
 
 | 문서 | 내용 |
 |---|---|
@@ -307,19 +315,10 @@ KAMP/
 
 ## 8. 협업 가이드
 
-### 브랜치와 커밋
-
-- `main`에 직접 작업하지 않고 작업 브랜치를 만듭니다. 예: `feat/cv-5fold`, `fix/eval-threshold`, `docs/report-draft`.
-- 커밋은 **작업 단위로 쪼개고**, 메시지는 `종류: 한글 요약` 형식을 씁니다. 종류는 `feat`, `fix`, `docs`, `chore`를 사용합니다. (예: `feat: 묶음 기준 5-fold 교차검증 스크립트 추가`)
-- 변경 이유를 본문에 적습니다.
-
-### 실험 규칙
-
-- 실험 하나 = `outputs/runs/<번호>_<모델>_<설정>/` 폴더 하나. 예: `03_yolov3tiny_img640`. **공용 `last.pt`에 덮어쓰지 않습니다.**
-- 실험은 `scripts/run_experiment.py`로 실행해 결과 형식을 맞춥니다.
-- 비교 실험은 **같은 분할(`data/splits`)과 같은 지표**를 씁니다. 분할/시드/하이퍼파라미터를 바꿨다면 `docs/experiment_results.md`에 이유를 적습니다.
-- 실험을 끝낸 뒤 `docs/experiment_results.md` 표를 채웁니다. **미완료·중단된 실험은 최종 결과로 인용하지 않고** 폴더 이름을 `_incomplete_...`로 바꿔 구분합니다.
-- 새로 겪은 문제와 해결은 `docs/troubleshooting.md`에 추가합니다.
+브랜치, 커밋, 실험 규칙은 [CONTRIBUTING.md](CONTRIBUTING.md)에 정리했습니다. 요약:
+- `main`은 PR로만 합칩니다. 작업 브랜치는 `feat/<이름>-<내용>`, 커밋 메시지는 `종류: 한글 요약`입니다.
+- 실험은 `scripts/run_experiment.py --name <내 폴더>/<번호>_<모델>_<설정>`으로 실행하고 같은 분할, 같은 평가(`evaluate.py`)를 씁니다.
+- 끝까지 돌지 못한 실험은 최종 결과로 인용하지 않고 폴더 이름을 `_incomplete_...`로 바꿉니다. 새로 겪은 문제는 `docs/troubleshooting.md`에 추가합니다.
 
 ### 올리면 안 되는 것
 
@@ -333,7 +332,7 @@ KAMP/
 - 실험 로그와 `config.json`에는 로컬 절대경로가 찍힙니다. **커밋 전에 `<KAMP>`로 치환**하고 아래 명령으로 확인하세요. 출력이 없어야 합니다.
 
   ```bash
-  git grep --untracked -nI "OneDrive\|Users[\\/]" -- outputs docs notebooks scripts
+  git grep --untracked -nI "OneDrive\|Users[\\/]" -- runs docs notebooks scripts src
   ```
 
   이미 올라간 로그는 같은 방식으로 치환되어 있습니다.
@@ -342,8 +341,8 @@ KAMP/
 
 ### 코드 수정 시 주의
 
-- `third_party/yolov3`는 2020년 버전을 최신 PyTorch/numpy/Windows에서 돌리도록 **이미 수정**했습니다(`torch.load`의 `weights_only=False`, `np.int` 제거, 추가 epoch 계산, 한글 경로용 `imread`/`imwrite` 등). 원본으로 되돌리지 마세요. 수정 목록은 [docs/troubleshooting.md](docs/troubleshooting.md)와 `CLAUDE.md`에 있습니다.
-- 재사용할 코드는 `third_party`가 아니라 `src/`에 작성합니다.
+- `src/yolov3`는 2020년 버전을 최신 PyTorch/numpy/Windows에서 돌리도록 **이미 수정**했습니다(`torch.load`의 `weights_only=False`, `np.int` 제거, 추가 epoch 계산, 한글 경로용 `imread`/`imwrite` 등). 원본으로 되돌리지 마세요. 수정 목록은 [docs/troubleshooting.md](docs/troubleshooting.md)와 `CLAUDE.md`에 있습니다.
+- 본인 모델 코드는 `src/<내 폴더>/`에 작성합니다. 공유 폴더(`src/yolov3` 포함)는 PR로만 바꿉니다.
 
 ## 9. 현재 상태와 할 일
 
@@ -369,7 +368,7 @@ KAMP/
 | 증상 | 원인과 해결 |
 |---|---|
 | `UnicodeDecodeError: 'cp949'...` | `PYTHONUTF8=1`을 설정하지 않음 (3-6) |
-| `Image Not Found <경로>` (파일은 있음) | 한글 경로를 `cv2.imread`가 읽지 못함. `third_party/yolov3`의 `imread` 헬퍼를 쓰는 코드인지 확인 |
+| `Image Not Found <경로>` (파일은 있음) | 한글 경로를 `cv2.imread`가 읽지 못함. `src/yolov3`의 `imread` 헬퍼를 쓰는 코드인지 확인 |
 | `CUDA: False` | CPU용 PyTorch를 설치했거나 드라이버 문제 (3-3, 3-5) |
 | CUDA out of memory | `--batch-size`를 줄임. SPP는 6GB에서 batch 4가 한계에 가까움 |
 | `이미 존재하는 실험 폴더입니다` | `--name`을 새 이름으로 바꾸거나 기존 폴더 이름을 `_incomplete_...`로 변경 |
@@ -382,6 +381,5 @@ KAMP/
 
 ## 11. 라이선스 및 출처
 
-- 학습 코드: [ultralytics/yolov3](https://github.com/ultralytics/yolov3) (GPL-3.0) 2020년 버전 기반으로 수정해 `third_party/yolov3`에 포함. 현재 `third_party/yolov3`에 LICENSE 파일은 없습니다(공개 저장소로 올리기 전에 원본 라이선스 파일을 추가해야 합니다).
-- 라벨링 도구: [OpenLabeling](https://github.com/Cartucho/OpenLabeling) (Apache-2.0), `third_party/OpenLabeling/LICENSE` 포함
+- 학습 코드: [ultralytics/yolov3](https://github.com/ultralytics/yolov3) (GPL-3.0) 2020년 버전 기반으로 수정해 `src/yolov3`에 포함. 현재 `src/yolov3`에 LICENSE 파일은 없습니다(공개 저장소로 올리기 전에 원본 라이선스 파일을 추가해야 합니다).
 - 데이터셋: KAMP (https://www.kamp-ai.kr). 이용 약관은 각자 확인하세요.
