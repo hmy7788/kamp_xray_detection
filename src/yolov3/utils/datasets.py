@@ -421,7 +421,10 @@ class LoadImagesAndLabels(Dataset):  # for training/testing
         assert nf > 0 or n == 20288, 'No labels found in %s. See %s' % (os.path.dirname(file) + os.sep, help_url)
         if not labels_loaded and n > 1000:
             print('Saving labels to %s for faster future loading' % np_labels_path)
-            np.save(np_labels_path, self.labels)  # save for next time
+            _arr = np.empty(len(self.labels), dtype=object)  # numpy 2: 길이가 다른 배열 목록은 object 배열로 직접 만들어야 저장된다
+            for _i, _l in enumerate(self.labels):
+                _arr[_i] = _l
+            np.save(np_labels_path, _arr, allow_pickle=True)  # save for next time
 
         # Cache images into memory for faster training (WARNING: large datasets may exceed system RAM)
         if cache_images:  # if training
