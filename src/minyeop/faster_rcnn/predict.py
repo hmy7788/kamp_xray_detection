@@ -21,12 +21,13 @@ from model import build_model  # noqa: E402
 from train import infer  # noqa: E402
 
 
-def predict_split(run, split, ckpt_name, device, batch_size, limit=None):
+def predict_split(run, split, ckpt_name, device, batch_size, limit=None, data_dir=None):
     cfg = json.loads((run / "config.json").read_text(encoding="utf-8"))
     model = build_model(cfg["min_size"], cfg["max_size"], cfg.get("anchor_sizes_list"), pretrained=False).to(device)
     ck = torch.load(run / "weights" / f"{ckpt_name}.pt", map_location=device, weights_only=False)
     model.load_state_dict(ck["model"])
-    recs, ms = infer(model, YoloDetDataset(split, train=False, limit=limit), device, batch_size, amp=not cfg.get("no_amp", False))
+    ds = YoloDetDataset(split, train=False, limit=limit, **({"data_dir": data_dir} if data_dir else {}))  # data_dir: 다른 이미지 폴더로 추론할 때(분석용)
+    recs, ms = infer(model, ds, device, batch_size, amp=not cfg.get("no_amp", False))
     return recs, ms, ck.get("epoch")
 
 
