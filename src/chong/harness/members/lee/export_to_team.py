@@ -1,6 +1,6 @@
 """하네스 실험(runs/<exp_id>)을 팀 저장소(hmy7788/kamp_xray_detection) 형식으로 내보낸다.
 
-사용: python members/lee/export_to_team.py lee_001 01_yolo26n_img1024 [--team C:/Users/lee/projects/kamp/KAMP]
+사용: python members/lee/export_to_team.py lee_001 01_yolo26n_img1024 [--team <팀 저장소 경로>]  (기본: 하네스 옆의 KAMP/)
 
 팀 저장소 규칙 (CONTRIBUTING.md, docs/README.md "실험 지표 기록 가이드"):
 - runs/chong/<번호>_<모델>_<설정>/ 에 실험 하나. 가중치·work/ 제외. 로컬 경로는 <KAMP>/<HOME> 로 치환.
