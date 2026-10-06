@@ -86,9 +86,14 @@ def run_split(cfg: dict, data: dict, seed: int, out_dir: Path) -> Path:
     best = out_dir / "train" / "weights" / "best.pt"
     results = out_dir / "train" / "results.csv"
     done = results.exists() and best.exists() and len(results.read_text().splitlines()) - 1 >= epochs
+    last = out_dir / "train" / "weights" / "last.pt"
     if done:
         # 학습이 이미 끝난 폴더 (예: 학습 직후 프로세스가 죽어 예측·채점만 남은 경우). 가중치를 그대로 쓴다.
         print(f"[entry] 학습 완료본이 있어 학습을 건너뛴다: {best}")
+    elif last.exists() and results.exists():
+        # 중간에 끊긴 학습 (예: 백그라운드 시간 제한). ultralytics 의 resume 으로 같은 설정·에폭을 이어 간다.
+        print(f"[entry] 끊긴 학습을 이어 간다 ({len(results.read_text().splitlines()) - 1}/{epochs} 에폭): {last}")
+        YOLO(str(last)).train(resume=True)
     else:
         model = _load_model(arch)
         model.train(data=str(ds / "data.yaml"), imgsz=imgsz, epochs=epochs, batch=batch, seed=seed,

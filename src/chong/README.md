@@ -3,9 +3,7 @@
 이총의 모델 코드 폴더입니다. **이 폴더 안은 본인만 수정합니다.** (다른 팀원 폴더, `data/`, `scripts/`, `src/yolov3/`는 PR과 팀 확인이 필요합니다. [CONTRIBUTING.md](../../CONTRIBUTING.md))
 
 ## 담당 모델
-- **YOLO26** (ultralytics 8.4, COCO 사전학습) — 입력 1024, 이후 P2 헤드(4px 격자) 변형
-- 학습 없는 기준선 **blob** (LoG 점 검출): 학습이 얼마나 필요한 문제인지 보여 주는 바닥 점수
-- 노이즈 바닥 **yolov8n 640 × 시드 3개**: 같은 설정에서 점수가 얼마나 흔들리는지
+- **YOLO26** (ultralytics 8.4, COCO 사전학습) — 입력 1024 (01), P2 헤드(4px 격자) 변형 (02)
 
 ## 구조: `harness/` 는 실험 하네스의 사본
 실험은 별도 하네스 저장소(설정 파일 하나 = 실험 하나, `run.py` 가 검사 → 학습 → 채점 → 기록을 한 번에)에서 돌렸고,
@@ -14,12 +12,12 @@
 ```
 harness/
 ├─ common/            실행기(run.py), 채점(evaluate.py, metrics/), 조건 축(conditions.yaml), 경로 도우미(kx.py)
-│   └─ baselines/     blob (학습 없음), yolo_ref (yolov8n 기본 설정)
+│   └─ baselines/     하네스 공용 기준선 코드 (이번 실험에서는 쓰지 않음)
 ├─ members/lee/
 │   ├─ entry.py                ultralytics 학습·예측 진입점 (arch 가 .yaml 이면 구조 + 사전학습 가중치 이식)
 │   ├─ synth_normal_check.py   합성 정상 사진 검사 (아래)
 │   └─ export_to_team.py       하네스 결과 → runs/chong/ 팀 형식 변환
-├─ configs/lee/       실험 설정 (lee_001 = 01_yolo26n_img1024, lee_003 = 02_blob_log_nolearn, ...)
+├─ configs/lee/       실험 설정 (lee_001 = 01_yolo26n_img1024, lee_002 = 02_yolo26n-p2_img1024)
 ├─ archive/legacy_v1_fill/   확정 데이터 v2 를 만든 전처리 코드 (scripts/ 로 PR 예정)
 ├─ docs/contracts/    데이터·실험·채점 약속, docs/insights.md 관찰 기록
 └─ reproduce.py
