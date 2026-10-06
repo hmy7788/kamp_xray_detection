@@ -18,7 +18,7 @@ python src/yeonchang/rtdetr/evaluate.py --exp 02_rtdetrl_img640_e30 --split test
 | 항목 | 값 | 이유 |
 |---|---|---|
 | imgsz | 640 | 원본 최대 576x444. 약 10px 결함을 조금이라도 크게 |
-| epochs / patience | 30 / 10 | 1클래스·COCO 사전학습 미세조정. 72 epoch는 epoch당 약 6분이라 너무 길어 줄임(01은 3 epoch 후 중단, `_incomplete_`) |
+| epochs / patience | 30 / 10 | 1클래스·COCO 사전학습 미세조정. 72 epoch는 epoch당 약 6분(약 7시간)이라 너무 길어 줄임 |
 | batch / nbs | 4 / 16 | 6GB GPU, 기울기 누적 4회 |
 | optimizer | AdamW, lr0 1e-4, wd 1e-4, 코사인, warmup 2 | DETR 계열 표준 |
 | 증강 | 좌우·상하 뒤집기, 밝기 ±0.3, 이동 0.1, 축소 0.2 | 회색조라 색상 증강 끔. mosaic·큰 축소는 결함을 더 작게 만들어 끔 |
