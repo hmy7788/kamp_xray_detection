@@ -61,11 +61,12 @@ python src/minyeop/faster_rcnn/report.py  --name 02_yolov3tiny_img640_v1    # �
 - `best.pt`는 학습 코드가 val의 0.99·mAP@0.5+0.01·R로 고른 epoch이다. `train.log`에는 개인 PC 경로가 들어가므로 Git에 올리지 않는다.
 
 ## Faster R-CNN MobileNetV3-FPN (`faster_rcnn_mobilenet/`)
-`faster_rcnn/`의 학습·예측 코드를 그대로 쓰고 모델 생성 함수만 `fasterrcnn_mobilenet_v3_large_fpn`(COCO 사전학습)으로 바꿔 끼웁니다. 같은 조건으로 ResNet-50 버전과 비교하려는 것이며, 이 FPN은 stride 16 이상의 특징맵만 써서 작은 결함에는 불리할 수 있습니다(시험 중).
+`faster_rcnn/`의 학습·예측 코드를 그대로 쓰고 모델 생성 함수만 `fasterrcnn_mobilenet_v3_large_fpn`(COCO 사전학습)으로 바꿔 끼웁니다. 같은 조건으로 ResNet-50 버전과 비교하려는 것이며, 이 FPN은 stride 16 이상의 특징맵만 써서 작은 결함에는 불리할 것으로 봤지만, 실제로는 찾는 능력이 ResNet-50과 같은 수준이었고 박스 정밀도(mAP50-95 0.559 대 0.611)만 낮았습니다.
 ```bash
 python src/minyeop/faster_rcnn_mobilenet/train.py   --name 04_frcnn_mobv3_min640_anc16_v1 --epochs 20 --batch-size 4 --anchor-sizes 16,32,64,128,256
 python src/minyeop/faster_rcnn_mobilenet/predict.py --name 04_frcnn_mobv3_min640_anc16_v1 --split val --ckpt best
 ```
+- 결과: test F1 0.986(공식 라벨만 0.959), 임계값 0.93, 학습 20분, 파라미터 19.4M. 앵커는 16~256 한 가지만 시험했다(기본 앵커와 비교하지 않음).
 
 ## 분석: 점 제거 (`dot_removal/`)
 `remove_dot.py`: test 이미지의 결함(어두운 점)을 보간으로 지운 이미지를 임시 폴더에 만들어 두 모델로 다시 추론하고, 같은 자리에서 검출이 남는지 센다. 원본 `data/`는 바꾸지 않는다.

@@ -67,7 +67,7 @@ KAMP "X-ray 검사장비 AI 데이터셋" 프로젝트. X선 이물 검출기 �
 
 ## 그 밖의 도구와 분석 (허민엽, `src/minyeop/`)
 - `yolov3_tiny/`: 공유 `src/yolov3`를 수정하지 않고 실험 폴더 안에서 학습하는 `run.py`, `predict.py`(공통 JSON 저장), `watch.py`. 결과 `runs/minyeop/02_yolov3tiny_img640_v1`(test F1 0.989, 임계값 0.06, 학습 59분). `train.log`에 개인 PC 경로가 있어 Git에 올리지 않는다.
-- `faster_rcnn_mobilenet/`: `faster_rcnn`의 학습·예측 코드를 재사용하고 모델만 `fasterrcnn_mobilenet_v3_large_fpn`으로 교체(COCO 사전학습, `--anchor-sizes`는 5개 크기를 3레벨에 적용). 이 FPN은 stride 16 이상만 써서 작은 결함에는 불리할 수 있다(시험 중).
+- `faster_rcnn_mobilenet/`: `faster_rcnn`의 학습·예측 코드를 재사용하고 모델만 `fasterrcnn_mobilenet_v3_large_fpn`으로 교체(COCO 사전학습, `--anchor-sizes`는 5개 크기를 3레벨에 적용). 이 FPN은 stride 16 이상만 쓴다. 결과 `runs/minyeop/04_frcnn_mobv3_min640_anc16_v1`: test F1 0.986(공식 라벨 0.959), 임계값 0.93, 학습 20분. 찾는 능력은 ResNet-50과 같은 수준이고 박스 정밀도만 낮다(mAP50-95 0.559 대 0.611). 같은 조건에서 추론 약 4배 빠름.
 - `faster_rcnn/report.py --center-r 5 --tag _v2`: 평가 v2(중심 거리 매칭, 임계값도 이 기준으로 val에서 재선정). R≥3px면 두 모델 모두 test 만점이라 구분은 R=1~2px에서만 된다. IoU 0.5 기준 F1은 사실상 중심 2px 이내 여부를 재고 있었다.
 - `dot_removal/remove_dot.py`: test 정답의 어두운 점을 보간(Navier-Stokes 또는 평균)으로 지운 뒤 두 모델에 다시 넣는 지름길 검증. 점을 충분히 지우면 검출이 거의 0이 된다(`runs/minyeop/03_dot_removal_v1/`, 해석은 `docs/README.md`).
 
