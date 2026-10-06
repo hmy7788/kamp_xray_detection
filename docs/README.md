@@ -80,6 +80,7 @@
 | 실험 이름 | 담당 | 브랜치 | 모델 / 사전학습 | 입력 크기 | 배치 | epoch (선택된 epoch) | 옵티마이저 / lr | 증강 | 시드 | 학습 시간 | 가중치 크기 | 비고 |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
 | `01_frcnn_r50fpn_min640_v1` | minyeop | `feat/minyeop-faster-rcnn` | torchvision Faster R-CNN ResNet-50 FPN / COCO | 짧은 변 640 (최대 1000), 기본 앵커 32~512 | 4 | 20 (**7**, val AP 최대) | SGD(모멘텀 0.9, wd 5e-4) lr 0.005, 워밍업 후 코사인 | 좌우 반전 | 0 | 1시간 07분 (RTX 4050 6GB, AMP) | 166MB | 빈 라벨 이미지도 학습에 사용 |
+| `02_yolov3tiny_img640_v1` | minyeop | `feat/minyeop-faster-rcnn` | ultralytics YOLOv3-tiny(2020) / COCO | 640 고정 | 16 (누적 4 → 유효 64) | 100 (**59**번째, best.pt 기준 0.99·mAP@0.5+0.01·R) | SGD(모멘텀 0.937) lr 0.01에서 코사인 감소, 기본 하이퍼파라미터 | 모자이크, 색상(HSV), 좌우 반전 (크기·회전 증강은 0) | 0 (코드 기본값) | 59분 (RTX 4050 6GB, AMP 미사용) | 69MB | 추론은 배치 1·fp32라 Faster R-CNN과 시간 직접 비교 불가 |
 | | | | | | | | | | | | | |
 
 재현 명령 (Faster R-CNN):
@@ -89,6 +90,38 @@ PYTHONUTF8=1 python src/minyeop/faster_rcnn/predict.py --name 01_frcnn_r50fpn_mi
 PYTHONUTF8=1 python src/minyeop/faster_rcnn/predict.py --name 01_frcnn_r50fpn_min640_v1 --split test --ckpt best   # 한 번만
 PYTHONUTF8=1 python src/minyeop/faster_rcnn/report.py  --name 01_frcnn_r50fpn_min640_v1 --infer-ms 31
 ```
+
+재현 명령 (YOLOv3-tiny):
+```bash
+PYTHONUTF8=1 python src/minyeop/yolov3_tiny/run.py --name 02_yolov3tiny_img640_v1 --epochs 100 --batch-size 16
+PYTHONUTF8=1 python src/minyeop/yolov3_tiny/predict.py --name 02_yolov3tiny_img640_v1 --split val  --ckpt best
+PYTHONUTF8=1 python src/minyeop/yolov3_tiny/predict.py --name 02_yolov3tiny_img640_v1 --split test --ckpt best   # 한 번만
+PYTHONUTF8=1 python src/minyeop/faster_rcnn/report.py  --name 02_yolov3tiny_img640_v1
+```
+
+### 두 모델 비교에서 확인한 것 (2026-10-06)
+- **임계값 눈금이 모델마다 크게 다르다**: Faster R-CNN 0.95, YOLOv3-tiny 0.06. 같은 임계값을 팀 전체에 강제하면 안 되는 구체적 근거다.
+- **test 오류가 같다**: 두 모델 모두 TP 656 / FP 7 / FN 7이고, Faster R-CNN의 오류 이미지 5장은 YOLOv3-tiny 오류 이미지 6장에 모두 포함된다. 모델이 달라도 같은 이미지에서 틀리므로 모델 약점이 아니라 **라벨(정답 박스 크기)과 IoU 0.5 기준의 문제**일 가능성이 높다.
+- 그래서 IoU 0.5 기준 F1로는 두 모델을 구별할 수 없다. AP@0.5는 test 0.988 대 0.981(구간이 크게 겹침)이라 우열을 확정할 수 없다.
+- 두 모델의 학습 조건이 다르다(증강, AMP, 배치, 학습 이미지 처리). 이 차이를 보고서에 함께 적을 것.
+
+### 평가 v2(중심 거리 기준)와 점 제거 실험 (2026-10-06, 제안·분석 단계)
+- **평가 v2**: IoU 대신 "검출 중심이 정답 중심에서 R(px) 이내"로 매칭한다. `report.py --center-r 5 --tag _v2`(결과 `report_v2_*.json`). R=5px는 제안값이고 팀 합의 전이다.
+  - R≥3px에서는 두 모델 모두 test 663개를 전부 찾고 오검출이 0이다. "찾았는가"는 포화이고, 구분은 R=1~2px(위치 정밀도)에서만 되며 이 구간에는 라벨 찍을 때의 오차가 섞여 있다.
+  - IoU 0.5 기준 F1은 사실상 "중심을 2px 안에 맞췄는가"를 재고 있었다(R=2px 결과가 IoU 0.5 결과와 거의 같음).
+  - 같은 test를 다른 규칙으로 재채점한 것이라 새 평가가 아니다. 오류가 0이라 부트스트랩 구간은 퇴화한다.
+- **점 제거 실험**(`src/minyeop/dot_removal/remove_dot.py`, 결과 `runs/minyeop/03_dot_removal_v1/`): test 정답 663개의 어두운 점을 보간으로 지운 뒤 두 모델에 다시 넣어, 같은 자리(중심 5px 이내)에서 검출이 남는지 본다.
+
+| 방식 | 제거 크기 | Faster R-CNN (≥0.95) | YOLOv3-tiny (≥0.06) |
+|---|---|---|---|
+| 원본 | | 663 | 663 |
+| Navier-Stokes + 노이즈 | 9x9 / 13x13 / 17x17 | 38 / 2 / 1 | 249 / 198 / 92 |
+| 평균 보간(노이즈 없음) | 9x9 / 13x13 / 17x17 | 39 / 2 / 0 | 38 / 1 / 0 |
+| 평균 보간 + 노이즈 | 13x13 | 1 | 118 |
+
+  - 점을 충분히 지우면 두 모델의 검출이 거의 0이 된다 → 결함의 점 자체가 핵심 단서이고, 위치·맥락만 보는 지름길 가설은 약해졌다.
+  - YOLO에 남는 약한 반응(0.06~0.15)은 보간에 더한 노이즈 무늬 때문이었다(노이즈를 빼면 1개, 평균 보간에 노이즈를 더하면 118개).
+  - 한계: 평평한 패치는 학습 때 본 적 없는 모양이고, 크기를 키우면 점 주변의 막대 일부도 지워진다. 시드 하나, test만 사용. 점이 없는 자리의 기준 대비, 점을 새로 그려 넣는 양성 대조군은 하지 않았다.
 
 ### 아직 없는 것
 - **조건별 재현율** (호기·해상도·대비·배경·크기): `data/conditions.csv`로 계산해야 하지만 아직 계산 코드가 없음. 크기 구간은 공식 라벨 박스만 사용할 것 ([metrics.md](metrics.md) 참고)

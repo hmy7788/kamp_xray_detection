@@ -40,3 +40,37 @@ python src/minyeop/faster_rcnn/visualize.py --name 01_frcnn_r50fpn_min640_v1 --s
 - 실험 폴더가 이미 있으면 `train.py`는 덮어쓰지 않고 중단합니다.
 - 사전학습 가중치는 첫 실행 때 자동으로 내려받습니다 (약 160MB). 6GB GPU에서 batch 4, AMP 기준 메모리 약 3.3GB를 썼습니다.
 - 결과: `runs/minyeop/01_frcnn_r50fpn_min640_v1/` (test F1 0.989, 공식 라벨만 0.964). 점수 해석 주의는 [docs/README.md](../../docs/README.md)의 "보고할 때의 주의".
+
+## 담당 모델: YOLOv3-tiny (`yolov3_tiny/`)
+공유 코드 `src/yolov3`를 수정하지 않고 실험 폴더 안에서 `train.py`를 실행하는 껍데기와 예측·모니터입니다. COCO 사전학습에서 시작하고 `valid`는 val만 씁니다(test는 학습에 쓰지 않음).
+
+| 파일 | 역할 |
+|---|---|
+| `run.py` | 실험 폴더 `runs/minyeop/<name>/`을 만들고 `kamp.data`·`config.json`(상대 경로만)을 쓴 뒤 `src/yolov3/train.py` 실행. 로그는 `train.log` |
+| `predict.py` | val/test 추론 후 Faster R-CNN과 같은 형식의 `preds_<split>.json` 저장 (신뢰도 0.001 이상, NMS IoU 0.6) |
+| `watch.py` | 진행 모니터 (`results.txt`와 로그를 읽음) |
+
+```bash
+python src/minyeop/yolov3_tiny/run.py     --name 02_yolov3tiny_img640_v1 --epochs 100 --batch-size 16
+python src/minyeop/yolov3_tiny/watch.py   --name 02_yolov3tiny_img640_v1 --follow
+python src/minyeop/yolov3_tiny/predict.py --name 02_yolov3tiny_img640_v1 --split val  --ckpt best
+python src/minyeop/yolov3_tiny/predict.py --name 02_yolov3tiny_img640_v1 --split test --ckpt best   # 한 번만
+python src/minyeop/faster_rcnn/report.py  --name 02_yolov3tiny_img640_v1    # 공통 보고 표 (--center-r 5 --tag _v2 로 평가 v2)
+```
+- 결과: test F1 0.989(공식 라벨만 0.964), 임계값 0.06, 학습 59분. 증강은 모자이크·색상·좌우 반전(크기·회전 증강은 0).
+- `best.pt`는 학습 코드가 val의 0.99·mAP@0.5+0.01·R로 고른 epoch이다. `train.log`에는 개인 PC 경로가 들어가므로 Git에 올리지 않는다.
+
+## Faster R-CNN MobileNetV3-FPN (`faster_rcnn_mobilenet/`)
+`faster_rcnn/`의 학습·예측 코드를 그대로 쓰고 모델 생성 함수만 `fasterrcnn_mobilenet_v3_large_fpn`(COCO 사전학습)으로 바꿔 끼웁니다. 같은 조건으로 ResNet-50 버전과 비교하려는 것이며, 이 FPN은 stride 16 이상의 특징맵만 써서 작은 결함에는 불리할 수 있습니다(시험 중).
+```bash
+python src/minyeop/faster_rcnn_mobilenet/train.py   --name 04_frcnn_mobv3_min640_anc16_v1 --epochs 20 --batch-size 4 --anchor-sizes 16,32,64,128,256
+python src/minyeop/faster_rcnn_mobilenet/predict.py --name 04_frcnn_mobv3_min640_anc16_v1 --split val --ckpt best
+```
+
+## 분석: 점 제거 (`dot_removal/`)
+`remove_dot.py`: test 이미지의 결함(어두운 점)을 보간으로 지운 이미지를 임시 폴더에 만들어 두 모델로 다시 추론하고, 같은 자리에서 검출이 남는지 센다. 원본 `data/`는 바꾸지 않는다.
+```bash
+python src/minyeop/dot_removal/remove_dot.py --work-dir <임시 폴더> --out runs/minyeop/03_dot_removal_v1/ns_half6 --half 6 --method ns
+python src/minyeop/dot_removal/remove_dot.py --work-dir <임시 폴더> --out runs/minyeop/03_dot_removal_v1/mean_half6 --half 6 --method mean --noise-gain 0
+```
+`--half`는 제거 정사각형의 반변(6 → 13x13px), `--method`는 `ns`(Navier-Stokes) 또는 `mean`(주변 평균), `--noise-gain`은 메운 자리에 더할 노이즈 세기. 결과 해석은 [docs/README.md](../../docs/README.md)의 "점 제거 실험".

@@ -12,3 +12,5 @@
 | 실험 | 모델 / 설정 | 결과 (val에서 임계값 고정) | 비고 |
 |---|---|---|---|
 | `01_frcnn_r50fpn_min640_v1` | Faster R-CNN R50-FPN, COCO 사전학습, 입력 640, 기본 앵커, 20 epoch(선택 epoch 7) | test F1 0.989, 공식 라벨만 0.964 (val F1 0.992), 임계값 0.95 | 표: [docs/experiments.md](../../docs/experiments.md), 그림: `01_frcnn_r50fpn_min640_v1/figures/` |
+| `02_yolov3tiny_img640_v1` | YOLOv3-tiny(ultralytics 2020), COCO 사전학습, 입력 640, 100 epoch(선택 59번째) | test F1 0.989, 공식 라벨만 0.964, 임계값 0.06 | 코드 `src/minyeop/yolov3_tiny/`. `train.log`와 학습 배치 샘플 이미지는 Git 제외 |
+| `03_dot_removal_v1` | 점 제거 분석(학습 아님): 보간 방식·크기별 `ns_half*`, `mean_half*`, `meannoise_half6` | 점을 충분히 지우면 두 모델 검출이 거의 0 | 코드 `src/minyeop/dot_removal/`, 해석은 `docs/README.md` |
