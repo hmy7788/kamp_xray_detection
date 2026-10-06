@@ -65,6 +65,12 @@ KAMP "X-ray 검사장비 AI 데이터셋" 프로젝트. X선 이물 검출기 �
 - **점수 해석 주의**: 팀 라벨이 고정 크기라 IoU 0.5 기준이 쉽게 포화된다. 오류는 대부분 크기 차이로 인한 IoU 미달이고(같은 점을 중심 1.2px 이내로 찾음) 진짜 미탐지가 아니다. 결함이 막대 끝에 있는 규칙성, 표시 흔적을 모델이 지름길로 쓰는지는 검증하지 않았다.
 - 가중치(`weights/`), 예측 결과(`preds_*.json`, 정답 좌표 포함), `status.json`, `progress.log`는 Git에 올리지 않는다. 그림(`figures/`)에는 데이터 이미지가 그려져 있어 비공개 저장소에서만 올린다.
 
+## 그 밖의 도구와 분석 (허민엽, `src/minyeop/`)
+- `yolov3_tiny/`: 공유 `src/yolov3`를 수정하지 않고 실험 폴더 안에서 학습하는 `run.py`, `predict.py`(공통 JSON 저장), `watch.py`. 결과 `runs/minyeop/02_yolov3tiny_img640_v1`(test F1 0.989, 임계값 0.06, 학습 59분). `train.log`에 개인 PC 경로가 있어 Git에 올리지 않는다.
+- `faster_rcnn_mobilenet/`: `faster_rcnn`의 학습·예측 코드를 재사용하고 모델만 `fasterrcnn_mobilenet_v3_large_fpn`으로 교체(COCO 사전학습, `--anchor-sizes`는 5개 크기를 3레벨에 적용). 이 FPN은 stride 16 이상만 써서 작은 결함에는 불리할 수 있다(시험 중).
+- `faster_rcnn/report.py --center-r 5 --tag _v2`: 평가 v2(중심 거리 매칭, 임계값도 이 기준으로 val에서 재선정). R≥3px면 두 모델 모두 test 만점이라 구분은 R=1~2px에서만 된다. IoU 0.5 기준 F1은 사실상 중심 2px 이내 여부를 재고 있었다.
+- `dot_removal/remove_dot.py`: test 정답의 어두운 점을 보간(Navier-Stokes 또는 평균)으로 지운 뒤 두 모델에 다시 넣는 지름길 검증. 점을 충분히 지우면 검출이 거의 0이 된다(`runs/minyeop/03_dot_removal_v1/`, 해석은 `docs/README.md`).
+
 ## 구버전 코드 수정 이력 (`src/yolov3`, 되돌리지 말 것)
 최신 PyTorch/numpy/Windows 호환을 위해 수정했다.
 - 모든 `torch.load(...)`에 `weights_only=False`
@@ -72,6 +78,7 @@ KAMP "X-ray 검사장비 AI 데이터셋" 프로젝트. X선 이물 검출기 �
 - `train.py`: 이어서 학습 시 `epochs += start_epoch`(기존 `ckpt['epoch']`는 반복 0회 버그), 환경변수 `YOLO_SAVE_DIR`로 산출물 위치 지정, DataLoader `persistent_workers`
 - `utils/utils.py`: `build_targets`의 `torch.arange(..., device=targets.device)`, `output_to_target`의 `float()` 변환
 - `utils/datasets.py`: 한글 경로용 `imread`/`imwrite` 헬퍼, `detect.py`에서도 사용
+- `utils/datasets.py`(2026-10-06): 이미지가 1,000장을 넘으면 만드는 라벨 캐시 저장(`np.save`)이 numpy 2에서 실패해서(길이가 다른 배열 목록), object 배열로 직접 만들어 저장하도록 수정. 캐시는 `data/<split>/labels.npy`로 생기며 `.gitignore`의 `*.npy`로 제외. 학습 동작에는 영향 없음
 
 ## 학습·평가 시 주의
 - `src/yolov3/train.py`의 `--data`/`--cfg` 기본값은 COCO용이라 항상 명시한다. `--epochs N`은 기존 체크포인트에서 **추가 N epoch**를 뜻한다.
