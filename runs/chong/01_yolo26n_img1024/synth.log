@@ -1,0 +1,23 @@
+{'original': 350, 'synth_normal': 350, 'control': 350}
+{
+ "original": {
+  "n_images": 350,
+  "center_hit_recall": 1.0,
+  "images_with_det": 350
+ },
+ "synth_normal": {
+  "n_images": 350,
+  "fp_image_rate": 0.76,
+  "n_fp_boxes": 334,
+  "fp_boxes_at_removed_spot": 334,
+  "frac_fp_at_removed_spot": 1.0,
+  "max_conf_p50": 0.28109587728977203,
+  "max_conf_p90": 0.7318407773971558
+ },
+ "control": {
+  "n_images": 350,
+  "spot_detected_rate": 0.0,
+  "center_hit_recall": 1.0
+ }
+}
+저장: runs\lee_001\synth_normal.md
