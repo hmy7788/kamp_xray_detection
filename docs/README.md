@@ -81,6 +81,7 @@
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
 | `01_frcnn_r50fpn_min640_v1` | minyeop | `feat/minyeop-faster-rcnn` | torchvision Faster R-CNN ResNet-50 FPN / COCO | 짧은 변 640 (최대 1000), 기본 앵커 32~512 | 4 | 20 (**7**, val AP 최대) | SGD(모멘텀 0.9, wd 5e-4) lr 0.005, 워밍업 후 코사인 | 좌우 반전 | 0 | 1시간 07분 (RTX 4050 6GB, AMP) | 166MB | 빈 라벨 이미지도 학습에 사용 |
 | `02_yolov3tiny_img640_v1` | minyeop | `feat/minyeop-faster-rcnn` | ultralytics YOLOv3-tiny(2020) / COCO | 640 고정 | 16 (누적 4 → 유효 64) | 100 (**59**번째, best.pt 기준 0.99·mAP@0.5+0.01·R) | SGD(모멘텀 0.937) lr 0.01에서 코사인 감소, 기본 하이퍼파라미터 | 모자이크, 색상(HSV), 좌우 반전 (크기·회전 증강은 0) | 0 (코드 기본값) | 59분 (RTX 4050 6GB, AMP 미사용) | 69MB | 추론은 배치 1·fp32라 Faster R-CNN과 시간 직접 비교 불가 |
+| `04_frcnn_mobv3_min640_anc16_v1` | minyeop | `feat/minyeop-faster-rcnn` | torchvision Faster R-CNN MobileNetV3-Large FPN / COCO | 짧은 변 640 (최대 1000), 앵커 16·32·64·128·256 (3개 레벨 공통) | 4 | 20 (**18**, val AP 최대) | SGD(모멘텀 0.9, wd 5e-4) lr 0.005, 워밍업 후 코사인 | 좌우 반전 | 0 | 20분 (RTX 4050 6GB, AMP) | 76MB | 기본 앵커와 비교하지 않음 |
 | | | | | | | | | | | | | |
 
 재현 명령 (Faster R-CNN):
@@ -104,6 +105,18 @@ PYTHONUTF8=1 python src/minyeop/faster_rcnn/report.py  --name 02_yolov3tiny_img6
 - **test 오류가 같다**: 두 모델 모두 TP 656 / FP 7 / FN 7이고, Faster R-CNN의 오류 이미지 5장은 YOLOv3-tiny 오류 이미지 6장에 모두 포함된다. 모델이 달라도 같은 이미지에서 틀리므로 모델 약점이 아니라 **라벨(정답 박스 크기)과 IoU 0.5 기준의 문제**일 가능성이 높다.
 - 그래서 IoU 0.5 기준 F1로는 두 모델을 구별할 수 없다. AP@0.5는 test 0.988 대 0.981(구간이 크게 겹침)이라 우열을 확정할 수 없다.
 - 두 모델의 학습 조건이 다르다(증강, AMP, 배치, 학습 이미지 처리). 이 차이를 보고서에 함께 적을 것.
+
+### 세 번째 모델: Faster R-CNN MobileNetV3-FPN (2026-10-06)
+```bash
+PYTHONUTF8=1 python src/minyeop/faster_rcnn_mobilenet/train.py   --name 04_frcnn_mobv3_min640_anc16_v1 --epochs 20 --batch-size 4 --anchor-sizes 16,32,64,128,256
+PYTHONUTF8=1 python src/minyeop/faster_rcnn_mobilenet/predict.py --name 04_frcnn_mobv3_min640_anc16_v1 --split val  --ckpt best
+PYTHONUTF8=1 python src/minyeop/faster_rcnn_mobilenet/predict.py --name 04_frcnn_mobv3_min640_anc16_v1 --split test --ckpt best   # 한 번만
+PYTHONUTF8=1 python src/minyeop/faster_rcnn/report.py --name 04_frcnn_mobv3_min640_anc16_v1 [--center-r 5 --tag _v2]
+```
+- 결과(test): F1 0.986, AP 0.985, mAP50-95 0.559, 공식 라벨 F1 0.959, 임계값 0.93. **찾는 능력은 ResNet-50·YOLOv3-tiny와 같은 수준**(평가 v2에서 663개 중 662개)이고, **박스 정밀도는 ResNet-50보다 낮다**(mAP50-95 0.559 대 0.611, R=2px F1 0.965 대 0.988). 이 FPN이 낮은 해상도 특징맵(stride 16 이상)만 쓰는 약점이 위치 정밀도에서만 드러났다.
+- ResNet-50 대비 파라미터 19.4M(41.8M), 학습 20분(67분), 같은 조건(배치 4, AMP)에서 추론 약 4배 빠름(8ms 대 31ms).
+- 오류 9건(FP 9 / FN 9): 공식 라벨 7장(8건)은 박스 크기 차이, 팀 라벨 2장은 중복 검출 1건과 신뢰도 0.910이라 임계값 0.93에 못 미친 1건이다. 진짜로 결함을 놓친 것은 없다.
+- 한계: 앵커 16~256 설정 하나만 시험했고(기본 앵커와 비교 안 함), 시드 하나, 모델마다 학습 조건(증강, AMP, 배치, epoch)이 달라 우열을 단정할 수 없다.
 
 ### 평가 v2(중심 거리 기준)와 점 제거 실험 (2026-10-06, 제안·분석 단계)
 - **평가 v2**: IoU 대신 "검출 중심이 정답 중심에서 R(px) 이내"로 매칭한다. `report.py --center-r 5 --tag _v2`(결과 `report_v2_*.json`). R=5px는 제안값이고 팀 합의 전이다.

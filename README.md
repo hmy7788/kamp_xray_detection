@@ -25,8 +25,8 @@ KAMP(K-인공지능 제조 플랫폼) **X-ray 검사장비 AI 데이터셋**으�
 |---|---|
 | 데이터 | **확정 v2 완료**: 2,532장 전부 라벨 있음, train / val / test 분할 포함 (`data/`, 아래 "데이터") |
 | `scripts/` (공유 파이프라인) | 비어 있음. 공통 평가 코드 역할은 임시로 `src/minyeop/faster_rcnn/report.py`가 함 (이관은 팀 확인 후) |
-| 학습·평가 코드 | Faster R-CNN(`src/minyeop/faster_rcnn/`)과 YOLOv3-tiny(`src/minyeop/yolov3_tiny/`) 학습·예측·보고 코드 완성. MobileNetV3-FPN은 학습 시험 중 |
-| 실험 결과 | Faster R-CNN, YOLOv3-tiny 2개: 둘 다 test F1 0.989, 공식 라벨만 0.964 (`runs/minyeop/01_…`, `02_…`). `runs/baseline`은 비어 있음 |
+| 학습·평가 코드 | Faster R-CNN(`src/minyeop/faster_rcnn/`)과 YOLOv3-tiny(`src/minyeop/yolov3_tiny/`) 학습·예측·보고 코드 완성. MobileNetV3-FPN(`src/minyeop/faster_rcnn_mobilenet/`)까지 완성 |
+| 실험 결과 | 3개: Faster R-CNN R50, YOLOv3-tiny는 test F1 0.989(공식 라벨만 0.964), MobileNetV3-FPN은 0.986(0.959) (`runs/minyeop/01_…`, `02_…`, `04_…`). `runs/baseline`은 비어 있음 |
 | `docs/` | `metrics.md`(성능 지표 정리), `experiments.md`(모델 공통 결과 표), `README.md`(결과 기록 가이드) |
 | 시작하지 않은 평가 항목 | 오류분석(15점), 현장 활용방안(10점), 보고서 |
 
@@ -146,10 +146,11 @@ data/
 - val(369장)은 F1 0.992로 test와 비슷해 val에 과하게 맞춘 흔적은 보이지 않습니다.
 - 오류 7건은 모두 공식 라벨 이미지이고, 같은 점을 중심 1.2px 이내에서 신뢰도 0.95 이상으로 찾았지만 박스 크기가 달라 IoU가 0.42~0.50이었습니다(중심 3px 이내로 짝지으면 FN 0). 빈 라벨 27장은 오검출 0입니다(쉬운 사진이라 정상 제품의 오경보율로 해석하지 말 것).
 - **YOLOv3-tiny**(COCO 사전학습, 입력 640, 100 epoch 59분)도 test F1 0.989(TP 656 / FP 7 / FN 7, 공식 라벨 F1 0.964)로 **숫자까지 같고**, 오류 이미지도 Faster R-CNN의 5장을 모두 포함합니다. 오류는 모델이 아니라 라벨 박스 크기와 IoU 기준 문제입니다. 구분은 mAP50-95(test 0.611 대 0.558)와 중심 거리 1~2px 구간에서만 보입니다. 임계값은 0.95 대 0.06으로 모델마다 다릅니다.
-- **평가 v2(중심 ≤ 5px, 제안)**: 두 모델 모두 test 정답 663개를 전부 찾고 오검출이 0입니다. "찾았는가"는 포화 상태입니다.
+- **Faster R-CNN MobileNetV3-FPN**(입력 640, 앵커 16~256, 20 epoch 20분)은 test F1 0.986(공식 라벨 0.959), mAP50-95 0.559로 찾는 능력은 같은 수준이고 박스 정밀도만 ResNet-50(0.611)보다 낮습니다. 파라미터 19.4M(ResNet-50은 41.8M), 같은 조건에서 추론 약 4배 빠릅니다.
+- **평가 v2(중심 ≤ 5px, 제안)**: 세 모델이 test 정답 663개 중 663, 663, 662개를 찾았습니다(마지막 1건은 신뢰도 0.910이 임계값 0.93에 못 미친 경계 사례). "찾았는가"는 포화 상태입니다.
 - **점 제거 실험**: 정답의 어두운 점을 보간으로 지우면 두 모델의 검출이 거의 사라집니다(13x13 제거 시 Faster R-CNN 663개 중 2개). 결함의 점 자체가 핵심 단서이고 위치만 보는 지름길은 약해졌습니다(상세는 [docs/README.md](docs/README.md)).
 - 위 함정 8·9(고정 크기 라벨, 지름길·표시 흔적 미검증) 때문에 점수를 일반 성능으로 읽으면 안 됩니다.
-- 코드와 결과는 `src/minyeop/{faster_rcnn,yolov3_tiny,faster_rcnn_mobilenet,dot_removal}/`, `runs/minyeop/{01_…,02_…,03_dot_removal_v1}/`(그림은 `figures/`)에 있고, 브랜치 `feat/minyeop-faster-rcnn`에서 PR 전입니다.
+- 코드와 결과는 `src/minyeop/{faster_rcnn,yolov3_tiny,faster_rcnn_mobilenet,dot_removal}/`, `runs/minyeop/{01_…,02_…,03_dot_removal_v1,04_…}/`(그림은 `figures/`)에 있고, 브랜치 `feat/minyeop-faster-rcnn`에서 PR 전입니다.
 
 ## 이전 시도의 참고값 (삭제된 결과, 이전 데이터·분할 기준이라 새 결과와 직접 비교하지 않음)
 표시를 지운 라벨 500장 데이터, COCO 사전학습에서 시작, 100 epoch, 신뢰도 임계값은 val에서 정함, IoU 0.5, 640px 기준입니다.
@@ -167,7 +168,7 @@ data/
 |---|---|---|---|
 | ✓ | 데이터 확정 v2 (전처리, 라벨링, 분할) | 데이터 이해(15) | 이총 |
 | 1 | 공통 평가 코드: 임시 계산기(`report.py`)는 있음 → `scripts/evaluate.py`로 옮길지, 중심 거리 매칭을 병행할지 팀 결정 | 모델 개발(40) | minyeop(임시 코드), 결정 _(미정)_ |
-| 2 | 베이스라인 2개 이상 학습·평가 (Faster R-CNN, YOLOv3-tiny 완료, 정연창·이총 모델 필요) | 모델 개발(40) | 각자 (minyeop: 2개 완료) |
+| 2 | 베이스라인 2개 이상 학습·평가 (Faster R-CNN, YOLOv3-tiny, MobileNetV3-FPN 완료, 정연창·이총 모델 필요) | 모델 개발(40) | 각자 (minyeop: 3개 완료) |
 | 3 | FN/FP 오류분석 (`conditions.csv` 활용: 호기, 대비, 배경, 월 등. 크기는 공식 라벨만). Faster R-CNN은 오류 이미지 그림만 있고 조건별 분해는 아직 | 오류분석(15) | _(미정)_ |
 | 4 | 표시를 지운 자리의 윤곽 흔적 검증 (v2 대상) | 데이터 이해(15) | _(미정)_ |
 | 5 | `environment.yml` 또는 한 번에 도는 실행 스크립트, 예측결과 CSV | 재현성(10) | _(미정)_ |
