@@ -22,14 +22,14 @@ import metrics  # noqa: E402
 from dataset import DATA, ROOT  # noqa: E402
 
 
-def per_image(recs, thr, iou_thr=0.5):
+def per_image(recs, thr, iou_thr=0.5, center_r=None):
     """이미지별 (n_gt, TP, FP, FN) 과 AP 계산용 (신뢰도, TP 여부) 배열."""
     cnt, aps = [], []
     for r in recs:
-        t, _, nm = metrics.match_image(r, thr, iou_thr)
+        t, _, nm = metrics.match_image(r, thr, iou_thr, center_r)
         tp = int(t.sum())
         cnt.append((len(r["gt"]), tp, len(t) - tp, len(r["gt"]) - nm))
-        t2, c2, _ = metrics.match_image(r, 0.001, iou_thr)
+        t2, c2, _ = metrics.match_image(r, 0.001, iou_thr, center_r)
         aps.append((c2, t2))
     return np.array(cnt), aps
 
@@ -81,6 +81,8 @@ def main():
     ap.add_argument("--infer-ms", type=float, default=None)
     ap.add_argument("--n-boot", type=int, default=1000)
     ap.add_argument("--no-save", action="store_true")
+    ap.add_argument("--center-r", type=float, default=None, help="평가 v2: IoU 대신 중심 거리(px) 기준으로 매칭 (임계값도 이 기준으로 val 에서 다시 정함)")
+    ap.add_argument("--tag", default="", help="저장 파일 이름에 붙일 표시 (예: _v2 -> report_v2_test.json)")
     a = ap.parse_args()
 
     if a.name:
@@ -89,7 +91,7 @@ def main():
     else:
         run = None
     val = json.loads(Path(a.preds_val).read_text(encoding="utf-8"))
-    thr = a.threshold if a.threshold is not None else metrics.best_f1(val)["thr"]
+    thr = a.threshold if a.threshold is not None else metrics.best_f1(val, center_r=a.center_r)["thr"]
     man = {r["image_id"] + ".png": r for r in csv.DictReader(open(DATA / "manifest.csv", encoding="utf-8"))}
 
     print(f"임계값 {thr} ({'지정값' if a.threshold is not None else 'val 에서 F1 최대'})\n")
@@ -99,13 +101,13 @@ def main():
         if not path or not Path(path).exists():
             continue
         recs = json.loads(Path(path).read_text(encoding="utf-8"))
-        cnt, aps = per_image(recs, thr)
+        cnt, aps = per_image(recs, thr, center_r=a.center_r)
         groups = {"전체": np.arange(len(recs))}
         for src, label in (("official", "공식 라벨"), ("team", "팀 라벨")):
             ix = np.array([i for i, r in enumerate(recs) if man[r["name"]]["source"] == src])
             if len(ix):
                 groups[label] = ix
-        saved = {"threshold": thr, "split": split}
+        saved = {"threshold": thr, "split": split, "matching": f"center<={a.center_r}px" if a.center_r is not None else "IoU>=0.5"}
         for label, ix in groups.items():
             s = summarize(cnt, aps, ix)
             ci = bootstrap(cnt[ix], [aps[i] for i in ix], a.n_boot) if label == "전체" else None
@@ -115,7 +117,7 @@ def main():
                   f"{s['F1']:.3f}{f1c} | {s['TP']} / {s['FP']} / {s['FN']} | {s['full_det']:.3f} | {s['FPPI']:.3f} |")
             saved[label] = {**s, **({"ci95": ci} if ci else {})}
         if run and not a.no_save:
-            (run / f"report_{split}.json").write_text(json.dumps(saved, ensure_ascii=False, indent=2), encoding="utf-8")
+            (run / f"report{a.tag}_{split}.json").write_text(json.dumps(saved, ensure_ascii=False, indent=2), encoding="utf-8")
     if a.infer_ms is not None:
         print(f"\n추론 시간 {a.infer_ms} ms/장")
 

@@ -5,7 +5,9 @@
    "gt":   [[x1, y1, x2, y2], ...],
    "dets": [[x1, y1, x2, y2, score], ...]}
 
-매칭: 신뢰도가 높은 검출부터 IoU >= iou_thr 인 아직 짝이 없는 정답과 짝지음(TP), 짝이 없으면 FP, 남은 정답은 FN.
+매칭(IoU, 기본): 신뢰도가 높은 검출부터 IoU >= iou_thr 인 아직 짝이 없는 정답과 짝지음(TP), 짝이 없으면 FP, 남은 정답은 FN.
+매칭(중심 거리, 평가 v2): center_r 를 주면 IoU 대신 "검출 중심과 정답 중심의 거리 <= center_r(px)" 인 아직 짝이 없는 가장 가까운
+정답과 짝지음. 나머지 규칙(신뢰도 순, 정답 하나에 검출 하나)은 같다. 결함이 약 10px 점이라 박스 크기가 달라도 위치가 맞으면 찾은 것으로 본다.
 AP: 신뢰도 0.001 이상 전체 검출로 PR 곡선을 만들어 전 구간 보간(VOC 방식)으로 면적을 구한다.
 """
 import numpy as np
@@ -20,11 +22,26 @@ def iou_matrix(a, b):
     return inter / (area(a)[:, None] + area(b)[None, :] - inter + 1e-9)
 
 
-def match_image(rec, thr, iou_thr=0.5):
-    """(신뢰도 내림차순 TP 여부 배열, 신뢰도 배열, 짝지어진 정답 수)"""
+def match_image(rec, thr, iou_thr=0.5, center_r=None):
+    """(신뢰도 내림차순 TP 여부 배열, 신뢰도 배열, 짝지어진 정답 수). center_r(px)를 주면 중심 거리 기준으로 매칭한다."""
     dets = sorted((d for d in rec["dets"] if d[4] >= thr), key=lambda d: -d[4])
     gt = rec["gt"]
     used, is_tp = set(), []
+    if center_r is not None:
+        gc = np.array([[(g[0] + g[2]) / 2, (g[1] + g[3]) / 2] for g in gt]).reshape(-1, 2)
+        for d in dets:
+            ok = False
+            if len(gc):
+                dist = np.hypot(gc[:, 0] - (d[0] + d[2]) / 2, gc[:, 1] - (d[1] + d[3]) / 2)
+                for j in np.argsort(dist):
+                    if dist[j] > center_r:
+                        break
+                    if j not in used:
+                        used.add(j)
+                        ok = True
+                        break
+            is_tp.append(ok)
+        return np.array(is_tp, bool), np.array([d[4] for d in dets], float), len(used)
     ious = iou_matrix([d[:4] for d in dets], gt) if dets and gt else None
     for i in range(len(dets)):
         ok = False
@@ -40,10 +57,10 @@ def match_image(rec, thr, iou_thr=0.5):
     return np.array(is_tp, bool), np.array([d[4] for d in dets], float), len(used)
 
 
-def prf_at(records, thr, iou_thr=0.5):
+def prf_at(records, thr, iou_thr=0.5, center_r=None):
     tp = fp = fn = n_gt = 0
     for r in records:
-        t, _, n_match = match_image(r, thr, iou_thr)
+        t, _, n_match = match_image(r, thr, iou_thr, center_r)
         k = int(t.sum())
         tp += k; fp += len(t) - k; fn += len(r["gt"]) - n_match; n_gt += len(r["gt"])
     p = tp / (tp + fp) if tp + fp else 0.0
@@ -52,10 +69,10 @@ def prf_at(records, thr, iou_thr=0.5):
     return {"thr": round(float(thr), 3), "P": p, "R": rc, "F1": f1, "TP": tp, "FP": fp, "FN": fn}
 
 
-def ap(records, iou_thr=0.5, floor=0.001):
+def ap(records, iou_thr=0.5, floor=0.001, center_r=None):
     confs, tps, n_gt = [], [], 0
     for r in records:
-        t, c, _ = match_image(r, floor, iou_thr)
+        t, c, _ = match_image(r, floor, iou_thr, center_r)
         confs.append(c); tps.append(t); n_gt += len(r["gt"])
     conf = np.concatenate(confs) if confs else np.array([])
     tp = np.concatenate(tps) if tps else np.array([], bool)
@@ -71,10 +88,10 @@ def ap(records, iou_thr=0.5, floor=0.001):
     return float(np.sum((mrec[idx + 1] - mrec[idx]) * mpre[idx + 1]))
 
 
-def best_f1(records, iou_thr=0.5):
+def best_f1(records, iou_thr=0.5, center_r=None):
     """F1 이 최대인 임계값(동률이면 가운데 값)과 그때의 P/R/F1."""
     grid = np.round(np.arange(0.05, 0.99, 0.01), 2)
-    rows = [prf_at(records, t, iou_thr) for t in grid]
+    rows = [prf_at(records, t, iou_thr, center_r) for t in grid]
     top = max(r["F1"] for r in rows)
     cand = [r for r in rows if r["F1"] >= top - 1e-12]
     return cand[len(cand) // 2]
