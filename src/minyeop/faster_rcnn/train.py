@@ -112,7 +112,7 @@ def main():
         sys.exit(f"이미 존재하는 실험 폴더입니다(덮어쓰기 방지): runs/{a.owner}/{a.name}")
     (out / "weights").mkdir(parents=True)
     anchors = [int(s) for s in a.anchor_sizes.split(",")] if a.anchor_sizes else None
-    (out / "config.json").write_text(json.dumps({**vars(a), "anchor_sizes_list": anchors, "model": "fasterrcnn_resnet50_fpn(COCO_V1)"},
+    (out / "config.json").write_text(json.dumps({**vars(a), "anchor_sizes_list": anchors, "model": getattr(build_model, "description", "fasterrcnn_resnet50_fpn(COCO_V1)")},  # 다른 모델 폴더가 build_model 을 바꿔 끼울 때 이름을 지정할 수 있다
                                                  ensure_ascii=False, indent=2), encoding="utf-8")
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -132,7 +132,8 @@ def main():
         sched = torch.optim.lr_scheduler.LambdaLR(opt, lr_at)
         scaler = torch.amp.GradScaler("cuda", enabled=amp)
 
-        rp.say(f"실험 시작: {a.owner}/{a.name} | Faster R-CNN R50-FPN | 입력 {a.min_size} | 앵커 {anchors or '기본'} | "
+        model_name = getattr(build_model, "short_name", "Faster R-CNN R50-FPN")  # 다른 모델 폴더가 build_model 을 바꿔 끼울 때 표시할 이름
+        rp.say(f"실험 시작: {a.owner}/{a.name} | {model_name} | 입력 {a.min_size} | 앵커 {anchors or '기본'} | "
                f"batch {a.batch_size} | epochs {a.epochs} | AMP {amp} | 학습 {len(train_ds)}장 / 검증 {len(val_ds)}장 | {device}")
         best_ap, rows = -1.0, []
         t_train = time.time()
