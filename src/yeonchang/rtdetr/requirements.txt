@@ -1,0 +1,4 @@
+# RT-DETR 실험 추가 의존성. 루트 requirements.txt(torch 2.6.0 등)를 먼저 설치한 뒤:
+#   pip install -r src/yeonchang/rtdetr/requirements.txt
+# 실제 설치된 버전은 runs/yeonchang/<실험>/config.json 의 env.ultralytics 에 기록된다.
+ultralytics>=8.3,<9
