@@ -1,0 +1,16 @@
+# 공용 기준선 1: 학습 없는 밝기 점(LoG) 검출. 바닥 점수 (결정 004).
+exp_id: lee_003
+member: lee
+family: blob
+seeds: [42]
+parent_exp: null
+change: "기준선 (blob, 학습 없음)"
+rubric_items: [2]
+reason: "결정 004 가 요구하는 공용 기준선. 학습이 얼마나 필요한 문제인지 보여 주는 바닥 점수이고, 색상 박스·자리 외우기 영향이 전혀 없다."
+entry: common/baselines/blob/entry.py
+model:
+  min_sigma: 1.5
+  max_sigma: 5
+  threshold: 0.01
+  max_dets: 30
+  box_scale: 1.4

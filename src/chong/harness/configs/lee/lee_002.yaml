@@ -1,0 +1,17 @@
+# lee_001 대비 변경점 하나: 구조를 P2 헤드 포함(yolo26n-p2.yaml)으로. 4px 격자 특징을 추가해 10px 이물질 대응.
+exp_id: lee_002
+member: lee
+family: yolo26
+seeds: [42]
+parent_exp: lee_001
+change: "구조 yolo26n -> yolo26n-p2 (4px 격자 헤드 추가)"
+rubric_items: [2, 3]
+reason: "리더 지시(2026-10-05): YOLO 계열을 순차로 돌린다. 이물질이 한 변 10px 라 8px 격자(P3)보다 촘촘한 4px 격자(P2)가 도움이 되는지 본다. 사전학습 가중치는 yolo26n.pt 에서 맞는 층만 옮겨 싣는다."
+entry: members/lee/entry.py
+model:
+  arch: yolo26n-p2.yaml
+  imgsz: 1024
+  epochs: 40
+  batch: 8
+  conf_min: 0.001
+  max_det: 50
