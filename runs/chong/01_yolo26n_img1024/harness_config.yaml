@@ -1,0 +1,22 @@
+exp_id: lee_001
+member: lee
+family: yolo26
+seeds:
+- 42
+parent_exp: null
+change: 첫 실험 (YOLO26n, imgsz 1024)
+rubric_items:
+- 2
+- 3
+reason: '지시(2026-10-05, lee): 최신 모델 하나로 먼저 돌려 보고, 이물질을 지운 합성 정상 사진을 검증에 넣어 모델이 자리를 외우는지
+  확인한다. YOLO26 은 작은 물체용 라벨 배정(STAL)이 들어간 최신 ultralytics 모델이고, 이물질이 한 변 10px 라 입력을
+  1024 로 키운다. s 모델은 6GB GPU 에서 메모리가 꽉 차 1.7초/스텝(50 에폭 5시간)이라 n 으로 줄였다. X-ray 전용 사전학습
+  가중치는 식품 X-ray 로 검증된 것이 없어 COCO 가중치를 쓴다.'
+entry: members/lee/entry.py
+model:
+  arch: yolo26n
+  imgsz: 1024
+  epochs: 40
+  batch: 8
+  conf_min: 0.001
+  max_det: 50
