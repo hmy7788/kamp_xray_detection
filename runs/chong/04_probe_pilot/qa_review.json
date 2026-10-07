@@ -1,0 +1,8 @@
+{
+  "accepted": true,
+  "reviewer": "Codex visual inspection",
+  "notes": "All six templates: native donor, recovered background, residual, sham source and first destination inspected. Compact target signal visible; no large carrier rectangle copied. Geometric guards cover all positions. Visual plausibility only, no physical validation.",
+  "record_sha256": "6a12cfc5190a8893d91552210d7aae31a7c3c6d5b7fbfad7db96b55b70c49db9",
+  "samples_sha256": "5521223033184aa18d5ffac990a26d649a3d10086130781492b309071586dd9a",
+  "scope": "Visual synthesis QA, not physical validation or detector performance approval."
+}

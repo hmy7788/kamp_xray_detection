@@ -1,0 +1,179 @@
+{
+  "setting": {
+    "id": "cpu640_t1",
+    "device": "cpu",
+    "imgsz": 640,
+    "half": false,
+    "threads": 1,
+    "map": false
+  },
+  "weights_sha256": "f7e1fe89035a25cb90ba36398636a41f4143a7169e9bd25a3767ac7f4c508f4c",
+  "config_sha256": "a6c0d839a8b616f708f85cbadbd28b30ad8efb2d4486b512474e610c255401e4",
+  "probes_sha256": "c8d63c23ca9aca81ebd9d0d540787094184bb32726584edee9d5da339ac836b4",
+  "n_images": 369,
+  "n_gt": 606,
+  "ap50": 0.9889244740234563,
+  "fixed_thresholds": [
+    {
+      "threshold": 0.42,
+      "tp": 602,
+      "fp": 4,
+      "fn": 4,
+      "precision": 0.9933993399339934,
+      "recall": 0.9933993399339934,
+      "f1": 0.9933993399339934,
+      "center_tp": 606,
+      "center_fn": 0,
+      "center_recall": 1.0,
+      "positive_images_without_any_detection": 0,
+      "fp_per_provided_image": 0.01084010840108401,
+      "note": "Provided NG/partial-product set; not a production false-alarm rate."
+    },
+    {
+      "threshold": 0.1,
+      "tp": 602,
+      "fp": 4,
+      "fn": 4,
+      "precision": 0.9933993399339934,
+      "recall": 0.9933993399339934,
+      "f1": 0.9933993399339934,
+      "center_tp": 606,
+      "center_fn": 0,
+      "center_recall": 1.0,
+      "positive_images_without_any_detection": 0,
+      "fp_per_provided_image": 0.01084010840108401,
+      "note": "Provided NG/partial-product set; not a production false-alarm rate."
+    }
+  ],
+  "by_machine": {
+    "1": [
+      {
+        "threshold": 0.42,
+        "tp": 228,
+        "fp": 1,
+        "fn": 1,
+        "precision": 0.9956331877729258,
+        "recall": 0.9956331877729258,
+        "f1": 0.9956331877729258,
+        "center_tp": 229,
+        "center_fn": 0,
+        "center_recall": 1.0,
+        "positive_images_without_any_detection": 0,
+        "fp_per_provided_image": 0.007462686567164179,
+        "note": "Provided NG/partial-product set; not a production false-alarm rate."
+      },
+      {
+        "threshold": 0.1,
+        "tp": 228,
+        "fp": 1,
+        "fn": 1,
+        "precision": 0.9956331877729258,
+        "recall": 0.9956331877729258,
+        "f1": 0.9956331877729258,
+        "center_tp": 229,
+        "center_fn": 0,
+        "center_recall": 1.0,
+        "positive_images_without_any_detection": 0,
+        "fp_per_provided_image": 0.007462686567164179,
+        "note": "Provided NG/partial-product set; not a production false-alarm rate."
+      }
+    ],
+    "2": [
+      {
+        "threshold": 0.42,
+        "tp": 208,
+        "fp": 2,
+        "fn": 2,
+        "precision": 0.9904761904761905,
+        "recall": 0.9904761904761905,
+        "f1": 0.9904761904761905,
+        "center_tp": 210,
+        "center_fn": 0,
+        "center_recall": 1.0,
+        "positive_images_without_any_detection": 0,
+        "fp_per_provided_image": 0.0196078431372549,
+        "note": "Provided NG/partial-product set; not a production false-alarm rate."
+      },
+      {
+        "threshold": 0.1,
+        "tp": 208,
+        "fp": 2,
+        "fn": 2,
+        "precision": 0.9904761904761905,
+        "recall": 0.9904761904761905,
+        "f1": 0.9904761904761905,
+        "center_tp": 210,
+        "center_fn": 0,
+        "center_recall": 1.0,
+        "positive_images_without_any_detection": 0,
+        "fp_per_provided_image": 0.0196078431372549,
+        "note": "Provided NG/partial-product set; not a production false-alarm rate."
+      }
+    ],
+    "3": [
+      {
+        "threshold": 0.42,
+        "tp": 166,
+        "fp": 1,
+        "fn": 1,
+        "precision": 0.9940119760479041,
+        "recall": 0.9940119760479041,
+        "f1": 0.9940119760479041,
+        "center_tp": 167,
+        "center_fn": 0,
+        "center_recall": 1.0,
+        "positive_images_without_any_detection": 0,
+        "fp_per_provided_image": 0.007518796992481203,
+        "note": "Provided NG/partial-product set; not a production false-alarm rate."
+      },
+      {
+        "threshold": 0.1,
+        "tp": 166,
+        "fp": 1,
+        "fn": 1,
+        "precision": 0.9940119760479041,
+        "recall": 0.9940119760479041,
+        "f1": 0.9940119760479041,
+        "center_tp": 167,
+        "center_fn": 0,
+        "center_recall": 1.0,
+        "positive_images_without_any_detection": 0,
+        "fp_per_provided_image": 0.007518796992481203,
+        "note": "Provided NG/partial-product set; not a production false-alarm rate."
+      }
+    ]
+  },
+  "full_api_latency": {
+    "n": 369,
+    "mean_ms": 71.53530189686084,
+    "p50_ms": 69.36870000208728,
+    "p95_ms": 84.55206000071485,
+    "p99_ms": 89.85081600898411,
+    "max_ms": 104.23859998991247,
+    "serial_images_per_second": 13.979112039560466
+  },
+  "backend_pre_infer_post_latency": {
+    "n": 369,
+    "mean_ms": 68.85470514958516,
+    "p50_ms": 66.69730000430718,
+    "p95_ms": 80.72885999572462,
+    "p99_ms": 86.80994400929194,
+    "max_ms": 101.38059998280369,
+    "serial_images_per_second": 14.523335737587207
+  },
+  "actual_torch_threads": 1,
+  "peak_sampled_rss_mib": 1731.2265625,
+  "actual_parameter_dtype": "torch.float32",
+  "cuda_peak_allocated_mib": null,
+  "parameters": 2504190,
+  "onnx_sha256": null,
+  "model_bytes": 5460293,
+  "precision_description": "FP32",
+  "onnx_intra_op_threads": null,
+  "retiming": {
+    "reason": "Use quantize parameter to exclude deprecated half-alias warnings from timed loop.",
+    "prediction_equivalence_images": 369,
+    "source_sha256": "29cf0c02032df25bf554c8c239bf7080c52cce4effd8e8c340033bd2ad5a0c2a",
+    "inference_source_sha256": "6612c3dd5ff3d5944d9a49b3440368590b15474a37f6a2b1a242214512613c87"
+  }
+}

@@ -1,0 +1,21 @@
+exp_id: 03_yolo26n_1024_reproduce
+member: lee
+family: yolo26
+seeds:
+- 42
+parent_exp: null
+change: 기존 가중치 부재로 lee_001 설정 재학습 (새 PC, 별도 결과)
+rubric_items:
+- 2
+- 3
+- 6
+reason: '사용자 요청: 기존 가중치가 없어 다시 학습한다. 원본 분할을 유지하고 YOLO26n/1024/40 epochs/batch 8 설정을
+  재현하여 가상 시험편 검출지도와 입력 크기 비교의 기준으로 사용한다. 과거 결과와 새 하드웨어의 재학습 결과를 구분한다.'
+entry: members/lee/entry.py
+model:
+  arch: yolo26n
+  imgsz: 1024
+  epochs: 40
+  batch: 8
+  conf_min: 0.001
+  max_det: 50

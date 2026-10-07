@@ -1,0 +1,415 @@
+{
+  "threshold": 0.42,
+  "train_cut_points": {
+    "median_brightness": [
+      120.0,
+      144.33333333333331
+    ],
+    "local_variation_MAD": [
+      3.0,
+      7.0
+    ],
+    "local_gradient_p90": [
+      3.773241530400525,
+      5.382118139228461
+    ]
+  },
+  "results": [
+    {
+      "setting": "gpu1024_fp32",
+      "lost_vs_1024": 0,
+      "gained_vs_1024": 0,
+      "conditions": [
+        {
+          "field": "local_gradient_p90",
+          "bin": "low",
+          "n": 240,
+          "new_hit": 138,
+          "bursts": 17,
+          "fraction": 0.575
+        },
+        {
+          "field": "local_gradient_p90",
+          "bin": "middle",
+          "n": 262,
+          "new_hit": 113,
+          "bursts": 18,
+          "fraction": 0.4312977099236641
+        },
+        {
+          "field": "local_gradient_p90",
+          "bin": "high",
+          "n": 260,
+          "new_hit": 90,
+          "bursts": 18,
+          "fraction": 0.34615384615384615
+        },
+        {
+          "field": "local_variation_MAD",
+          "bin": "low",
+          "n": 122,
+          "new_hit": 77,
+          "bursts": 14,
+          "fraction": 0.6311475409836066
+        },
+        {
+          "field": "local_variation_MAD",
+          "bin": "middle",
+          "n": 320,
+          "new_hit": 163,
+          "bursts": 18,
+          "fraction": 0.509375
+        },
+        {
+          "field": "local_variation_MAD",
+          "bin": "high",
+          "n": 320,
+          "new_hit": 101,
+          "bursts": 18,
+          "fraction": 0.315625
+        },
+        {
+          "field": "median_brightness",
+          "bin": "low",
+          "n": 224,
+          "new_hit": 124,
+          "bursts": 16,
+          "fraction": 0.5535714285714286
+        },
+        {
+          "field": "median_brightness",
+          "bin": "middle",
+          "n": 306,
+          "new_hit": 127,
+          "bursts": 18,
+          "fraction": 0.4150326797385621
+        },
+        {
+          "field": "median_brightness",
+          "bin": "high",
+          "n": 232,
+          "new_hit": 90,
+          "bursts": 17,
+          "fraction": 0.3879310344827586
+        }
+      ]
+    },
+    {
+      "setting": "gpu640_fp32",
+      "lost_vs_1024": 119,
+      "gained_vs_1024": 70,
+      "conditions": [
+        {
+          "field": "local_gradient_p90",
+          "bin": "low",
+          "n": 240,
+          "new_hit": 110,
+          "bursts": 17,
+          "fraction": 0.4583333333333333
+        },
+        {
+          "field": "local_gradient_p90",
+          "bin": "middle",
+          "n": 262,
+          "new_hit": 97,
+          "bursts": 18,
+          "fraction": 0.3702290076335878
+        },
+        {
+          "field": "local_gradient_p90",
+          "bin": "high",
+          "n": 260,
+          "new_hit": 85,
+          "bursts": 18,
+          "fraction": 0.3269230769230769
+        },
+        {
+          "field": "local_variation_MAD",
+          "bin": "low",
+          "n": 122,
+          "new_hit": 72,
+          "bursts": 14,
+          "fraction": 0.5901639344262295
+        },
+        {
+          "field": "local_variation_MAD",
+          "bin": "middle",
+          "n": 320,
+          "new_hit": 159,
+          "bursts": 18,
+          "fraction": 0.496875
+        },
+        {
+          "field": "local_variation_MAD",
+          "bin": "high",
+          "n": 320,
+          "new_hit": 61,
+          "bursts": 18,
+          "fraction": 0.190625
+        },
+        {
+          "field": "median_brightness",
+          "bin": "low",
+          "n": 224,
+          "new_hit": 124,
+          "bursts": 16,
+          "fraction": 0.5535714285714286
+        },
+        {
+          "field": "median_brightness",
+          "bin": "middle",
+          "n": 306,
+          "new_hit": 93,
+          "bursts": 18,
+          "fraction": 0.30392156862745096
+        },
+        {
+          "field": "median_brightness",
+          "bin": "high",
+          "n": 232,
+          "new_hit": 75,
+          "bursts": 17,
+          "fraction": 0.3232758620689655
+        }
+      ]
+    },
+    {
+      "setting": "gpu640_fp16",
+      "lost_vs_1024": 118,
+      "gained_vs_1024": 70,
+      "conditions": [
+        {
+          "field": "local_gradient_p90",
+          "bin": "low",
+          "n": 240,
+          "new_hit": 110,
+          "bursts": 17,
+          "fraction": 0.4583333333333333
+        },
+        {
+          "field": "local_gradient_p90",
+          "bin": "middle",
+          "n": 262,
+          "new_hit": 97,
+          "bursts": 18,
+          "fraction": 0.3702290076335878
+        },
+        {
+          "field": "local_gradient_p90",
+          "bin": "high",
+          "n": 260,
+          "new_hit": 86,
+          "bursts": 18,
+          "fraction": 0.33076923076923076
+        },
+        {
+          "field": "local_variation_MAD",
+          "bin": "low",
+          "n": 122,
+          "new_hit": 72,
+          "bursts": 14,
+          "fraction": 0.5901639344262295
+        },
+        {
+          "field": "local_variation_MAD",
+          "bin": "middle",
+          "n": 320,
+          "new_hit": 159,
+          "bursts": 18,
+          "fraction": 0.496875
+        },
+        {
+          "field": "local_variation_MAD",
+          "bin": "high",
+          "n": 320,
+          "new_hit": 62,
+          "bursts": 18,
+          "fraction": 0.19375
+        },
+        {
+          "field": "median_brightness",
+          "bin": "low",
+          "n": 224,
+          "new_hit": 125,
+          "bursts": 16,
+          "fraction": 0.5580357142857143
+        },
+        {
+          "field": "median_brightness",
+          "bin": "middle",
+          "n": 306,
+          "new_hit": 93,
+          "bursts": 18,
+          "fraction": 0.30392156862745096
+        },
+        {
+          "field": "median_brightness",
+          "bin": "high",
+          "n": 232,
+          "new_hit": 75,
+          "bursts": 17,
+          "fraction": 0.3232758620689655
+        }
+      ]
+    },
+    {
+      "setting": "onnx640_t1",
+      "lost_vs_1024": 118,
+      "gained_vs_1024": 70,
+      "conditions": [
+        {
+          "field": "local_gradient_p90",
+          "bin": "low",
+          "n": 240,
+          "new_hit": 110,
+          "bursts": 17,
+          "fraction": 0.4583333333333333
+        },
+        {
+          "field": "local_gradient_p90",
+          "bin": "middle",
+          "n": 262,
+          "new_hit": 97,
+          "bursts": 18,
+          "fraction": 0.3702290076335878
+        },
+        {
+          "field": "local_gradient_p90",
+          "bin": "high",
+          "n": 260,
+          "new_hit": 86,
+          "bursts": 18,
+          "fraction": 0.33076923076923076
+        },
+        {
+          "field": "local_variation_MAD",
+          "bin": "low",
+          "n": 122,
+          "new_hit": 72,
+          "bursts": 14,
+          "fraction": 0.5901639344262295
+        },
+        {
+          "field": "local_variation_MAD",
+          "bin": "middle",
+          "n": 320,
+          "new_hit": 159,
+          "bursts": 18,
+          "fraction": 0.496875
+        },
+        {
+          "field": "local_variation_MAD",
+          "bin": "high",
+          "n": 320,
+          "new_hit": 62,
+          "bursts": 18,
+          "fraction": 0.19375
+        },
+        {
+          "field": "median_brightness",
+          "bin": "low",
+          "n": 224,
+          "new_hit": 125,
+          "bursts": 16,
+          "fraction": 0.5580357142857143
+        },
+        {
+          "field": "median_brightness",
+          "bin": "middle",
+          "n": 306,
+          "new_hit": 93,
+          "bursts": 18,
+          "fraction": 0.30392156862745096
+        },
+        {
+          "field": "median_brightness",
+          "bin": "high",
+          "n": 232,
+          "new_hit": 75,
+          "bursts": 17,
+          "fraction": 0.3232758620689655
+        }
+      ]
+    },
+    {
+      "setting": "int8_640_t1",
+      "lost_vs_1024": 119,
+      "gained_vs_1024": 66,
+      "conditions": [
+        {
+          "field": "local_gradient_p90",
+          "bin": "low",
+          "n": 240,
+          "new_hit": 112,
+          "bursts": 17,
+          "fraction": 0.4666666666666667
+        },
+        {
+          "field": "local_gradient_p90",
+          "bin": "middle",
+          "n": 262,
+          "new_hit": 91,
+          "bursts": 18,
+          "fraction": 0.3473282442748092
+        },
+        {
+          "field": "local_gradient_p90",
+          "bin": "high",
+          "n": 260,
+          "new_hit": 85,
+          "bursts": 18,
+          "fraction": 0.3269230769230769
+        },
+        {
+          "field": "local_variation_MAD",
+          "bin": "low",
+          "n": 122,
+          "new_hit": 70,
+          "bursts": 14,
+          "fraction": 0.5737704918032787
+        },
+        {
+          "field": "local_variation_MAD",
+          "bin": "middle",
+          "n": 320,
+          "new_hit": 156,
+          "bursts": 18,
+          "fraction": 0.4875
+        },
+        {
+          "field": "local_variation_MAD",
+          "bin": "high",
+          "n": 320,
+          "new_hit": 62,
+          "bursts": 18,
+          "fraction": 0.19375
+        },
+        {
+          "field": "median_brightness",
+          "bin": "low",
+          "n": 224,
+          "new_hit": 117,
+          "bursts": 16,
+          "fraction": 0.5223214285714286
+        },
+        {
+          "field": "median_brightness",
+          "bin": "middle",
+          "n": 306,
+          "new_hit": 95,
+          "bursts": 18,
+          "fraction": 0.3104575163398693
+        },
+        {
+          "field": "median_brightness",
+          "bin": "high",
+          "n": 232,
+          "new_hit": 76,
+          "bursts": 17,
+          "fraction": 0.3275862068965517
+        }
+      ]
+    }
+  ],
+  "note": "Descriptive associations with observed image brightness/variation/gradient; no causal powder-density or package-thickness claim. Repeated probes share backgrounds and templates."
+}

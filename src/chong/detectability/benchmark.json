@@ -1,0 +1,22 @@
+{
+  "thresholds": [0.42, 0.10],
+  "warmup": 16,
+  "seed": 42,
+  "rect": false,
+  "settings": [
+    {"id": "gpu1024_fp32", "device": "0", "imgsz": 1024, "half": false, "threads": 4, "map": true},
+    {"id": "gpu640_fp32", "device": "0", "imgsz": 640, "half": false, "threads": 4, "map": true},
+    {"id": "gpu640_fp16", "device": "0", "imgsz": 640, "half": true, "threads": 4, "map": true},
+    {"id": "cpu640_t1", "device": "cpu", "imgsz": 640, "half": false, "threads": 1, "map": false},
+    {"id": "cpu640_t4", "device": "cpu", "imgsz": 640, "half": false, "threads": 4, "map": false},
+    {"id": "onnx640_t1", "device": "cpu", "imgsz": 640, "half": false, "threads": 1, "map": true, "backend": "onnx"},
+    {"id": "onnx640_t4", "device": "cpu", "imgsz": 640, "half": false, "threads": 4, "map": false, "backend": "onnx"},
+    {"id": "int8_640_t1", "device": "cpu", "imgsz": 640, "half": false, "threads": 1, "map": true, "backend": "onnx", "int8": true}
+  ],
+  "notes": [
+    "One retrained checkpoint; input size, numeric precision, and CPU thread budget are evaluated separately.",
+    "Batch=1, rect=false (square letterbox for all backends); full API latency includes local PNG read, decode, preprocessing, inference, postprocessing, and CPU result transfer.",
+    "Current PC timings do not establish production equipment throughput or trigger-to-reject latency.",
+    "No threshold tuning on synthetic images; 0.42 from prior experiment, 0.10 as declared sensitivity check."
+  ]
+}

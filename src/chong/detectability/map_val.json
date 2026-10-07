@@ -1,0 +1,11 @@
+{
+  "split": "val",
+  "seed": 20261006,
+  "donors_per_machine": 2,
+  "backgrounds_per_machine": 6,
+  "grid_size": 5,
+  "threshold": 0.42,
+  "secondary_threshold": 0.10,
+  "purpose": "검증 분할의 위치별 검출 진단; 학습용 합성과 분리",
+  "claims": "Position-only, empirical display residual. No physical sensitivity or equipment miss claim."
+}

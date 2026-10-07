@@ -1,0 +1,13 @@
+{
+  "source_weights_sha256": "f7e1fe89035a25cb90ba36398636a41f4143a7169e9bd25a3767ac7f4c508f4c",
+  "onnx_sha256": "d955621da6ff839be2b3bc4f2fc2f9e0239c3533718423f9cfa298f056fc04a9",
+  "file": "baseline_640.onnx",
+  "onnx_bytes": 9772817,
+  "batch": 1,
+  "imgsz": 640,
+  "opset": 18,
+  "dynamic": false,
+  "precision": "FP32",
+  "detection_head": "one-to-many with embedded NMS, iou=0.7, conf_floor=0.001, max_det=50",
+  "note": "Format conversion; no quantization, pruning, or accuracy claim before validation."
+}

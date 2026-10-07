@@ -114,4 +114,16 @@ def run_split(cfg: dict, data: dict, seed: int, out_dir: Path) -> Path:
             rows.append(dict(image_id=iid, cx=None, cy=None, w=None, h=None, conf=None))
     out = out_dir / "preds.csv"
     pd.DataFrame(rows).to_csv(out, index=False, lineterminator="\n")
+
+    # 현장 활용 근거: 한 장씩(batch 1) 넣었을 때 GPU·CPU 속도와 모델 크기. runs/<exp_id>/speed_seed<seed>.json
+    try:
+        import importlib.util
+
+        spec = importlib.util.spec_from_file_location("lee_speed", Path(__file__).with_name("speed.py"))
+        sp = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(sp)
+        wpath = Path(model.ckpt_path) if getattr(model, "ckpt_path", None) else best
+        sp.measure_and_save(wpath, paths, imgsz, out_dir.parent.parent / f"speed_seed{seed}.json")
+    except Exception as e:  # 속도 측정 실패가 채점을 막으면 안 된다
+        print(f"[speed] 측정 실패 (채점은 계속): {e!r}")
     return out

@@ -10,7 +10,7 @@
   3. 원본(original): 손대지 않은 val 사진. 기준점.
 결과: runs/<exp_id>/synth_normal.json, synth_normal.md. 사진은 runs/<exp_id>/work/synth/ (git 제외).
 
-메우는 방식은 데이터 계보(archive/legacy_v1_fill)와 같은 "주변 픽셀 평균(5×5)으로 바깥부터 채우기"다.
+메우는 방식은 "바로 옆의 같은 크기 조각을 복사해 덮기"다 (fill_mask 참고). 2026-10-06 두 번 고침.
 라벨 txt 만 읽는다. 장비 색상 박스 좌표는 쓰지 않는다 (CLAUDE.md 규칙 2).
 """
 from __future__ import annotations
@@ -30,26 +30,45 @@ MARGIN = 2      # 라벨 상자보다 이만큼 넓게 메운다 (px)
 MIN_DIST = 30   # 대조용 임의 자리와 라벨 중심의 최소 거리 (px)
 
 
-def fill_mask(im: np.ndarray, mask: np.ndarray) -> np.ndarray:
-    """mask 가 True 인 픽셀을 바깥부터 5×5 이웃(채워진 픽셀만)의 평균으로 채운다."""
-    im = im.astype(np.float32).copy()
-    todo = mask.copy()
+def fill_mask(im: np.ndarray, mask: np.ndarray, avoid: np.ndarray | None = None) -> np.ndarray:
+    """mask 가 True 인 자리를 '바로 옆의 같은 크기 조각'으로 덮는다 (질감까지 그대로 옮겨 메운 티가 안 나게).
+    mask 의 덩어리마다 상하좌우 네 방향으로 한 칸(덩어리 크기+2px) 옮긴 자리를 후보로 두고,
+    테두리 3px 띠가 원래 테두리와 가장 비슷한 후보를 고른다. 후보는 mask 와 avoid(라벨 자리) 를 밟으면 안 된다.
+    (이전 두 버전: 주변 평균 채우기는 점이 번지거나 매끈하게 뭉개져 티가 났다.)"""
+    import cv2
+    out = im.copy()
     h, w = im.shape
-    while todo.any():
-        ys, xs = np.where(todo)
-        new = im.copy()
-        done_any = False
-        for y, x in zip(ys, xs):
-            y0, y1, x0, x1 = max(0, y - 2), min(h, y + 3), max(0, x - 2), min(w, x + 3)
-            nb = im[y0:y1, x0:x1][~todo[y0:y1, x0:x1]]
-            if nb.size:
-                new[y, x] = nb.mean()
-                todo[y, x] = False
-                done_any = True
-        im = new
-        if not done_any:
-            break
-    return np.clip(np.round(im), 0, 255).astype(np.uint8)
+    forbid = mask if avoid is None else (mask | avoid)
+    n, comp = cv2.connectedComponents(mask.astype(np.uint8), connectivity=8)
+    for c in range(1, n):
+        ys, xs = np.where(comp == c)
+        y0, y1, x0, x1 = ys.min(), ys.max() + 1, xs.min(), xs.max() + 1
+        bh, bw = y1 - y0, x1 - x0
+        ring = np.zeros((h, w), bool)
+        ring[max(0, y0 - 3):min(h, y1 + 3), max(0, x0 - 3):min(w, x1 + 3)] = True
+        ring[y0:y1, x0:x1] = False
+        ring &= ~forbid
+        best = None
+        for dy, dx in ((0, bw + 2), (0, -(bw + 2)), (bh + 2, 0), (-(bh + 2), 0)):
+            sy0, sx0 = y0 + dy, x0 + dx
+            if sy0 - 3 < 0 or sx0 - 3 < 0 or sy0 + bh + 3 > h or sx0 + bw + 3 > w:
+                continue
+            if forbid[sy0:sy0 + bh, sx0:sx0 + bw].any():
+                continue
+            ry, rx = np.where(ring)
+            sry, srx = ry + dy, rx + dx
+            ok = (sry >= 0) & (sry < h) & (srx >= 0) & (srx < w)
+            if ok.sum() == 0:
+                continue
+            score = np.abs(im[ry[ok], rx[ok]].astype(np.float32) - im[sry[ok], srx[ok]].astype(np.float32)).mean()
+            if best is None or score < best[0]:
+                best = (score, dy, dx)
+        if best is None:
+            continue  # 네 방향 모두 막히면 그대로 둔다 (거의 없음)
+        _, dy, dx = best
+        sel = comp[y0:y1, x0:x1] == c
+        out[y0:y1, x0:x1][sel] = im[y0 + dy:y1 + dy, x0 + dx:x1 + dx][sel]
+    return out
 
 
 def box_px(b, w, h):
@@ -105,20 +124,20 @@ def build(ids, imgs, labs, out: Path, seed: int) -> dict:
         spot = random_spot(im, bpx, rng, size)
         if spot is not None:
             p = out / "control" / f"{iid}.png"
-            Image.fromarray(fill_mask(im, mask_box(h, w, spot[0], spot[1], size, size))).save(p)
+            Image.fromarray(fill_mask(im, mask_box(h, w, spot[0], spot[1], size, size), avoid=m)).save(p)
             sets["control"][iid] = {"path": str(p), "spot": (spot[0], spot[1], size), "gt": bpx}
     return sets
 
 
-def predict(model, items: dict, imgsz: int) -> dict:
+def predict(model, items: dict, imgsz: int, device=None, chunk: int = 8) -> dict:
     """image_id -> [(x_px, y_px, w_px, h_px, conf)]"""
     ids = list(items)
     paths = [items[i]["path"] for i in ids]
     out = {}
 
-    def chunked(chunk=8):  # ultralytics 8.4 는 목록 전체를 한 묶음으로 올리므로 끊어서 넘긴다
+    def chunked(chunk=chunk):  # ultralytics 8.4 는 목록 전체를 한 묶음으로 올리므로 끊어서 넘긴다
         for s in range(0, len(paths), chunk):
-            yield from model.predict(paths[s:s + chunk], imgsz=imgsz, conf=0.001, max_det=50, verbose=False, stream=True)
+            yield from model.predict(paths[s:s + chunk], imgsz=imgsz, conf=0.001, max_det=50, verbose=False, stream=True, device=device, half=True)
 
     for iid, res in zip(ids, chunked()):
         b = res.boxes
@@ -220,6 +239,8 @@ def main() -> int:
     ap.add_argument("run_dir")
     ap.add_argument("--seed", type=int, default=None)
     ap.add_argument("--thr", type=float, default=None)
+    ap.add_argument("--device", default=None, help="예: cpu")
+    ap.add_argument("--chunk", type=int, default=8, help="한 번에 추론하는 사진 수 (GPU 메모리가 부족하면 줄인다)")
     a = ap.parse_args()
     rd = Path(a.run_dir)
     cfg = kx.read_yaml(rd / "config.yaml")
@@ -242,7 +263,7 @@ def main() -> int:
 
     from ultralytics import YOLO
     model = YOLO(str(weights))
-    preds = {name: predict(model, items, imgsz) for name, items in sets.items()}
+    preds = {name: predict(model, items, imgsz, a.device, a.chunk) for name, items in sets.items()}
     r = summarize(sets, preds, thr)
     r.update({"exp_id": cfg["exp_id"], "seed": seed, "weights": str(weights), "imgsz": imgsz, "evaluated_at": kx.now_iso()})
     kx.write_json(rd / "synth_normal.json", r)

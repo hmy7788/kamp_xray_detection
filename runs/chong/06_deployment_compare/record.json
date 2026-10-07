@@ -1,0 +1,134 @@
+{
+  "training_run": "03_yolo26n_1024_reproduce",
+  "weights_sha256": "f7e1fe89035a25cb90ba36398636a41f4143a7169e9bd25a3767ac7f4c508f4c",
+  "weights_bytes": 5460293,
+  "manifest_sha256": "1942bf3452defc08022b11f464092d46b095ea2bb31961b15b072bc9d623c623",
+  "probes_sha256": "c8d63c23ca9aca81ebd9d0d540787094184bb32726584edee9d5da339ac836b4",
+  "config": {
+    "thresholds": [
+      0.42,
+      0.1
+    ],
+    "warmup": 16,
+    "seed": 42,
+    "rect": false,
+    "settings": [
+      {
+        "id": "gpu1024_fp32",
+        "device": "0",
+        "imgsz": 1024,
+        "half": false,
+        "threads": 4,
+        "map": true
+      },
+      {
+        "id": "gpu640_fp32",
+        "device": "0",
+        "imgsz": 640,
+        "half": false,
+        "threads": 4,
+        "map": true
+      },
+      {
+        "id": "gpu640_fp16",
+        "device": "0",
+        "imgsz": 640,
+        "half": true,
+        "threads": 4,
+        "map": true
+      },
+      {
+        "id": "cpu640_t1",
+        "device": "cpu",
+        "imgsz": 640,
+        "half": false,
+        "threads": 1,
+        "map": false
+      },
+      {
+        "id": "cpu640_t4",
+        "device": "cpu",
+        "imgsz": 640,
+        "half": false,
+        "threads": 4,
+        "map": false
+      },
+      {
+        "id": "onnx640_t1",
+        "device": "cpu",
+        "imgsz": 640,
+        "half": false,
+        "threads": 1,
+        "map": true,
+        "backend": "onnx"
+      },
+      {
+        "id": "onnx640_t4",
+        "device": "cpu",
+        "imgsz": 640,
+        "half": false,
+        "threads": 4,
+        "map": false,
+        "backend": "onnx"
+      },
+      {
+        "id": "int8_640_t1",
+        "device": "cpu",
+        "imgsz": 640,
+        "half": false,
+        "threads": 1,
+        "map": true,
+        "backend": "onnx",
+        "int8": true
+      }
+    ],
+    "notes": [
+      "One retrained checkpoint; input size, numeric precision, and CPU thread budget are evaluated separately.",
+      "Batch=1, rect=false (square letterbox for all backends); full API latency includes local PNG read, decode, preprocessing, inference, postprocessing, and CPU result transfer.",
+      "Current PC timings do not establish production equipment throughput or trigger-to-reject latency.",
+      "No threshold tuning on synthetic images; 0.42 from prior experiment, 0.10 as declared sensitivity check."
+    ]
+  },
+  "config_sha256": "a6c0d839a8b616f708f85cbadbd28b30ad8efb2d4486b512474e610c255401e4",
+  "n_probes": 762,
+  "n_templates": 6,
+  "n_background_bursts": 18,
+  "onnx_sha256": "d955621da6ff839be2b3bc4f2fc2f9e0239c3533718423f9cfa298f056fc04a9",
+  "int8_sha256": "3fb5bdd9bb3dddcc4951dfd0d4eb37451e2ec583967984c31063103cc6076a9b",
+  "qa_sha256": "e9b73333c0f8ee8df53d08149b30abd08117b8dcc3fbf5856182dcb7a13c6863",
+  "source_sha256": {
+    "benchmark_cpu_standalone.py": "f376cce5915a3eb1da54ad575b4a366618dfe27f1fc1972e8efdaf170d2913f3",
+    "build_probes.py": "b3f3d2090ceb315f298bc54eabb3bfd06e622daf11130c07f08f00db3bccfac5",
+    "core.py": "a43b7ffe49873725a4eae26a0232b7933aad40d0059187ce9f462005bfb1580a",
+    "evaluate.py": "6612c3dd5ff3d5944d9a49b3440368590b15474a37f6a2b1a242214512613c87",
+    "export_cpu.py": "4c7f3d68f277ec8921acafc7bc1ac8ad2e4c6e723e6f226330d4fd5092455256",
+    "onnx_cpu.py": "18d4b11d43263a84d89be7e0c2e2d48b39becb4f9553d012cffe6a39511ceac6",
+    "position_diagnostics.py": "2eee75e8189440ba2d857d89bb795ca280d657afa483aba6f24c53a9700068d9",
+    "preview_positions.py": "287f453b0630856fc7ea9f99f85081ea5345cb1db6baaae7f6adc85cb7fe29ed",
+    "quantize_cpu.py": "fa383d4a000d4ee1f1f838146b5a09d8100fa4b14726a27bd6ada68af41ce45f",
+    "report.py": "7b716acf5bf7c6acb357e1404b8e49122a3bf8877333ff7878dad6f7401869f5",
+    "retime.py": "29cf0c02032df25bf554c8c239bf7080c52cce4effd8e8c340033bd2ad5a0c2a",
+    "review_probes.py": "4491da2166f195e06a0d2799fda5c20573caad1aa07001e1c8c223f2663d17b0",
+    "test_core.py": "1d8b4434e7ae7c692e1f350ea80c845456a9ec5b516750a44ac95b863fec20e0"
+  },
+  "env": {
+    "python": "3.13.13",
+    "torch": "2.11.0+cu128",
+    "ultralytics": "8.4.152",
+    "onnx": "1.23.2",
+    "onnxruntime": "1.30.0",
+    "opencv_threads": 1,
+    "torch_interop_threads": 1,
+    "cuda": "12.8",
+    "gpu": "NVIDIA GeForce RTX 3060",
+    "cpu": "11th Gen Intel(R) Core(TM) i7-11700F @ 2.50GHz",
+    "logical_cpus": 16,
+    "os": "Windows-11-10.0.26200-SP0"
+  },
+  "limits": [
+    "All accuracy checks use validation; test remains unopened.",
+    "Synthetic rates describe fixed templates/positions only.",
+    "Current-PC serial API throughput excludes camera, PLC, conveyor, and reject actuator.",
+    "Peak RSS includes Python/runtime/data; CUDA allocated peak is not whole-system GPU usage."
+  ]
+}

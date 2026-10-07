@@ -1,0 +1,25 @@
+{
+ "imgsz": 640,
+ "weight": "best.pt",
+ "params_m": 2.504,
+ "layers": 454,
+ "gflops": 5.89,
+ "weight_mb": 5.38,
+ "gpu": {
+  "device": "NVIDIA GeForce RTX 4050 Laptop GPU",
+  "n_images": 364,
+  "ms_mean": 11.57,
+  "ms_median": 10.62,
+  "ms_p95": 16.15,
+  "fps": 86.4
+ },
+ "cpu": {
+  "device": "Intel64 Family 6 Model 186 Stepping 2, GenuineIntel",
+  "threads": 10,
+  "n_images": 50,
+  "ms_mean": 37.08,
+  "ms_median": 36.6,
+  "ms_p95": 41.8,
+  "fps": 27.0
+ }
+}

@@ -1,0 +1,175 @@
+{
+  "setting": {
+    "id": "onnx640_t4",
+    "device": "cpu",
+    "imgsz": 640,
+    "half": false,
+    "threads": 4,
+    "map": false,
+    "backend": "onnx"
+  },
+  "weights_sha256": "f7e1fe89035a25cb90ba36398636a41f4143a7169e9bd25a3767ac7f4c508f4c",
+  "detection_head": "one-to-many with NMS, iou=0.7, conf_floor=0.001, max_det=50",
+  "config_sha256": "a6c0d839a8b616f708f85cbadbd28b30ad8efb2d4486b512474e610c255401e4",
+  "probes_sha256": "c8d63c23ca9aca81ebd9d0d540787094184bb32726584edee9d5da339ac836b4",
+  "n_images": 369,
+  "n_gt": 606,
+  "ap50": 0.9889244740234563,
+  "fixed_thresholds": [
+    {
+      "threshold": 0.42,
+      "tp": 602,
+      "fp": 4,
+      "fn": 4,
+      "precision": 0.9933993399339934,
+      "recall": 0.9933993399339934,
+      "f1": 0.9933993399339934,
+      "center_tp": 606,
+      "center_fn": 0,
+      "center_recall": 1.0,
+      "positive_images_without_any_detection": 0,
+      "fp_per_provided_image": 0.01084010840108401,
+      "note": "Provided NG/partial-product set; not a production false-alarm rate."
+    },
+    {
+      "threshold": 0.1,
+      "tp": 602,
+      "fp": 4,
+      "fn": 4,
+      "precision": 0.9933993399339934,
+      "recall": 0.9933993399339934,
+      "f1": 0.9933993399339934,
+      "center_tp": 606,
+      "center_fn": 0,
+      "center_recall": 1.0,
+      "positive_images_without_any_detection": 0,
+      "fp_per_provided_image": 0.01084010840108401,
+      "note": "Provided NG/partial-product set; not a production false-alarm rate."
+    }
+  ],
+  "by_machine": {
+    "1": [
+      {
+        "threshold": 0.42,
+        "tp": 228,
+        "fp": 1,
+        "fn": 1,
+        "precision": 0.9956331877729258,
+        "recall": 0.9956331877729258,
+        "f1": 0.9956331877729258,
+        "center_tp": 229,
+        "center_fn": 0,
+        "center_recall": 1.0,
+        "positive_images_without_any_detection": 0,
+        "fp_per_provided_image": 0.007462686567164179,
+        "note": "Provided NG/partial-product set; not a production false-alarm rate."
+      },
+      {
+        "threshold": 0.1,
+        "tp": 228,
+        "fp": 1,
+        "fn": 1,
+        "precision": 0.9956331877729258,
+        "recall": 0.9956331877729258,
+        "f1": 0.9956331877729258,
+        "center_tp": 229,
+        "center_fn": 0,
+        "center_recall": 1.0,
+        "positive_images_without_any_detection": 0,
+        "fp_per_provided_image": 0.007462686567164179,
+        "note": "Provided NG/partial-product set; not a production false-alarm rate."
+      }
+    ],
+    "2": [
+      {
+        "threshold": 0.42,
+        "tp": 208,
+        "fp": 2,
+        "fn": 2,
+        "precision": 0.9904761904761905,
+        "recall": 0.9904761904761905,
+        "f1": 0.9904761904761905,
+        "center_tp": 210,
+        "center_fn": 0,
+        "center_recall": 1.0,
+        "positive_images_without_any_detection": 0,
+        "fp_per_provided_image": 0.0196078431372549,
+        "note": "Provided NG/partial-product set; not a production false-alarm rate."
+      },
+      {
+        "threshold": 0.1,
+        "tp": 208,
+        "fp": 2,
+        "fn": 2,
+        "precision": 0.9904761904761905,
+        "recall": 0.9904761904761905,
+        "f1": 0.9904761904761905,
+        "center_tp": 210,
+        "center_fn": 0,
+        "center_recall": 1.0,
+        "positive_images_without_any_detection": 0,
+        "fp_per_provided_image": 0.0196078431372549,
+        "note": "Provided NG/partial-product set; not a production false-alarm rate."
+      }
+    ],
+    "3": [
+      {
+        "threshold": 0.42,
+        "tp": 166,
+        "fp": 1,
+        "fn": 1,
+        "precision": 0.9940119760479041,
+        "recall": 0.9940119760479041,
+        "f1": 0.9940119760479041,
+        "center_tp": 167,
+        "center_fn": 0,
+        "center_recall": 1.0,
+        "positive_images_without_any_detection": 0,
+        "fp_per_provided_image": 0.007518796992481203,
+        "note": "Provided NG/partial-product set; not a production false-alarm rate."
+      },
+      {
+        "threshold": 0.1,
+        "tp": 166,
+        "fp": 1,
+        "fn": 1,
+        "precision": 0.9940119760479041,
+        "recall": 0.9940119760479041,
+        "f1": 0.9940119760479041,
+        "center_tp": 167,
+        "center_fn": 0,
+        "center_recall": 1.0,
+        "positive_images_without_any_detection": 0,
+        "fp_per_provided_image": 0.007518796992481203,
+        "note": "Provided NG/partial-product set; not a production false-alarm rate."
+      }
+    ]
+  },
+  "full_api_latency": {
+    "n": 369,
+    "mean_ms": 29.802646070323142,
+    "p50_ms": 30.864000000292435,
+    "p95_ms": 33.74471999704838,
+    "p99_ms": 36.952743993024335,
+    "max_ms": 56.050400002277456,
+    "serial_images_per_second": 33.55406756971755
+  },
+  "backend_pre_infer_post_latency": {
+    "n": 369,
+    "mean_ms": 28.25590867199304,
+    "p50_ms": 29.44069998920895,
+    "p95_ms": 31.96195999043993,
+    "p99_ms": 34.42044799390714,
+    "max_ms": 54.61079999804497,
+    "serial_images_per_second": 35.39082786571962
+  },
+  "actual_torch_threads": 4,
+  "peak_sampled_rss_mib": 704.32421875,
+  "actual_parameter_dtype": "ONNX tensor(float)",
+  "cuda_peak_allocated_mib": null,
+  "parameters": 2504190,
+  "onnx_sha256": "d955621da6ff839be2b3bc4f2fc2f9e0239c3533718423f9cfa298f056fc04a9",
+  "model_bytes": 9772817,
+  "precision_description": "FP32",
+  "onnx_intra_op_threads": 4
+}

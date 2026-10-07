@@ -1,0 +1,19 @@
+{
+  "model": "baseline_640.onnx",
+  "model_sha256": "d955621da6ff839be2b3bc4f2fc2f9e0239c3533718423f9cfa298f056fc04a9",
+  "threads": 1,
+  "roi": true,
+  "python": "3.13.13",
+  "onnxruntime": "1.30.0",
+  "torch_installed": false,
+  "n_images": 369,
+  "batch": 1,
+  "warmup_images": 16,
+  "mean_ms": 53.623492683312065,
+  "p50_ms": 52.92570000165142,
+  "p95_ms": 58.06284000282176,
+  "p99_ms": 62.53550800727679,
+  "serial_images_per_second": 18.648542830019828,
+  "peak_sampled_rss_mib": 168.77734375,
+  "note": "Same PC, no PyTorch installed. PNG read-to-result; no camera/PLC/actuator time."
+}

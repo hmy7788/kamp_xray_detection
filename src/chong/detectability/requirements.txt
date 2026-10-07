@@ -1,0 +1,9 @@
+ultralytics==8.4.152
+numpy
+pandas
+opencv-python
+Pillow
+psutil
+PyYAML
+onnx>=1.17,<2
+onnxruntime

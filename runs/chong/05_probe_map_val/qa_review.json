@@ -1,0 +1,8 @@
+{
+  "accepted": true,
+  "reviewer": "Codex visual inspection",
+  "notes": "All six validation templates inspected before detector evaluation, including background reconstruction and same-support nearby-patch sham. Compact residuals are visible without donor carrier rectangles. Source/background bursts are distinct. Empirical display-domain synthesis only; physical material and diameter remain unverified.",
+  "record_sha256": "bc8e0ed79ef3fa5b2a774283845eb34be04d888d1787dbbaf570aa3d31983d99",
+  "samples_sha256": "c8d63c23ca9aca81ebd9d0d540787094184bb32726584edee9d5da339ac836b4",
+  "scope": "Visual synthesis QA, not physical validation or detector performance approval."
+}

@@ -1,0 +1,10 @@
+{
+  "split": "train",
+  "seed": 42,
+  "donors_per_machine": 2,
+  "backgrounds_per_machine": 2,
+  "grid_size": 5,
+  "threshold": 0.10,
+  "purpose": "합성 방법 사전 검수",
+  "claims": "Display-domain, position-only experiment; no material or millimeter claim."
+}

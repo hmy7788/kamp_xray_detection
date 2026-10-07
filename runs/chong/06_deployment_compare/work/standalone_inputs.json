@@ -1,0 +1,1482 @@
+{
+  "split": "val",
+  "manifest_sha256": "1942bf3452defc08022b11f464092d46b095ea2bb31961b15b072bc9d623c623",
+  "images": [
+    {
+      "id": "001_20200907_185049(1)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200907_185049(1).png"
+    },
+    {
+      "id": "002_20200721_163248(8)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200721_163248(8).png"
+    },
+    {
+      "id": "002_20200721_163301(1)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200721_163301(1).png"
+    },
+    {
+      "id": "001_20200901_003433(7)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200901_003433(7).png"
+    },
+    {
+      "id": "001_20200921_202521(5)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200921_202521(5).png"
+    },
+    {
+      "id": "002_20200624_203126(3)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200624_203126(3).png"
+    },
+    {
+      "id": "002_20200727_114822(4)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200727_114822(4).png"
+    },
+    {
+      "id": "002_20200728_163706(6)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200728_163706(6).png"
+    },
+    {
+      "id": "002_20200630_163232(4)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200630_163232(4).png"
+    },
+    {
+      "id": "002_20200727_091734(5)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200727_091734(5).png"
+    },
+    {
+      "id": "002_20200708_163949(4)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200708_163949(4).png"
+    },
+    {
+      "id": "002_20200727_120322(1)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200727_120322(1).png"
+    },
+    {
+      "id": "002_20200916_083111(3)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200916_083111(3).png"
+    },
+    {
+      "id": "001_20200708_041219(0)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200708_041219(0).png"
+    },
+    {
+      "id": "001_20200901_003447(1)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200901_003447(1).png"
+    },
+    {
+      "id": "002_20200713_163828(2)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200713_163828(2).png"
+    },
+    {
+      "id": "002_20200624_203114(3)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200624_203114(3).png"
+    },
+    {
+      "id": "001_20200623_123232(3)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200623_123232(3).png"
+    },
+    {
+      "id": "001_20200912_021601(0)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200912_021601(0).png"
+    },
+    {
+      "id": "002_20200908_003312(9)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200908_003312(9).png"
+    },
+    {
+      "id": "002_20200727_123306(5)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200727_123306(5).png"
+    },
+    {
+      "id": "001_20200907_185040(2)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200907_185040(2).png"
+    },
+    {
+      "id": "001_20200901_043424(4)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200901_043424(4).png"
+    },
+    {
+      "id": "002_20200727_123300(5)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200727_123300(5).png"
+    },
+    {
+      "id": "001_20200623_123214(3)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200623_123214(3).png"
+    },
+    {
+      "id": "002_20200713_163832(8)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200713_163832(8).png"
+    },
+    {
+      "id": "002_20200622_203121(4)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200622_203121(4).png"
+    },
+    {
+      "id": "002_20200707_043323(4)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200707_043323(4).png"
+    },
+    {
+      "id": "002_20200623_043120(0)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200623_043120(0).png"
+    },
+    {
+      "id": "002_20200629_082639(2)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200629_082639(2).png"
+    },
+    {
+      "id": "002_20200922_083807(4)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200922_083807(4).png"
+    },
+    {
+      "id": "002_20200821_150510(6)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200821_150510(6).png"
+    },
+    {
+      "id": "001_20200915_164202(8)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200915_164202(8).png"
+    },
+    {
+      "id": "002_20200915_083047(9)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200915_083047(9).png"
+    },
+    {
+      "id": "001_20200819_124415(9)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200819_124415(9).png"
+    },
+    {
+      "id": "002_20200727_120835(5)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200727_120835(5).png"
+    },
+    {
+      "id": "002_20200727_121131(2)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200727_121131(2).png"
+    },
+    {
+      "id": "001_20200819_124414(0)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200819_124414(0).png"
+    },
+    {
+      "id": "002_20200727_114123(5)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200727_114123(5).png"
+    },
+    {
+      "id": "002_20200706_123239(6)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200706_123239(6).png"
+    },
+    {
+      "id": "002_20200630_163223(6)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200630_163223(6).png"
+    },
+    {
+      "id": "001_20200915_203455(9)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200915_203455(9).png"
+    },
+    {
+      "id": "002_20200921_111920(1)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200921_111920(1).png"
+    },
+    {
+      "id": "002_20200623_163032(5)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200623_163032(5).png"
+    },
+    {
+      "id": "002_20200701_163029(1)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200701_163029(1).png"
+    },
+    {
+      "id": "001_20200921_202547(2)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200921_202547(2).png"
+    },
+    {
+      "id": "001_20200901_003438(1)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200901_003438(1).png"
+    },
+    {
+      "id": "002_20200905_123103(4)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200905_123103(4).png"
+    },
+    {
+      "id": "001_20200722_163255(2)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200722_163255(2).png"
+    },
+    {
+      "id": "002_20200905_083116(7)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200905_083116(7).png"
+    },
+    {
+      "id": "001_20200723_043308(5)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200723_043308(5).png"
+    },
+    {
+      "id": "002_20200623_163023(3)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200623_163023(3).png"
+    },
+    {
+      "id": "002_20200721_163245(6)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200721_163245(6).png"
+    },
+    {
+      "id": "002_20200708_163953(3)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200708_163953(3).png"
+    },
+    {
+      "id": "002_20200708_123808(2)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200708_123808(2).png"
+    },
+    {
+      "id": "002_20200721_163253(3)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200721_163253(3).png"
+    },
+    {
+      "id": "002_20200713_163823(7)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200713_163823(7).png"
+    },
+    {
+      "id": "001_20200921_202539(4)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200921_202539(4).png"
+    },
+    {
+      "id": "001_20200901_043415(3)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200901_043415(3).png"
+    },
+    {
+      "id": "002_20200901_203213(2)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200901_203213(2).png"
+    },
+    {
+      "id": "002_20200901_203200(2)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200901_203200(2).png"
+    },
+    {
+      "id": "002_20200912_163058(9)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200912_163058(9).png"
+    },
+    {
+      "id": "001_20200721_163835(0)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200721_163835(0).png"
+    },
+    {
+      "id": "002_20200912_163113(5)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200912_163113(5).png"
+    },
+    {
+      "id": "001_20200914_203326(4)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200914_203326(4).png"
+    },
+    {
+      "id": "001_20200917_123329(1)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200917_123329(1).png"
+    },
+    {
+      "id": "002_20200814_042920(3)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200814_042920(3).png"
+    },
+    {
+      "id": "002_20200727_115040(1)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200727_115040(1).png"
+    },
+    {
+      "id": "002_20200701_163033(0)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200701_163033(0).png"
+    },
+    {
+      "id": "002_20200821_150506(5)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200821_150506(5).png"
+    },
+    {
+      "id": "001_20200623_123236(9)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200623_123236(9).png"
+    },
+    {
+      "id": "002_20200727_123227(4)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200727_123227(4).png"
+    },
+    {
+      "id": "002_20200916_043158(6)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200916_043158(6).png"
+    },
+    {
+      "id": "002_20200810_163047(0)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200810_163047(0).png"
+    },
+    {
+      "id": "002_20200706_163451(8)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200706_163451(8).png"
+    },
+    {
+      "id": "002_20200706_163448(8)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200706_163448(8).png"
+    },
+    {
+      "id": "002_20200629_082642(2)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200629_082642(2).png"
+    },
+    {
+      "id": "001_20200728_083108(2)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200728_083108(2).png"
+    },
+    {
+      "id": "001_20200831_123316(5)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200831_123316(5).png"
+    },
+    {
+      "id": "001_20200917_123309(3)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200917_123309(3).png"
+    },
+    {
+      "id": "002_20200722_003354(1)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200722_003354(1).png"
+    },
+    {
+      "id": "002_20200721_163237(8)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200721_163237(8).png"
+    },
+    {
+      "id": "002_20200918_083033(4)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200918_083033(4).png"
+    },
+    {
+      "id": "001_20200723_163233(0)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200723_163233(0).png"
+    },
+    {
+      "id": "002_20200624_203120(3)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200624_203120(3).png"
+    },
+    {
+      "id": "002_20200901_203208(8)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200901_203208(8).png"
+    },
+    {
+      "id": "002_20200922_083801(7)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200922_083801(7).png"
+    },
+    {
+      "id": "002_20200623_163029(6)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200623_163029(6).png"
+    },
+    {
+      "id": "002_20200721_163244(4)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200721_163244(4).png"
+    },
+    {
+      "id": "001_20200819_043216(0)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200819_043216(0).png"
+    },
+    {
+      "id": "002_20200630_123238(5)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200630_123238(5).png"
+    },
+    {
+      "id": "002_20200701_203449(7)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200701_203449(7).png"
+    },
+    {
+      "id": "002_20200708_123804(2)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200708_123804(2).png"
+    },
+    {
+      "id": "002_20200915_083059(9)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200915_083059(9).png"
+    },
+    {
+      "id": "002_20200702_003016(3)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200702_003016(3).png"
+    },
+    {
+      "id": "002_20200630_002744(3)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200630_002744(3).png"
+    },
+    {
+      "id": "001_20200810_163116(0)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200810_163116(0).png"
+    },
+    {
+      "id": "002_20200901_203156(2)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200901_203156(2).png"
+    },
+    {
+      "id": "001_20200916_122917(1)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200916_122917(1).png"
+    },
+    {
+      "id": "001_20200914_203335(4)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200914_203335(4).png"
+    },
+    {
+      "id": "001_20200915_123417(9)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200915_123417(9).png"
+    },
+    {
+      "id": "002_20200702_003020(8)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200702_003020(8).png"
+    },
+    {
+      "id": "001_20200915_203446(9)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200915_203446(9).png"
+    },
+    {
+      "id": "002_20200630_002753(4)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200630_002753(4).png"
+    },
+    {
+      "id": "001_20200917_123325(3)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200917_123325(3).png"
+    },
+    {
+      "id": "001_20200908_043332(2)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200908_043332(2).png"
+    },
+    {
+      "id": "002_20200905_083124(7)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200905_083124(7).png"
+    },
+    {
+      "id": "001_20200723_203353(2)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200723_203353(2).png"
+    },
+    {
+      "id": "002_20200916_122703(5)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200916_122703(5).png"
+    },
+    {
+      "id": "002_20200630_123234(0)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200630_123234(0).png"
+    },
+    {
+      "id": "001_20200713_091104(2)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200713_091104(2).png"
+    },
+    {
+      "id": "002_20200622_203057(3)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200622_203057(3).png"
+    },
+    {
+      "id": "002_20200912_163101(7)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200912_163101(7).png"
+    },
+    {
+      "id": "002_20200916_083106(8)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200916_083106(8).png"
+    },
+    {
+      "id": "002_20200905_123059(6)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200905_123059(6).png"
+    },
+    {
+      "id": "001_20200914_203344(4)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200914_203344(4).png"
+    },
+    {
+      "id": "002_20200905_123055(5)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200905_123055(5).png"
+    },
+    {
+      "id": "002_20200701_203512(1)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200701_203512(1).png"
+    },
+    {
+      "id": "001_20200915_203500(5)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200915_203500(5).png"
+    },
+    {
+      "id": "001_20200912_021546(2)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200912_021546(2).png"
+    },
+    {
+      "id": "002_20200811_003007(9)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200811_003007(9).png"
+    },
+    {
+      "id": "002_20200708_123746(2)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200708_123746(2).png"
+    },
+    {
+      "id": "001_20200723_203357(7)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200723_203357(7).png"
+    },
+    {
+      "id": "002_20200630_002731(0)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200630_002731(0).png"
+    },
+    {
+      "id": "002_20200707_043331(4)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200707_043331(4).png"
+    },
+    {
+      "id": "002_20200916_122650(1)__m2",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200916_122650(1)__m2.png"
+    },
+    {
+      "id": "002_20200702_003011(7)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200702_003011(7).png"
+    },
+    {
+      "id": "001_20200723_043303(9)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200723_043303(9).png"
+    },
+    {
+      "id": "002_20200629_082645(4)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200629_082645(4).png"
+    },
+    {
+      "id": "002_20200706_163436(9)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200706_163436(9).png"
+    },
+    {
+      "id": "002_20200918_083026(0)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200918_083026(0).png"
+    },
+    {
+      "id": "002_20200623_043115(4)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200623_043115(4).png"
+    },
+    {
+      "id": "002_20200706_123246(0)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200706_123246(0).png"
+    },
+    {
+      "id": "002_20200918_083029(4)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200918_083029(4).png"
+    },
+    {
+      "id": "002_20200623_163026(3)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200623_163026(3).png"
+    },
+    {
+      "id": "001_20200818_163233(9)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200818_163233(9).png"
+    },
+    {
+      "id": "002_20200908_003321(8)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200908_003321(8).png"
+    },
+    {
+      "id": "002_20200916_122645(5)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200916_122645(5).png"
+    },
+    {
+      "id": "002_20200727_114220(2)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200727_114220(2).png"
+    },
+    {
+      "id": "001_20200916_122903(5)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200916_122903(5).png"
+    },
+    {
+      "id": "001_20200912_021552(4)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200912_021552(4).png"
+    },
+    {
+      "id": "002_20200721_163257(5)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200721_163257(5).png"
+    },
+    {
+      "id": "002_20200622_203101(3)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200622_203101(3).png"
+    },
+    {
+      "id": "002_20200915_083056(9)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200915_083056(9).png"
+    },
+    {
+      "id": "002_20200623_163035(5)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200623_163035(5).png"
+    },
+    {
+      "id": "002_20200623_163020(3)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200623_163020(3).png"
+    },
+    {
+      "id": "002_20200916_043150(0)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200916_043150(0).png"
+    },
+    {
+      "id": "002_20200916_083120(2)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200916_083120(2).png"
+    },
+    {
+      "id": "001_20200921_123528(7)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200921_123528(7).png"
+    },
+    {
+      "id": "002_20200921_111923(3)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200921_111923(3).png"
+    },
+    {
+      "id": "001_20200908_043341(4)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200908_043341(4).png"
+    },
+    {
+      "id": "002_20200630_123243(0)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200630_123243(0).png"
+    },
+    {
+      "id": "001_20200901_003451(7)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200901_003451(7).png"
+    },
+    {
+      "id": "002_20200630_002739(8)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200630_002739(8).png"
+    },
+    {
+      "id": "001_20200907_185043(2)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200907_185043(2).png"
+    },
+    {
+      "id": "001_20200915_164139(8)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200915_164139(8).png"
+    },
+    {
+      "id": "002_20200630_163241(3)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200630_163241(3).png"
+    },
+    {
+      "id": "002_20200702_003008(7)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200702_003008(7).png"
+    },
+    {
+      "id": "002_20200629_082651(5)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200629_082651(5).png"
+    },
+    {
+      "id": "002_20200912_163104(6)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200912_163104(6).png"
+    },
+    {
+      "id": "002_20200915_083053(9)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200915_083053(9).png"
+    },
+    {
+      "id": "002_20200625_003120(7)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200625_003120(7).png"
+    },
+    {
+      "id": "002_20200727_091657(1)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200727_091657(1).png"
+    },
+    {
+      "id": "002_20200915_083044(8)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200915_083044(8).png"
+    },
+    {
+      "id": "001_20200915_164159(6)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200915_164159(6).png"
+    },
+    {
+      "id": "002_20200713_163753(9)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200713_163753(9).png"
+    },
+    {
+      "id": "001_20200915_164147(9)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200915_164147(9).png"
+    },
+    {
+      "id": "002_20200727_120228(0)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200727_120228(0).png"
+    },
+    {
+      "id": "002_20200706_163443(1)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200706_163443(1).png"
+    },
+    {
+      "id": "001_20200708_041212(4)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200708_041212(4).png"
+    },
+    {
+      "id": "002_20200707_083258(1)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200707_083258(1).png"
+    },
+    {
+      "id": "002_20200905_083120(6)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200905_083120(6).png"
+    },
+    {
+      "id": "002_20200707_083246(1)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200707_083246(1).png"
+    },
+    {
+      "id": "001_20200901_043433(3)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200901_043433(3).png"
+    },
+    {
+      "id": "002_20200630_163246(0)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200630_163246(0).png"
+    },
+    {
+      "id": "001_20200915_123413(3)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200915_123413(3).png"
+    },
+    {
+      "id": "002_20200727_120429(7)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200727_120429(7).png"
+    },
+    {
+      "id": "002_20200702_003004(2)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200702_003004(2).png"
+    },
+    {
+      "id": "002_20200721_163257(9)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200721_163257(9).png"
+    },
+    {
+      "id": "002_20200921_111936(2)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200921_111936(2).png"
+    },
+    {
+      "id": "001_20200810_163112(8)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200810_163112(8).png"
+    },
+    {
+      "id": "002_20200916_122654(5)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200916_122654(5).png"
+    },
+    {
+      "id": "002_20200625_003139(0)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200625_003139(0).png"
+    },
+    {
+      "id": "002_20200727_121238(7)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200727_121238(7).png"
+    },
+    {
+      "id": "002_20200721_163302(4)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200721_163302(4).png"
+    },
+    {
+      "id": "002_20200727_114126(2)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200727_114126(2).png"
+    },
+    {
+      "id": "001_20200721_163838(2)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200721_163838(2).png"
+    },
+    {
+      "id": "002_20200625_003125(4)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200625_003125(4).png"
+    },
+    {
+      "id": "002_20200727_123318(9)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200727_123318(9).png"
+    },
+    {
+      "id": "002_20200625_003134(4)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200625_003134(4).png"
+    },
+    {
+      "id": "002_20200922_083810(4)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200922_083810(4).png"
+    },
+    {
+      "id": "002_20200706_123258(0)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200706_123258(0).png"
+    },
+    {
+      "id": "002_20200630_002748(7)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200630_002748(7).png"
+    },
+    {
+      "id": "001_20200917_084034(2)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200917_084034(2).png"
+    },
+    {
+      "id": "001_20200721_163831(6)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200721_163831(6).png"
+    },
+    {
+      "id": "002_20200624_203117(3)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200624_203117(3).png"
+    },
+    {
+      "id": "002_20200721_163249(9)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200721_163249(9).png"
+    },
+    {
+      "id": "002_20200921_111930(0)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200921_111930(0).png"
+    },
+    {
+      "id": "002_20200708_123754(3)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200708_123754(3).png"
+    },
+    {
+      "id": "001_20200914_203322(0)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200914_203322(0).png"
+    },
+    {
+      "id": "002_20200916_122640(9)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200916_122640(9).png"
+    },
+    {
+      "id": "001_20200907_185055(2)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200907_185055(2).png"
+    },
+    {
+      "id": "001_20200708_041228(7)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200708_041228(7).png"
+    },
+    {
+      "id": "002_20200721_163253(9)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200721_163253(9).png"
+    },
+    {
+      "id": "002_20200722_003343(8)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200722_003343(8).png"
+    },
+    {
+      "id": "001_20200901_043428(8)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200901_043428(8).png"
+    },
+    {
+      "id": "002_20200624_203111(4)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200624_203111(4).png"
+    },
+    {
+      "id": "002_20200918_083037(6)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200918_083037(6).png"
+    },
+    {
+      "id": "002_20200708_163937(6)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200708_163937(6).png"
+    },
+    {
+      "id": "001_20200623_123241(3)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200623_123241(3).png"
+    },
+    {
+      "id": "002_20200706_163445(8)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200706_163445(8).png"
+    },
+    {
+      "id": "001_20200831_123324(1)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200831_123324(1).png"
+    },
+    {
+      "id": "001_20200908_043328(0)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200908_043328(0).png"
+    },
+    {
+      "id": "001_20200915_164151(3)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200915_164151(3).png"
+    },
+    {
+      "id": "001_20200915_164155(7)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200915_164155(7).png"
+    },
+    {
+      "id": "002_20200708_123800(1)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200708_123800(1).png"
+    },
+    {
+      "id": "001_20200914_203340(0)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200914_203340(0).png"
+    },
+    {
+      "id": "001_20200921_123515(3)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200921_123515(3).png"
+    },
+    {
+      "id": "001_20200908_043350(5)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200908_043350(5).png"
+    },
+    {
+      "id": "002_20200622_203053(2)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200622_203053(2).png"
+    },
+    {
+      "id": "002_20200922_083755(7)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200922_083755(7).png"
+    },
+    {
+      "id": "002_20200713_163814(8)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200713_163814(8).png"
+    },
+    {
+      "id": "001_20200727_123121(5)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200727_123121(5).png"
+    },
+    {
+      "id": "002_20200708_163941(4)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200708_163941(4).png"
+    },
+    {
+      "id": "002_20200708_163945(4)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200708_163945(4).png"
+    },
+    {
+      "id": "002_20200624_203123(3)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200624_203123(3).png"
+    },
+    {
+      "id": "002_20200701_203507(7)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200701_203507(7).png"
+    },
+    {
+      "id": "002_20200630_163237(0)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200630_163237(0).png"
+    },
+    {
+      "id": "002_20200901_083204(5)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200901_083204(5).png"
+    },
+    {
+      "id": "001_20200921_202526(0)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200921_202526(0).png"
+    },
+    {
+      "id": "001_20200921_123501(8)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200921_123501(8).png"
+    },
+    {
+      "id": "002_20200708_123750(2)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200708_123750(2).png"
+    },
+    {
+      "id": "002_20200921_111933(1)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200921_111933(1).png"
+    },
+    {
+      "id": "001_20200921_202534(9)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200921_202534(9).png"
+    },
+    {
+      "id": "001_20200916_122921(6)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200916_122921(6).png"
+    },
+    {
+      "id": "002_20200912_163116(5)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200912_163116(5).png"
+    },
+    {
+      "id": "002_20200701_203503(2)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200701_203503(2).png"
+    },
+    {
+      "id": "001_20200914_203330(8)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200914_203330(8).png"
+    },
+    {
+      "id": "002_20200916_083102(3)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200916_083102(3).png"
+    },
+    {
+      "id": "002_20200721_163239(7)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200721_163239(7).png"
+    },
+    {
+      "id": "002_20200630_123224(9)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200630_123224(9).png"
+    },
+    {
+      "id": "002_20200727_120523(7)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200727_120523(7).png"
+    },
+    {
+      "id": "001_20200901_043410(8)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200901_043410(8).png"
+    },
+    {
+      "id": "002_20200727_091655(1)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200727_091655(1).png"
+    },
+    {
+      "id": "002_20200922_083758(7)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200922_083758(7).png"
+    },
+    {
+      "id": "001_20200901_003442(7)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200901_003442(7).png"
+    },
+    {
+      "id": "002_20200916_083057(9)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200916_083057(9).png"
+    },
+    {
+      "id": "001_20200915_123404(4)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200915_123404(4).png"
+    },
+    {
+      "id": "001_20200723_163243(6)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200723_163243(6).png"
+    },
+    {
+      "id": "001_20200713_091052(5)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200713_091052(5).png"
+    },
+    {
+      "id": "002_20200706_123254(7)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200706_123254(7).png"
+    },
+    {
+      "id": "001_20200916_122912(6)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200916_122912(6).png"
+    },
+    {
+      "id": "002_20200905_083134(7)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200905_083134(7).png"
+    },
+    {
+      "id": "001_20200917_123340(7)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200917_123340(7).png"
+    },
+    {
+      "id": "002_20200623_043100(6)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200623_043100(6).png"
+    },
+    {
+      "id": "002_20200922_083752(7)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200922_083752(7).png"
+    },
+    {
+      "id": "001_20200721_163841(6)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200721_163841(6).png"
+    },
+    {
+      "id": "002_20200707_043327(5)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200707_043327(5).png"
+    },
+    {
+      "id": "002_20200921_111926(6)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200921_111926(6).png"
+    },
+    {
+      "id": "002_20200916_043152(7)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200916_043152(7).png"
+    },
+    {
+      "id": "002_20200727_091737(7)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200727_091737(7).png"
+    },
+    {
+      "id": "001_20200818_163230(6)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200818_163230(6).png"
+    },
+    {
+      "id": "002_20200701_163017(3)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200701_163017(3).png"
+    },
+    {
+      "id": "001_20200713_091113(2)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200713_091113(2).png"
+    },
+    {
+      "id": "002_20200701_163021(2)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200701_163021(2).png"
+    },
+    {
+      "id": "002_20200727_123224(5)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200727_123224(5).png"
+    },
+    {
+      "id": "002_20200707_083236(0)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200707_083236(0).png"
+    },
+    {
+      "id": "001_20200623_123245(8)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200623_123245(8).png"
+    },
+    {
+      "id": "001_20200915_123359(7)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200915_123359(7).png"
+    },
+    {
+      "id": "002_20200916_043155(6)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200916_043155(6).png"
+    },
+    {
+      "id": "001_20200912_021604(3)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200912_021604(3).png"
+    },
+    {
+      "id": "001_20200917_084040(4)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200917_084040(4).png"
+    },
+    {
+      "id": "002_20200630_002735(3)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200630_002735(3).png"
+    },
+    {
+      "id": "001_20200921_123510(8)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200921_123510(8).png"
+    },
+    {
+      "id": "001_20200916_122859(1)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200916_122859(1).png"
+    },
+    {
+      "id": "001_20200915_123422(2)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200915_123422(2).png"
+    },
+    {
+      "id": "002_20200702_002959(7)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200702_002959(7).png"
+    },
+    {
+      "id": "002_20200727_120943(0)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200727_120943(0).png"
+    },
+    {
+      "id": "002_20200905_083104(6)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200905_083104(6).png"
+    },
+    {
+      "id": "002_20200706_123242(9)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200706_123242(9).png"
+    },
+    {
+      "id": "001_20200915_123409(0)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200915_123409(0).png"
+    },
+    {
+      "id": "002_20200707_083240(0)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200707_083240(0).png"
+    },
+    {
+      "id": "002_20200623_043109(4)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200623_043109(4).png"
+    },
+    {
+      "id": "001_20200917_084031(1)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200917_084031(1).png"
+    },
+    {
+      "id": "002_20200814_042924(9)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200814_042924(9).png"
+    },
+    {
+      "id": "002_20200727_121144(7)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200727_121144(7).png"
+    },
+    {
+      "id": "002_20200916_043146(9)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200916_043146(9).png"
+    },
+    {
+      "id": "002_20200701_163004(7)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200701_163004(7).png"
+    },
+    {
+      "id": "001_20200907_185052(1)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200907_185052(1).png"
+    },
+    {
+      "id": "002_20200916_122659(0)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200916_122659(0).png"
+    },
+    {
+      "id": "001_20200915_203451(3)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200915_203451(3).png"
+    },
+    {
+      "id": "001_20200908_043345(8)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200908_043345(8).png"
+    },
+    {
+      "id": "002_20200915_083050(8)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200915_083050(8).png"
+    },
+    {
+      "id": "001_20200908_043336(7)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200908_043336(7).png"
+    },
+    {
+      "id": "002_20200908_003259(2)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200908_003259(2).png"
+    },
+    {
+      "id": "001_20200921_123524(3)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200921_123524(3).png"
+    },
+    {
+      "id": "002_20200630_123229(5)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200630_123229(5).png"
+    },
+    {
+      "id": "002_20200707_083254(0)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200707_083254(0).png"
+    },
+    {
+      "id": "002_20200918_083045(4)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200918_083045(4).png"
+    },
+    {
+      "id": "001_20200917_123316(8)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200917_123316(8).png"
+    },
+    {
+      "id": "001_20200912_021549(3)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200912_021549(3).png"
+    },
+    {
+      "id": "001_20200708_041231(7)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200708_041231(7).png"
+    },
+    {
+      "id": "001_20200917_123313(1)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200917_123313(1).png"
+    },
+    {
+      "id": "002_20200625_003116(4)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200625_003116(4).png"
+    },
+    {
+      "id": "001_20200907_185046(1)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200907_185046(1).png"
+    },
+    {
+      "id": "002_20200707_083250(0)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200707_083250(0).png"
+    },
+    {
+      "id": "001_20200623_123223(3)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200623_123223(3).png"
+    },
+    {
+      "id": "001_20200818_203607(4)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200818_203607(4).png"
+    },
+    {
+      "id": "001_20200921_123506(3)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200921_123506(3).png"
+    },
+    {
+      "id": "001_20200721_163828(2)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200721_163828(2).png"
+    },
+    {
+      "id": "002_20200629_082648(6)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200629_082648(6).png"
+    },
+    {
+      "id": "002_20200901_203149(6)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200901_203149(6).png"
+    },
+    {
+      "id": "002_20200905_123051(5)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200905_123051(5).png"
+    },
+    {
+      "id": "001_20200912_021555(0)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200912_021555(0).png"
+    },
+    {
+      "id": "002_20200905_123107(5)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200905_123107(5).png"
+    },
+    {
+      "id": "002_20200901_083212(5)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200901_083212(5).png"
+    },
+    {
+      "id": "002_20200706_123251(3)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200706_123251(3).png"
+    },
+    {
+      "id": "001_20200727_123118(0)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200727_123118(0).png"
+    },
+    {
+      "id": "001_20200921_202530(4)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200921_202530(4).png"
+    },
+    {
+      "id": "002_20200912_163052(9)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200912_163052(9).png"
+    },
+    {
+      "id": "001_20200916_122908(1)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200916_122908(1).png"
+    },
+    {
+      "id": "002_20200811_003029(6)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200811_003029(6).png"
+    },
+    {
+      "id": "002_20200727_120134(0)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200727_120134(0).png"
+    },
+    {
+      "id": "002_20200706_163440(2)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200706_163440(2).png"
+    },
+    {
+      "id": "001_20200819_043209(9)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200819_043209(9).png"
+    },
+    {
+      "id": "002_20200916_083115(8)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200916_083115(8).png"
+    },
+    {
+      "id": "002_20200625_003130(0)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200625_003130(0).png"
+    },
+    {
+      "id": "002_20200908_003308(2)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200908_003308(2).png"
+    },
+    {
+      "id": "001_20200901_043419(9)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200901_043419(9).png"
+    },
+    {
+      "id": "002_20200727_121332(7)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200727_121332(7).png"
+    },
+    {
+      "id": "001_20200722_163247(7)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200722_163247(7).png"
+    },
+    {
+      "id": "002_20200727_120631(2)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200727_120631(2).png"
+    },
+    {
+      "id": "001_20200713_091129(5)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200713_091129(5).png"
+    },
+    {
+      "id": "002_20200908_003303(8)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200908_003303(8).png"
+    },
+    {
+      "id": "001_20200917_084022(3)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200917_084022(3).png"
+    },
+    {
+      "id": "002_20200622_203109(3)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200622_203109(3).png"
+    },
+    {
+      "id": "002_20200701_163024(9)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200701_163024(9).png"
+    },
+    {
+      "id": "002_20200810_163043(1)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200810_163043(1).png"
+    },
+    {
+      "id": "001_20200713_091141(5)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200713_091141(5).png"
+    },
+    {
+      "id": "002_20200901_203204(5)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200901_203204(5).png"
+    },
+    {
+      "id": "002_20200713_163819(2)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200713_163819(2).png"
+    },
+    {
+      "id": "001_20200917_084025(3)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200917_084025(3).png"
+    },
+    {
+      "id": "002_20200701_203458(5)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200701_203458(5).png"
+    },
+    {
+      "id": "001_20200728_083116(1)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200728_083116(1).png"
+    },
+    {
+      "id": "002_20200728_163710(5)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200728_163710(5).png"
+    },
+    {
+      "id": "002_20200905_123111(6)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200905_123111(6).png"
+    },
+    {
+      "id": "001_20200810_123047(8)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200810_123047(8).png"
+    },
+    {
+      "id": "002_20200916_043144(0)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200916_043144(0).png"
+    },
+    {
+      "id": "002_20200630_163227(9)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200630_163227(9).png"
+    },
+    {
+      "id": "001_20200901_003429(1)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200901_003429(1).png"
+    },
+    {
+      "id": "001_20200708_041209(1)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200708_041209(1).png"
+    },
+    {
+      "id": "001_20200915_203504(9)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200915_203504(9).png"
+    },
+    {
+      "id": "002_20200630_123220(5)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200630_123220(5).png"
+    },
+    {
+      "id": "002_20200623_043056(0)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200623_043056(0).png"
+    },
+    {
+      "id": "002_20200918_083041(4)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200918_083041(4).png"
+    },
+    {
+      "id": "001_20200818_203601(4)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200818_203601(4).png"
+    },
+    {
+      "id": "001_20200721_163845(0)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200721_163845(0).png"
+    },
+    {
+      "id": "002_20200727_121037(1)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200727_121037(1).png"
+    },
+    {
+      "id": "002_20200629_082630(7)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200629_082630(7).png"
+    },
+    {
+      "id": "002_20200908_003330(9)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200908_003330(9).png"
+    },
+    {
+      "id": "002_20200905_083100(6)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200905_083100(6).png"
+    },
+    {
+      "id": "001_20200917_084037(3)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200917_084037(3).png"
+    },
+    {
+      "id": "002_20200708_163957(5)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200708_163957(5).png"
+    },
+    {
+      "id": "001_20200713_091125(7)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200713_091125(7).png"
+    },
+    {
+      "id": "002_20200623_043105(0)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200623_043105(0).png"
+    },
+    {
+      "id": "002_20200701_203454(3)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200701_203454(3).png"
+    },
+    {
+      "id": "001_20200810_123051(3)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200810_123051(3).png"
+    },
+    {
+      "id": "001_20200915_203430(3)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\001_20200915_203430(3).png"
+    },
+    {
+      "id": "002_20200622_203105(4)",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-06\\https-github-com-hmy7788-kamp-xray\\outputs\\kamp_xray_detection\\runs\\chong\\local\\work\\data_view\\val\\images\\002_20200622_203105(4).png"
+    }
+  ]
+}

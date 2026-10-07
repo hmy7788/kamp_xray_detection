@@ -4,7 +4,7 @@
   "family": "yolo26",
   "model": "yolo26n",
   "init_weights": "COCO 사전학습 (ultralytics 배포본 yolo26n.pt)",
-  "data": "data/ v2 (train 학습, val 임계값·채점). test 미채점",
+  "data": "data/ v2 (train 학습, val 임계값·채점). test 는 2026-10-07 같은 가중치로 1회 채점 (harness_metrics_test.json, final_mode.json)",
   "manifest_sha256": "1942bf3452defc08022b11f464092d46b095ea2bb31961b15b072bc9d623c623",
   "hyp": {
     "imgsz": 1024,

@@ -1,0 +1,305 @@
+{
+  "stage": "requires_visual_QA",
+  "config": {
+    "split": "train",
+    "seed": 42,
+    "donors_per_machine": 2,
+    "backgrounds_per_machine": 2,
+    "grid_size": 5,
+    "threshold": 0.1,
+    "purpose": "합성 방법 사전 검수",
+    "claims": "Display-domain, position-only experiment; no material or millimeter claim."
+  },
+  "manifest_sha256": "1942bf3452defc08022b11f464092d46b095ea2bb31961b15b072bc9d623c623",
+  "config_sha256": "03a612b8bfc313b81cd3add4f56d21a15c6b501dee46672d2ed8bf6374e82412",
+  "samples_sha256": "5521223033184aa18d5ffac990a26d649a3d10086130781492b309071586dd9a",
+  "n_samples": 273,
+  "n_templates": 6,
+  "sources": [
+    {
+      "role": "donor",
+      "image_id": "002_20200905_163940(2)",
+      "burst_id": "m1_b0157",
+      "image_sha256": "2b78f4dfda9f48bbac24559486128b2cf58872b7c0a0955f537c9f4225be3f32"
+    },
+    {
+      "role": "donor",
+      "image_id": "002_20200623_082306(5)",
+      "burst_id": "m1_b0004",
+      "image_sha256": "10376edcaca7139a025c637e20f892b6d9a1f45433d69a2bbaddd3e6a73cfb8b"
+    },
+    {
+      "role": "background",
+      "image_id": "002_20200814_032749(8)",
+      "burst_id": "m1_b0114",
+      "image_sha256": "ba134dae3b8467013e2a013ca64b265a728054da58fc2b50e0679630cdb0e0d5"
+    },
+    {
+      "role": "background",
+      "image_id": "002_20200921_163055(8)",
+      "burst_id": "m1_b0197",
+      "image_sha256": "bb3ad80c4042dc85704d68c952a730076732678d710a13ecc4a72cf0cb86bace"
+    },
+    {
+      "role": "donor",
+      "image_id": "002_20200624_083032(4)",
+      "burst_id": "m2_b0010",
+      "image_sha256": "2fcdc102a602ca92c755ceff049ac88bfd3480dde54ae3e42c2c3c3056e5abeb"
+    },
+    {
+      "role": "donor",
+      "image_id": "002_20200624_123152(7)",
+      "burst_id": "m2_b0011",
+      "image_sha256": "1a3875bd3ea0aae71239896bfcd0beae9666528ed7825e7e7f432826456b6cc9"
+    },
+    {
+      "role": "background",
+      "image_id": "002_20200715_083118(3)",
+      "burst_id": "m2_b0054",
+      "image_sha256": "96ce1a9699f9e396b19dc186cff9d10c8958cdff382eac8cb89cd6e38937c33c"
+    },
+    {
+      "role": "background",
+      "image_id": "002_20200901_003133(6)",
+      "burst_id": "m2_b0109",
+      "image_sha256": "19c5840374b066e8c3241d36f6747cfb6a0491b6f32a1c42bc39c7091766397d"
+    },
+    {
+      "role": "donor",
+      "image_id": "001_20200624_083153(8)",
+      "burst_id": "m3_b0010",
+      "image_sha256": "e7c0b6232c8d29bfdb76510dfe7d7482338ea43f1c11e090e02815cab6118731"
+    },
+    {
+      "role": "donor",
+      "image_id": "001_20200814_123143(5)",
+      "burst_id": "m3_b0099",
+      "image_sha256": "6af09b5c5c924814b7134de352c6630a8dbf61266a87ee1867a1b42f0fe4ed6d"
+    },
+    {
+      "role": "background",
+      "image_id": "001_20200622_203312(6)",
+      "burst_id": "m3_b0001",
+      "image_sha256": "6877ac1a282810f8ad2b20e32f0f06228e527a157403225e486584099a5f3b97"
+    },
+    {
+      "role": "background",
+      "image_id": "001_20200916_003416(1)",
+      "burst_id": "m3_b0151",
+      "image_sha256": "e6ea99d4eb1d4e1495a527d62abd6fa10714b016a975300b0405697bfea978e1"
+    }
+  ],
+  "templates": [
+    {
+      "id": "m1_t1",
+      "machine": "1",
+      "image_id": "002_20200905_163940(2)",
+      "burst_id": "m1_b0157",
+      "label_index": 0,
+      "file": "templates/m1_t1.npz",
+      "sha256": "3a2df15db47391e10354bfa7e3b1b13106acc76772da7d90d5ba9b3206e07933",
+      "signal_shape": [
+        7,
+        6
+      ],
+      "peak": 51.0,
+      "dark_mass": 171.47177124023438,
+      "bright_mass": 14.586763381958008,
+      "sham_abs_mass": 28.09703826904297,
+      "sham_center": [
+        224,
+        170
+      ],
+      "center_offset": [
+        2.0,
+        3.0
+      ]
+    },
+    {
+      "id": "m1_t2",
+      "machine": "1",
+      "image_id": "002_20200623_082306(5)",
+      "burst_id": "m1_b0004",
+      "label_index": 0,
+      "file": "templates/m1_t2.npz",
+      "sha256": "1d825d9035c80c4e248f63bb69d5f345233cae356c99104855aa8e4cfc608133",
+      "signal_shape": [
+        6,
+        7
+      ],
+      "peak": 53.0,
+      "dark_mass": 212.07725524902344,
+      "bright_mass": 10.81087589263916,
+      "sham_abs_mass": 35.87718200683594,
+      "sham_center": [
+        230,
+        166
+      ],
+      "center_offset": [
+        3.0,
+        2.0
+      ]
+    },
+    {
+      "id": "m2_t1",
+      "machine": "2",
+      "image_id": "002_20200624_083032(4)",
+      "burst_id": "m2_b0010",
+      "label_index": 0,
+      "file": "templates/m2_t1.npz",
+      "sha256": "96679ede2f24b46e73d4b606fea88444663b1ee2ae0b6d434630366ea92ea4cd",
+      "signal_shape": [
+        6,
+        6
+      ],
+      "peak": 36.0,
+      "dark_mass": 105.83131408691406,
+      "bright_mass": 11.524619102478027,
+      "sham_abs_mass": 17.023056030273438,
+      "sham_center": [
+        196,
+        146
+      ],
+      "center_offset": [
+        3.0,
+        3.0
+      ]
+    },
+    {
+      "id": "m2_t2",
+      "machine": "2",
+      "image_id": "002_20200624_123152(7)",
+      "burst_id": "m2_b0011",
+      "label_index": 0,
+      "file": "templates/m2_t2.npz",
+      "sha256": "00df3de303e1aa157a563d9dbcd9fcb48ee3dcf1078b784ffb0a24bb4344f1df",
+      "signal_shape": [
+        6,
+        7
+      ],
+      "peak": 31.0,
+      "dark_mass": 94.64844512939453,
+      "bright_mass": 13.954789161682129,
+      "sham_abs_mass": 30.841541290283203,
+      "sham_center": [
+        192,
+        117
+      ],
+      "center_offset": [
+        3.0,
+        2.0
+      ]
+    },
+    {
+      "id": "m3_t1",
+      "machine": "3",
+      "image_id": "001_20200624_083153(8)",
+      "burst_id": "m3_b0010",
+      "label_index": 0,
+      "file": "templates/m3_t1.npz",
+      "sha256": "78c31dc955dd5d24a3e8df2c4948e4a22e09581b0db8db9f56b49f74b0fa2820",
+      "signal_shape": [
+        6,
+        7
+      ],
+      "peak": 45.0,
+      "dark_mass": 216.36692810058594,
+      "bright_mass": 5.477008819580078,
+      "sham_abs_mass": 64.22493743896484,
+      "sham_center": [
+        394,
+        156
+      ],
+      "center_offset": [
+        3.0,
+        3.0
+      ]
+    },
+    {
+      "id": "m3_t2",
+      "machine": "3",
+      "image_id": "001_20200814_123143(5)",
+      "burst_id": "m3_b0099",
+      "label_index": 0,
+      "file": "templates/m3_t2.npz",
+      "sha256": "002b6c59a2141c0c31a26a3107913b94ba7445bbaff70723e3ee2aace8375146",
+      "signal_shape": [
+        7,
+        7
+      ],
+      "peak": 39.0,
+      "dark_mass": 189.62742614746094,
+      "bright_mass": 6.093216896057129,
+      "sham_abs_mass": 80.09190368652344,
+      "sham_center": [
+        370,
+        170
+      ],
+      "center_offset": [
+        3.0,
+        3.0
+      ]
+    }
+  ],
+  "exclusions": {
+    "position: outside estimated product": 15,
+    "position: near existing target": 12
+  },
+  "gallery": [
+    {
+      "sample_id": "m1_t1_b1_r0_c0",
+      "path": "images/qa_m1_t1_b1.png"
+    },
+    {
+      "sample_id": "m1_t1_b2_r0_c1",
+      "path": "images/qa_m1_t1_b2.png"
+    },
+    {
+      "sample_id": "m1_t2_b1_r0_c0",
+      "path": "images/qa_m1_t2_b1.png"
+    },
+    {
+      "sample_id": "m1_t2_b2_r0_c1",
+      "path": "images/qa_m1_t2_b2.png"
+    },
+    {
+      "sample_id": "m2_t1_b1_r0_c0",
+      "path": "images/qa_m2_t1_b1.png"
+    },
+    {
+      "sample_id": "m2_t1_b2_r0_c0",
+      "path": "images/qa_m2_t1_b2.png"
+    },
+    {
+      "sample_id": "m2_t2_b1_r0_c0",
+      "path": "images/qa_m2_t2_b1.png"
+    },
+    {
+      "sample_id": "m2_t2_b2_r0_c0",
+      "path": "images/qa_m2_t2_b2.png"
+    },
+    {
+      "sample_id": "m3_t1_b1_r0_c0",
+      "path": "images/qa_m3_t1_b1.png"
+    },
+    {
+      "sample_id": "m3_t1_b2_r0_c0",
+      "path": "images/qa_m3_t1_b2.png"
+    },
+    {
+      "sample_id": "m3_t2_b1_r0_c0",
+      "path": "images/qa_m3_t2_b1.png"
+    },
+    {
+      "sample_id": "m3_t2_b2_r0_c0",
+      "path": "images/qa_m3_t2_b2.png"
+    }
+  ],
+  "limitations": [
+    "display-domain residual, not calibrated X-ray physics",
+    "original labelled targets retained; only inserted location is scored",
+    "source residual extraction may be imperfect; inspect all templates",
+    "positions share source bursts and are not independent observations",
+    "no material identity, physical sensitivity, production FPR, or equipment miss claim"
+  ]
+}
