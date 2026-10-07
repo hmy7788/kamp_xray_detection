@@ -1,0 +1,61 @@
+# 조건 축의 유일한 정의. 여기에 축을 추가하면 compute_conditions.py 와 evaluate.py 가 자동으로 칸을 늘린다.
+#
+# type:
+#   manifest   manifest.csv 의 열 값을 그대로 범주로 쓴다
+#   quantile   compute_conditions.py 가 계산한 feature 를 분위수로 나눈다 (bins = 경계 개수, labels = 이름)
+#   fixed      고정 경계값 (edges)
+# feature 는 compute_conditions.py 의 FEATURES 에 정의된 이름이어야 한다.
+# 경계값은 결정 006 에서 확정하기 전까지 기본값이다. 계산된 실제 경계는 data/conditions_thresholds.json 에 남는다.
+axes:
+  machine:
+    type: manifest
+    column: machine
+    desc: 촬영 장비 (1, 2, 3호기)
+
+  resolution:
+    type: manifest
+    column: resolution       # compute_conditions.py 가 width x height 로 만든다
+    desc: 사진 크기
+
+  month:
+    type: manifest
+    column: month
+    desc: 촬영 월
+
+  n_objects:
+    type: manifest
+    column: n_boxes
+    desc: 한 장에 있는 이물질 수
+
+  source:
+    type: manifest
+    column: source
+    desc: 라벨 출처 (official = KAMP 공식 라벨, team = 팀이 찍은 라벨)
+
+  size_bin:
+    type: quantile
+    feature: box_side_px     # sqrt(w*h) 픽셀
+    bins: 3
+    labels: [small, mid, large]
+    desc: 이물질 상자 크기 3분위
+
+  contrast_bin:
+    type: quantile
+    feature: local_contrast  # |상자 안 평균 밝기 - 둘레 평균 밝기|
+    bins: 3
+    labels: [low, mid, high]
+    desc: 이물질과 주변의 밝기 차이 3분위
+
+  bg_bin:
+    type: quantile
+    feature: ring_mean       # 상자 둘레(3px 링) 평균 밝기. 낮으면 어두운 줄무늬 위
+    bins: 3
+    labels: [dark, mid, bright]
+    desc: 이물질이 놓인 배경 밝기 3분위 (어두운 줄무늬 vs 평탄)
+
+  edge_dist_bin:
+    type: fixed
+    feature: edge_dist_norm  # 상자 중심에서 가장 가까운 사진 테두리까지 거리 (0~0.5, 정규화)
+    edges: [0.05, 0.15]
+    labels: [edge, near, center]
+    desc: 가장자리 여부. 실측 라벨에는 edge 가 0개다 (합성 스트레스셋에서만 채워짐)
