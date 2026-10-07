@@ -51,7 +51,7 @@ def read_csv(p):
 def fig0_story():
     fig, ax = plt.subplots(figsize=(13, 3.6))
     ax.axis("off")
-    steps = [("① 문제", "IoU 기준 F1이\n세 모델 모두 0.99\n→ 구분 불가", "#dde6f7"),
+    steps = [("① 문제", "IoU 기준 F1이\n6개 모델 모두 0.99\n→ 구분 불가", "#dde6f7"),
              ("② 의심", "점수가 부풀려진 건\n아닌가?\n(고정 크기 라벨)", "#fbe7cc"),
              ("③ 검증", "평가 재설계\n점 제거 · 합성 점\n가짜 정상", "#d6ecdc"),
              ("④ 발견", "FN은 박스 크기 문제\n진짜 약점: 옅은 점,\n노이즈, 위치 의존", "#f5d9d9"),
