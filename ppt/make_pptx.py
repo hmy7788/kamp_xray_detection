@@ -134,6 +134,40 @@ def new_slide(title, message=None, note=None):
     return s
 
 
+
+
+def flow_box(slide, x, y, w, h, title, lines, fill, size=12, title_size=14):
+    """제목 한 줄과 본문 여러 줄을 가진 둥근 상자."""
+    shp = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(x), Inches(y), Inches(w), Inches(h))
+    shp.fill.solid()
+    shp.fill.fore_color.rgb = fill
+    shp.line.color.rgb = GRAY
+    tf = shp.text_frame
+    tf.word_wrap = True
+    tf.vertical_anchor = MSO_ANCHOR.MIDDLE
+    tf.margin_left = tf.margin_right = Inches(0.07)
+    tf.margin_top = tf.margin_bottom = Inches(0.03)
+    p0 = tf.paragraphs[0]
+    p0.alignment = PP_ALIGN.CENTER
+    p0.space_after = Pt(3)
+    r0 = p0.add_run()
+    r0.text = title
+    r0.font.size, r0.font.bold, r0.font.name = Pt(title_size), True, FONT
+    r0.font.color.rgb = NAVY
+    for line in lines:
+        pp = tf.add_paragraph()
+        pp.alignment = PP_ALIGN.CENTER
+        pp.space_after = Pt(1)
+        rr = pp.add_run()
+        rr.text = line
+        rr.font.size, rr.font.name = Pt(size), FONT
+        rr.font.color.rgb = BLACK
+    return shp
+
+
+def arrow(slide, x, y, w=0.2, text="▶", size=12):
+    tb(slide, x, y, w, 0.4, text, size=size, color=GRAY, align=PP_ALIGN.CENTER)
+
 # ================================================================ 1 표지
 s = prs.slides.add_slide(BLANK)
 page[0] += 1
@@ -289,6 +323,38 @@ bullets(s, 9.2, 1.95, 3.8, 5.0, [
     "**test는 한 번만** 평가",
     "팀원 모델은 가중치를 받아 같은 코드로 다시 평가(임계값도 다시 선정)",
 ], size=16, gap=10)
+
+# ================================================================ 4-1 평가 아키텍처
+s = new_slide("평가 아키텍처: 같은 코드로 모든 모델을 채점", "임계값은 val에서 정해 고정하고, test는 한 번만 본다", note="평가(정답 있음)는 신뢰도와 IoU(또는 중심 거리)를 둘 다 보고, 현장 판정(정답 없음)은 신뢰도만 본다. 코드: src/minyeop/faster_rcnn/metrics.py, report.py")
+C1, C2, C3, C4, C5 = RGBColor(0xDD, 0xE6, 0xF7), RGBColor(0xFB, 0xE7, 0xCC), RGBColor(0xD6, 0xEC, 0xDC), RGBColor(0xF5, 0xD9, 0xD9), RGBColor(0xE6, 0xDC, 0xF0)
+# 1단: 예측과 임계값
+tb(s, 0.5, 1.75, 12.3, 0.35, "① 예측과 임계값 선정", size=14, bold=True, color=NAVY)
+steps = [("데이터 v2", ["train 1,767 · val 369", "test 396 · 분할 시드 42"], C1),
+         ("학습", ["6개 모델, train만 사용", "test는 학습에 쓰지 않음"], C1),
+         ("val 예측", ["신뢰도 0.001 이상 검출을", "전부 저장"], C2),
+         ("임계값 선정", ["val에서 F1이 최대인 값", "모델마다 따로 정해 고정"], C2),
+         ("test 예측 (1회)", ["고정한 임계값으로", "test는 한 번만 채점"], C2)]
+for i, (ti, li, co) in enumerate(steps):
+    x = 0.5 + i * 2.5
+    flow_box(s, x, 2.1, 2.3, 1.15, ti, li, co, size=12)
+    if i < len(steps) - 1:
+        arrow(s, x + 2.3, 2.5)
+# 2단: 채점
+tb(s, 0.5, 3.4, 12.3, 0.35, "② 채점 (정답 있음): 신뢰도와 IoU를 둘 다 본다", size=14, bold=True, color=NAVY)
+sc = [("신뢰도 필터", ["신뢰도 ≥ 임계값인", "검출만 사용"], C3),
+      ("매칭", ["신뢰도 높은 순으로 정답 1개에", "검출 1개 짝짓기", "IoU ≥ 0.5 (기본)", "중심 거리 ≤ R px (v2)"], C3),
+      ("TP / FP / FN", ["짝이 있으면 TP", "짝 없는 검출 FP", "짝 없는 정답 FN"], C3),
+      ("지표", ["P · R · F1(고정 임계값)", "AP50, mAP50-95(임계값 무관)", "전체 / 공식 라벨만, 호기별"], C3)]
+for i, (ti, li, co) in enumerate(sc):
+    x = 0.5 + i * 3.1
+    flow_box(s, x, 3.75, 2.9, 1.5, ti, li, co, size=12)
+    if i < len(sc) - 1:
+        arrow(s, x + 2.9, 4.3)
+# 3단: 일반화 평가와 현장 판정
+tb(s, 0.5, 5.35, 6.0, 0.35, "③ 일반화·robust 평가", size=14, bold=True, color=NAVY)
+flow_box(s, 0.5, 5.7, 6.9, 1.2, "같은 임계값, 이미지만 바꿔 시험", ["점 제거 · 가짜 정상 · 합성 점 · 호기별", "→ 이미지 단위 오경보율, 합성 점 검출률·AP"], C4, size=12)
+tb(s, 7.6, 5.35, 5.2, 0.35, "현장 판정 (정답 없음)", size=14, bold=True, color=NAVY)
+flow_box(s, 7.6, 5.7, 5.2, 1.2, "신뢰도만 본다 (IoU 사용 안 함)", ["이미지 최고 신뢰도 ≥ 임계값이면 NG", "→ 불합격 / 재검사 / 합격 3단 판정"], C5, size=12)
 
 # ================================================================ 5 1차 결과
 s = new_slide("결과: 몇 개를 못 찾았다", "F1은 0.986~0.991, 정답 663개 중 6~9개를 놓쳤고 거의 전부 공식 라벨 이미지다")

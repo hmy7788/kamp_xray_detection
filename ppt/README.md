@@ -8,7 +8,7 @@
 | `report_draft.md` | 보고서 초안(양식의 6개 장 + 표지 + 설문 캡처). 빈 곳은 `[작성 필요]`, `[확정 필요]`, `[확인 필요]`로 표시, 맨 앞에 체크리스트 |
 | `make_figures.py` | `ppt/figures/`의 그림을 결과 파일에서 직접 만드는 스크립트 (`python ppt/make_figures.py`, `PYTHONUTF8=1`) |
 | `figures/` | 생성·복사된 그림(PNG) |
-| `presentation.pptx`, `presentation.pdf` | **발표자료** 29장(제출은 PDF+PPT). 최종 모델 D-FINE-N 기준, 팀명은 [확정 필요] |
+| `presentation.pptx`, `presentation.pdf` | **발표자료** 30장(제출은 PDF+PPT). 최종 모델 D-FINE-N 기준, 팀명은 [확정 필요] |
 | `make_example_figures.py` | 발표자료용 예시 사진·그래프(fig5a~e, fig3n) 생성. `PYTHONUTF8=1 python ppt/make_example_figures.py [a b c d e n]` |
 | `make_pptx.py` | 발표자료 생성 스크립트(`python ppt/make_pptx.py`, python-pptx). 숫자는 `docs/`와 같은 값이라 결과가 바뀌면 이 파일의 문자열을 고친다. 파일 속성(작성자 등)은 비운다 |
 | `export_pdf.ps1` | PowerPoint(Windows)로 PDF 변환, `-PngDir`로 슬라이드 PNG도 내보냄(레이아웃 점검용) |
