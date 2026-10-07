@@ -167,7 +167,7 @@ data/
 | 우선순위 | 할 일 | 평가 항목 | 담당 |
 |---|---|---|---|
 | 1 | 공통 평가 코드: 임시 계산기(`report.py`)는 있음 → `scripts/evaluate.py`로 옮길지, 중심 거리 매칭을 병행할지 팀 결정 | 모델 개발(40) | minyeop(임시 코드), 결정 _(미정)_ |
-| 2 | 베이스라인 2개 이상 학습·평가 (Faster R-CNN, YOLOv3-tiny, MobileNetV3-FPN 완료. 이총 YOLO26n은 val 결과만 있고 test 미실시, 정연창 모델 필요) | 모델 개발(40) | 각자 (minyeop: 3개 완료) |
+| 2 | 베이스라인 2개 이상 학습·평가 (Faster R-CNN, YOLOv3-tiny, MobileNetV3-FPN 완료. 이총 YOLO26n 640·1024 test 완료, 정연창 모델 필요) | 모델 개발(40) | 각자 (minyeop: 3개 완료) |
 | 3 | FN/FP 오류분석 (`conditions.csv` 활용: 호기, 대비, 배경, 월 등. 크기는 공식 라벨만). 호기·해상도별 통계와 합성 점 시험은 있고(`docs/analysis.md`) `conditions.csv` 기반 조건별 분해는 아직 | 오류분석(15) | _(미정)_ |
 | 4 | 표시를 지운 자리의 윤곽 흔적 검증 (v2 대상) | 데이터 이해(15) | _(미정)_ |
 | 5 | `environment.yml` 또는 한 번에 도는 실행 스크립트, 예측결과 CSV | 재현성(10) | _(미정)_ |
