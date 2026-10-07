@@ -40,6 +40,17 @@
   - 가짜 정상은 점만 지운 이미지이지 진짜 정상 제품이 아니다. 평균 보간(평평한 패치)은 모델이 쉽게 "없음"으로 판정하는 쉬운 조건일 수 있고, 노이즈 보간은 무늬 자체가 헛경보를 일으키는 어려운 조건일 수 있다. **실제 정상 제품의 오경보율은 이 두 값 사이 어딘가이고 어디인지는 이 실험으로 알 수 없다.** 보고서에는 단일 값이 아니라 범위로 쓸 것
   - 시드 하나, 임계값은 이미지 단위 오경보를 줄이는 기준이 아니라 IoU 기준 val F1 최대값
 
+### 2-2. 점 제거·가짜 정상, 6개 모델 (팀원 모델 포함)
+- **방법**: 2절·점 제거와 같은 설정(평균 보간 4/6/8, 평균+노이즈 6, NS+노이즈 4/5/6/8, 시드 0)으로 6개 모델을 다시 돌렸다. 두 분석이 같은 이미지라 한 번에 계산한다. 기존 R50·YOLOv3-tiny 숫자가 그대로 재현되어 새 모델 결과도 같은 기준이다.
+- **점 자체가 단서다 (6개 모델 공통)**: 노이즈 없는 평균 보간으로 반변 6px 이상 지우면 남는 검출이 663개 중 0~3개다. 점이 사라지면 검출도 사라진다(결함의 정체는 점이다).
+- **노이즈를 더한 보간에 대한 반응은 모델마다 크게 다르다**:
+  - 거의 반응 없음: R50(0.3~0.5%), YOLO26n(0.8~4.1%).
+  - 크게 반응: MobileNetV3(34~64%), D-FINE(20~49%), YOLOv3-tiny(22~39%), RT-DETR(20~37%). 오경보 대부분이 **지운 자리**에서 나온다(예: NS+노이즈 6에서 YOLOv3-tiny 215개 중 지운 자리 215, MobileNet 391/395). 모델이 점의 형태 말고 "작은 어두운 얼룩 질감"에도 반응한다는 뜻이다.
+  - 오경보율은 임계값에 좌우되므로 **AUC(원본 대 가짜 정상)**를 함께 본다. 지운 자리가 원본 점과 가장 구분이 안 되는 모델은 MobileNet(0.842)과 D-FINE(0.900)이고, YOLOv3-tiny(0.997)와 RT-DETR(0.974)은 구분은 되지만 임계값이 낮아(YOLOv3-tiny 0.06) 오경보가 많이 나온다. 이전 문서의 "YOLO 22~39%"는 상당 부분 낮은 임계값 탓이다.
+- **D-FINE은 노이즈 없는 평균 보간에서도 오경보가 가장 많다**(4.1%, 2.4%). 대부분 지운 자리 밖이다(15개 중 14개, 9개 중 9개). 느슨한 임계값(0.66)과 DETR 계열의 배경 오검출 성향이 의심되나 확인하지 않았다.
+- **한계**: 가짜 정상은 진짜 정상이 아니다. R50과 YOLO26n이 반응하지 않는 것이 진짜 강건성인지, 보간·노이즈 패턴을 못 보는 것인지는 가려내지 못했다. 보간 흔적의 영향은 모델마다 다를 수 있다. test 이미지 기반이며(6절), 빈 라벨 27장은 오경보가 0이지만 제품이 반만 찍힌 특수 사진이다.
+- **시사점(제안)**: 현장 오경보 관점에서는 R50·YOLO26n이 유리하다. 단 YOLO26n은 합성 점의 3호기에서 약했다(3-3절). 오경보에 약한 모델은 임계값을 높이는 대신 옅은 점을 놓칠 수 있다(트레이드오프).
+
 ## 3. 점 합성 시험 (미탐지 조건 분석)
 - **목적**: 실제로는 놓침이 거의 없어서 분석할 미탐 사례가 없으므로, 옅은 점을 만들어 어디서부터 놓치는지 본다.
 - **방법** (코드 `src/minyeop/synth_insert/insert_dots.py`, 결과 `runs/minyeop/06_synth_insert_v1/`)
@@ -110,7 +121,7 @@
 | 가짜 정상 오경보 | `fake_normal/false_alarm.py` | `05_fake_normal_v1/` (`summary.json`, `per_image.csv`) |
 | 점 합성 시험 | `synth_insert/insert_dots.py` | `06_synth_insert_v1/` (`summary.json`, `per_dot.csv`, `figures/synth_check.png`, `synth_full.png`) |
 | 막대 안 합성 점 평가 | `scripts/synth_eval.py`(데이터 생성), `synth_eval/eval_synth.py`, `figures.py` | `08_synth_eval_v1/` (`summary.json`, `per_dot.csv`, `figures/synth_eval.png`) |
-| 6개 모델 비교(팀원 모델 포함) | `extra_models/predict_extra.py`, `eval_extra.py`, `compare_synth.py`, `figures.py` | `09_extra_models_v1/` (`summary.json`, `figures/compare6.png`, `preds_*.json`은 Git 제외) |
+| 6개 모델 비교(팀원 모델 포함) | `extra_models/predict_extra.py`, `eval_extra.py`, `compare_synth.py`, `robust_extra.py`, `figures.py`, `figures_robust.py` | `09_extra_models_v1/` (`summary.json`, `robust_summary.json`, `figures/compare6.png`, `robust6.png`, `preds_*.json`은 Git 제외) |
 | 점 제거 | `dot_removal/remove_dot.py` | `03_dot_removal_v1/` |
 | 추론 속도 | 일회성 스크립트 (저장소에 없음) | 이 문서와 experiments.md의 표 |
 
