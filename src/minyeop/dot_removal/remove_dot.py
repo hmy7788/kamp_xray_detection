@@ -66,7 +66,7 @@ def remove_dots(img_path, gts, half, rng, noise_gain=0.75, method="ns"):
     mask = np.zeros_like(im8)
     for x, y in spots:
         mask[max(y - half, 0):y + half + 1, max(x - half, 0):x + half + 1] = 255
-    if method == "mean":  # 평균 보간: 지운 자리를 바로 바깥 3px 링의 평균 밝기 한 값으로 채운다 (데이터 전처리의 "주변 회색 메움"과 같은 방식)
+    if method == "mean":  # 평균 보간: 지운 자리를 바로 바깥 3px 링의 평균 밝기 한 값으로 채운다 (데이터 전처리의 "주변 회색 메움"과 같은 계열이지만 같지는 않다: 전처리는 색 픽셀을 5x5 평균으로 반복해 채워 한 값이 아니다)
         out = im.copy()
         H, W = im.shape
         for x, y in spots:

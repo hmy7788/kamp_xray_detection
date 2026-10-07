@@ -25,7 +25,7 @@ PYTHONUTF8=1 python scripts/synth_eval.py --split test --out data_synth/test --v
 공통 평가 코드 역할은 임시로 `src/minyeop/faster_rcnn/`의 `metrics.py`(AP·P/R/F1)와 `report.py`(보고 표 계산)가 대신합니다. 모델과 무관한 검출 결과 JSON을 입력으로 받습니다([docs/README.md](../docs/README.md)). 모두가 쓰는 코드로 `scripts/evaluate.py`에 옮길지는 팀 확인이 필요합니다.
 
 ## 담당
-- **데이터 전처리, 분할**: 이총(`chong`) — 확정 v2 데이터는 `data/`에 있지만 이를 만든 전처리 코드는 이 저장소에 없습니다. 대회 제출물에 전처리 코드가 포함되어야 하므로(재현성 평가) 여기에 커밋해야 합니다. v2 데이터 계보: KAMP 원본 BMP → 중복 제거 → 장비 색상 박스 제거(주변 회색 메움) → 회색조 PNG.
+- **데이터 전처리, 분할**: 이총(`chong`) — 확정 v2 데이터는 `data/`에 있고, 이를 만든 전처리 코드는 main에는 없지만 이총의 브랜치 `feat/chong-preprocess`(`scripts/preprocess/`)에 있습니다(원본 BMP에 돌리면 `data/`와 픽셀 단위로 일치함을 확인함). main에 병합이 필요합니다. 대회 제출물에 전처리 코드가 포함되어야 하므로(재현성 평가) 여기에 커밋해야 합니다. v2 데이터 계보: KAMP 원본 BMP → 중복 제거 → 장비 색상 박스 제거(주변 회색 메움) → 회색조 PNG.
 - **학습 실행, 평가**: 팀 합의 후 담당 지정 _(미정)_
 
 ## 이전 구현 참고

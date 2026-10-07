@@ -20,3 +20,4 @@
 | `07_group_stats_v1` | 호기·해상도별 통계(학습 아님) | 뚜렷한 호기·해상도 효과 없음, 1호기·352x332는 공식 라벨 76%라 낮음 | 코드 `src/minyeop/group_stats/` |
 | `08_synth_eval_v1` | 막대 안 합성 점 평가(학습 아님): 시드 42, test 바탕 386장·점 1,436개 | 대비 6 미만 거의 못 찾음, MobileNet은 3호기 합성 점을 거의 못 찾음(2~4%) | 코드 `scripts/synth_eval.py`, `src/minyeop/synth_eval/` |
 | `09_extra_models_v1` | 팀원 모델(YOLO26n, RT-DETR-l, D-FINE-N) 가중치로 6개 모델 비교(학습 아님) | 실제 test는 모두 포화(F1 0.986~0.991), 합성 점은 임계값과 무관하게 보면 MobileNet만 뒤처짐, 점 제거·가짜 정상은 R50·YOLO26n만 노이즈 보간에 반응 없음 | 코드 `src/minyeop/extra_models/`, 가중치 `weights/pts/` |
+| `10_preprocess_check_v1` | 전처리 재현 검증(학습 아님): 원본 BMP에 fill을 적용해 data/와 픽셀 비교 | 2,532장 모두 완전 일치 | 코드 `src/minyeop/preprocess_check/`, 전처리 코드는 `feat/chong-preprocess` |
