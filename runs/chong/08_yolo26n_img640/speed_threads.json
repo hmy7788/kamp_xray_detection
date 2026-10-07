@@ -1,0 +1,102 @@
+{
+  "exp_id": "lee_003",
+  "imgsz": 640,
+  "weights": "runs\\lee_003\\work\\seed42\\train\\weights\\best.pt",
+  "onnx": "runs/synth_band/exports/lee003_640.onnx",
+  "cpu": "Intel64 Family 6 Model 186 Stepping 2, GenuineIntel",
+  "gpu": "NVIDIA GeForce RTX 4050 Laptop GPU",
+  "images": "CPU: val 앞 50장 (5장 예열 제외) / GPU: val 전부 (30장 예열 제외)",
+  "runs": [
+    {
+      "tag": "torch_gpu",
+      "backend": "torch",
+      "device": "0",
+      "threads": null,
+      "pinned_p_cores": false,
+      "torch_threads": 16,
+      "n_images": 339,
+      "ms_mean": 12.72,
+      "ms_median": 11.63,
+      "ms_p95": 16.72,
+      "fps": 78.6
+    },
+    {
+      "tag": "torch_cpu_t1",
+      "backend": "torch",
+      "device": "cpu",
+      "threads": 1,
+      "pinned_p_cores": true,
+      "torch_threads": 1,
+      "n_images": 50,
+      "ms_mean": 59.77,
+      "ms_median": 59.88,
+      "ms_p95": 63.25,
+      "fps": 16.7
+    },
+    {
+      "tag": "torch_cpu_t4",
+      "backend": "torch",
+      "device": "cpu",
+      "threads": 4,
+      "pinned_p_cores": true,
+      "torch_threads": 4,
+      "n_images": 50,
+      "ms_mean": 32.55,
+      "ms_median": 32.18,
+      "ms_p95": 40.36,
+      "fps": 30.7
+    },
+    {
+      "tag": "torch_cpu_t16",
+      "backend": "torch",
+      "device": "cpu",
+      "threads": 16,
+      "pinned_p_cores": false,
+      "torch_threads": 16,
+      "n_images": 50,
+      "ms_mean": 37.22,
+      "ms_median": 37.03,
+      "ms_p95": 43.71,
+      "fps": 26.9
+    },
+    {
+      "tag": "onnx_cpu_t1",
+      "backend": "onnx",
+      "device": "cpu",
+      "threads": 1,
+      "pinned_p_cores": true,
+      "torch_threads": 1,
+      "n_images": 50,
+      "ms_mean": 63.19,
+      "ms_median": 62.99,
+      "ms_p95": 65.36,
+      "fps": 15.8
+    },
+    {
+      "tag": "onnx_cpu_t4",
+      "backend": "onnx",
+      "device": "cpu",
+      "threads": 4,
+      "pinned_p_cores": true,
+      "torch_threads": 4,
+      "n_images": 50,
+      "ms_mean": 26.38,
+      "ms_median": 26.34,
+      "ms_p95": 29.32,
+      "fps": 37.9
+    },
+    {
+      "tag": "onnx_cpu_t16",
+      "backend": "onnx",
+      "device": "cpu",
+      "threads": 16,
+      "pinned_p_cores": false,
+      "torch_threads": 16,
+      "n_images": 50,
+      "ms_mean": 76.11,
+      "ms_median": 69.27,
+      "ms_p95": 119.04,
+      "fps": 13.1
+    }
+  ]
+}

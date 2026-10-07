@@ -165,3 +165,7 @@ GPU: RTX 4050 Laptop (200장), CPU: Intel Core i7-13620H 10코어/16스레드 (3
 | YOLOv3-tiny | 8.7M | 59분 (100 epoch) | 4.8ms (208) | 142ms | 43ms | 35ms |
 | Faster R-CNN MobileNetV3-FPN | 19.0M | 20분 (20 epoch) | 11.3ms (88) | 149ms | 73ms | 73ms |
 | Faster R-CNN R50-FPN | 41.4M | 67분 (20 epoch) | 48.4ms (21) | 2,073ms | 756ms | 584ms |
+| **YOLO26n 640 (chong 최종, PyTorch)** | 2.5M | 110분 (40 epoch, 중단 뒤 이어 학습·다른 작업과 겹침. 같은 설정 1024 는 62분) | 12.7ms (79) | 60ms | 33ms | 37ms |
+| YOLO26n 640 (chong 최종, ONNX Runtime CPU) | 2.5M (ONNX 9.3MB) | 같은 가중치 | — | 63ms | 26ms | 76ms |
+
+chong 행 측정 조건: val 사진(CPU 50장·GPU 364장, 예열 제외), 배치 1, fp32, 전처리·추론·후처리 포함. 1·4스레드는 P코어에 고정(하이브리드 CPU 에서 E코어 배정 시 3~4배 느려짐), 16스레드는 전 코어라 E코어가 끌어내려 4스레드보다 느리다. ONNX 4스레드는 실행에 따라 26~40ms. 원본은 `runs/chong/08_yolo26n_img640/speed_threads.json`, 코드 `src/chong/harness/members/lee/speed_threads.py`.
