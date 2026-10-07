@@ -71,7 +71,7 @@ KAMP "X-ray 검사장비 AI 데이터셋" 프로젝트. X선 이물 검출기 �
 - `faster_rcnn/report.py --center-r 5 --tag _v2`: 평가 v2(중심 거리 매칭, 임계값도 이 기준으로 val에서 재선정). R≥3px면 두 모델 모두 test 만점이라 구분은 R=1~2px에서만 된다. IoU 0.5 기준 F1은 사실상 중심 2px 이내 여부를 재고 있었다.
 - `dot_removal/remove_dot.py`: test 정답의 어두운 점을 보간(Navier-Stokes 또는 평균)으로 지운 뒤 두 모델에 다시 넣는 지름길 검증. 점을 충분히 지우면 검출이 거의 0이 된다(`runs/minyeop/03_dot_removal_v1/`, 해석은 `docs/README.md`).
 - `fake_normal/false_alarm.py`: 점을 지운 test 이미지(가짜 정상)에서 세 모델의 이미지 단위 오경보를 계산한다(`runs/minyeop/05_fake_normal_v1/`). 평균 보간은 0.8% 이하, 노이즈를 더한 보간은 YOLO·MobileNet 22~64%라 **오경보는 범위로 해석**한다(진짜 정상 제품이 아님).
-- `synth_insert/insert_dots.py`: val의 실제 점을 test 바탕에 s·f를 바꿔 합성해 검출률을 본다(`runs/minyeop/06_synth_insert_v1/`). MobileNet은 무작위 자리에서 30%(R50·YOLO 약 90%)라 위치 의존이 의심되지만, 합성 점의 사각형 자국이 교란 요인이다.
+- `synth_insert/insert_dots.py`: val의 실제 점을 test 바탕에 s·f를 바꿔 합성해 검출률을 본다(`runs/minyeop/06_synth_insert_v1/`). 6개 모델 전부(`runs/minyeop/11_synth_insert_6models_v1/`)에서 무작위 자리 검출률은 D-FINE-N 93%, YOLOv3-tiny 90%, R50 89%, RT-DETR-l 85%, YOLO26n 75%, MobileNet 30%라 위치 의존은 MobileNet이 가장 크고 YOLO26n·RT-DETR-l에도 일부 있다(합성 점의 사각형 자국이 교란 요인). 속도는 6개 모델을 같은 조건으로 재측정했다(`extra_models/speed_all.py`).
 - `group_stats/`: 호기·해상도별 통계(`runs/minyeop/07_group_stats_v1/`). 해상도별 공식 라벨 비율이 달라(10~76%) 순수한 호기·해상도 효과를 분리하지 못한다.
 - `extra_models/`: `weights/pts/`의 팀원 모델(YOLO26n, RT-DETR-l, D-FINE-N)을 우리 모델과 같은 기준으로 평가(`runs/minyeop/09_extra_models_v1/`). 실제 test는 6개 모두 포화(F1 0.986~0.991). 노이즈 보간 가짜 정상에는 R50·YOLO26n만 반응이 없다. 가중치 폴더 `faster r-cnn mobilenetv3/best.pt`는 실제로 R50이다.
 - **최종 모델: D-FINE-N**(2026-10-07, `docs/analysis.md` 5절). val mAP50-95는 RT-DETR-l과 동률 선두(부트스트랩), 합성 점 미탐지 강건성 최상·작음(3.7M)이 근거이고 약점은 노이즈 보간 오경보 49%. 미탐지 우선이라는 우선순위는 결과를 본 뒤 정한 것이며 보고서에 밝힌다.
