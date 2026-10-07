@@ -321,10 +321,28 @@ def copy_figs():
              RUN / "07_group_stats_v1/figures/group_chart_test.png": "fig3f_groups_chart.png",
              RUN / "07_group_stats_v1/figures/group_samples_test.png": "fig3h_group_samples.png",
              RUN / "06_synth_insert_v1/figures/synth_check.png": "fig3g_synth_examples.png",
-             RUN / "06_synth_insert_v1/figures/synth_full.png": "fig3i_synth_full.png"}
+             RUN / "06_synth_insert_v1/figures/synth_full.png": "fig3i_synth_full.png",
+             RUN / "08_synth_eval_v1/figures/synth_eval.png": "fig3j_synth_eval_bars.png",
+             RUN / "09_extra_models_v1/figures/compare6.png": "fig3k_compare6.png",
+             RUN / "09_extra_models_v1/figures/robust6.png": "fig3l_robust6.png"}
     for src, dst in pairs.items():
         shutil.copy(src, OUT / dst)
         print("복사", dst)
+
+
+def fig3_bar_preview():
+    """막대 안 합성 점 데이터(scripts/synth_eval.py)의 미리보기: 호기마다 이미지 1장, 원본(초록=실제 점)과 합성(하늘색=막대 윤곽). 임시 폴더에 데이터를 다시 만든다(시드 42, 약 1분)."""
+    import importlib.util
+    import tempfile
+    spec = importlib.util.spec_from_file_location("synth_eval", ROOT / "scripts" / "synth_eval.py")
+    se = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(se)
+    with tempfile.TemporaryDirectory() as tmp:
+        out = Path(tmp) / "test"
+        dots, imgs, skipped, extra, man = se.generate("test", out, 4, se.SEED)
+        se.preview(out, "test", extra, man, n_per_machine=1, scale=1.3)
+        shutil.copy(out / "preview_overview.png", OUT / "fig3m_synth_bars.png")
+    print("생성 fig3m_synth_bars.png")
 
 
 if __name__ == "__main__":
@@ -340,4 +358,5 @@ if __name__ == "__main__":
     fig3_heatmap()
     fig4_threshold(rows)
     copy_figs()
+    fig3_bar_preview()
     print("완료:", OUT)

@@ -25,6 +25,10 @@
 | `fig3f_groups_chart.png` | 호기·해상도별 성능과 공식 라벨 비율 | 3 | 복사: `runs/minyeop/07_group_stats_v1/figures/` |
 | `fig3g_synth_examples.png`, `fig3i_synth_full.png` | 합성한 점의 실제 모양과 위치 | 3 | 복사: `runs/minyeop/06_synth_insert_v1/figures/` |
 | `fig3h_group_samples.png` | 호기·해상도 그룹별 검출 예시 | 3 | 복사: `runs/minyeop/07_group_stats_v1/figures/` |
+| `fig3j_synth_eval_bars.png` | 막대 안 합성 점 검출률(세 모델): 대비별, 호기별 | 3 | 복사: `runs/minyeop/08_synth_eval_v1/figures/` |
+| `fig3k_compare6.png` | 6개 모델 합성 점 비교: val 임계값, 임계값과 무관한 AP, 호기별 | 3 | 복사: `runs/minyeop/09_extra_models_v1/figures/` |
+| `fig3l_robust6.png` | 6개 모델 점 제거·가짜 정상 히트맵(오경보율, AUC) | 3 | 복사: `runs/minyeop/09_extra_models_v1/figures/` |
+| `fig3m_synth_bars.png` | 작대기 안 합성 점 미리보기(호기마다 1장) | 3 | `make_figures.py`(`fig3_bar_preview`, 임시 폴더에 시드 42로 다시 생성) |
 | `fig4a_threshold_tradeoff.png` | 임계값에 따른 옅은 점 검출 vs 오경보 → 재검사 구간 근거 | 4 | `make_figures.py` |
 
 모델 색은 모든 그림에서 같다: R50 파랑, YOLOv3-tiny 주황, MobileNetV3 초록.
