@@ -8,6 +8,9 @@
 | `report_draft.md` | 보고서 초안(양식의 6개 장 + 표지 + 설문 캡처). 빈 곳은 `[작성 필요]`, `[확정 필요]`, `[확인 필요]`로 표시, 맨 앞에 체크리스트 |
 | `make_figures.py` | `ppt/figures/`의 그림을 결과 파일에서 직접 만드는 스크립트 (`python ppt/make_figures.py`, `PYTHONUTF8=1`) |
 | `figures/` | 생성·복사된 그림(PNG) |
+| `presentation.pptx`, `presentation.pdf` | **발표자료** 18장(제출은 PDF+PPT). 최종 모델 D-FINE-N 기준, 팀명은 [확정 필요] |
+| `make_pptx.py` | 발표자료 생성 스크립트(`python ppt/make_pptx.py`, python-pptx). 숫자는 `docs/`와 같은 값이라 결과가 바뀌면 이 파일의 문자열을 고친다. 파일 속성(작성자 등)은 비운다 |
+| `export_pdf.ps1` | PowerPoint(Windows)로 PDF 변환, `-PngDir`로 슬라이드 PNG도 내보냄(레이아웃 점검용) |
 
 ## 그림 목록 (장별)
 | 그림 | 내용 | 장 | 만드는 곳 |
@@ -39,3 +42,5 @@
 - 그림에는 **데이터 이미지가 그려진 것**(fig3a, fig3g~i)이 있다. 저장소가 비공개인 동안에만 Git에 둔다.
 - 해석과 한계는 `docs/analysis.md`가 원문이고, `report_draft.md`는 그것을 보고서 문체로 옮긴 것이다. 두 문서가 어긋나면 `docs/analysis.md`를 기준으로 고친다.
 - 새 그림은 `make_figures.py`에 함수를 추가하고 이 표에 한 줄 적는다.
+
+- `presentation.pptx/pdf`에는 데이터 이미지가 들어간 그림이 있어 저장소가 비공개인 동안에만 Git에 둔다. 제출 전에 팀명을 넣고, 식별 정보(소속, 로고)가 없는지 PDF 속성까지 확인한다.
