@@ -540,7 +540,7 @@ table(s, 0.6, 1.9, 12.1, [
     ["상황", "권장", "이유"],
     ["기본(최종 모델)", "D-FINE-N", "val 동률 선두, 미탐지 강건성 최상, 3.7M. 노이즈 오경보 49%"],
     ["오경보가 중요한 현장", "Faster R-CNN R50 또는 YOLO26n", "노이즈 오경보 0.5%·4.1%. R50은 느리고 YOLO26n은 3호기 합성 점에 약함"],
-    ["CPU 전용 / 최경량", "YOLOv3-tiny", "CPU 4스레드 약 70ms(6개 중 가장 빠름), 정확도 손실이 작음"],
+    ["CPU 전용 / 최경량", "YOLOv3-tiny", "CPU 4스레드 약 15 FPS(6개 중 가장 빠름), GPU FP16에서 258 FPS, 정확도 손실이 작음"],
     ["비권장", "MobileNetV3", "위치 의존, 합성 점 AP 0.262, 노이즈 오경보 34~64%"],
 ], [2.2, 3.4, 6.5], size=14, row_h=0.58)
 import json as _json2
@@ -557,12 +557,19 @@ def _rg(label, key):
     return _fm(lo) if _fm(lo) == _fm(hi) or hi - lo < 0.6 else f"{_fm(lo)}~{_fm(hi)}"
 
 
-_order = [("YOLOv3-tiny", "YOLOv3-tiny"), ("Faster R-CNN MobileNetV3-FPN", "MobileNetV3"), ("Faster R-CNN R50-FPN", "R50"), ("D-FINE-N", "D-FINE-N"), ("YOLO26n", "YOLO26n"), ("RT-DETR-l", "RT-DETR-l")]
-_rows = [["처리 속도 (이미지 1장, ms)"] + [s_ for _, s_ in _order]]
-for _lab in ("GPU", "CPU 1스레드", "CPU 4스레드", "CPU 16스레드"):
-    _rows.append([_lab] + [_rg(_lab, k_) for k_, _ in _order])
-table(s, 0.6, 5.0, 12.1, _rows, [2.6, 1.5, 1.5, 1.2, 1.5, 1.5, 1.5], size=13, row_h=0.36)
-tb(s, 0.6, 6.82, 12.1, 0.5, "6개 모델을 같은 스크립트·같은 조건(전처리 제외, 모델 연산+후처리, 배치 1, fp32)으로 2회 반복해 잰 중앙값의 범위. GPU는 안정적(±1ms), CPU는 패스마다 크게 변동. 현장 장비 사양은 알지 못한다.", size=11, color=GRAY)
+_F = _json2.loads((ROOT / "runs/minyeop/09_extra_models_v1/fps_all.json").read_text(encoding="utf-8"))
+_order = [("YOLOv3-tiny", "YOLOv3-tiny"), ("YOLO26n", "YOLO26n"), ("Faster R-CNN MobileNetV3-FPN", "MobileNetV3"), ("D-FINE-N", "D-FINE-N"), ("RT-DETR-l", "RT-DETR-l"), ("Faster R-CNN R50-FPN", "R50")]
+
+
+def _ff(v):
+    return f"{v:.1f}" if v < 10 else f"{v:.0f}"
+
+
+_rows = [["처리 속도 FPS (3회 중 최고)"] + [s_ for _, s_ in _order]]
+for _mode in ("GPU FP32", "GPU FP16", "CPU 4스레드", "CPU 1스레드"):
+    _rows.append([_mode] + [_ff(_F["요약"][_mode][k_]["FPS 최대"]) for k_, _ in _order])
+table(s, 0.6, 5.0, 12.1, _rows, [2.6, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5], size=13, row_h=0.36)
+tb(s, 0.6, 6.82, 12.1, 0.5, "같은 조건(전처리 제외, 모델 연산+후처리, 배치 1)으로 3회 재어 최고값 사용. GPU FP32는 3회 ±15% 이내로 안정적, GPU FP16·CPU는 뒤쪽 패스에서 열·전력 제한으로 최대 11배 느려졌다. FP16은 가중치·입력을 half로 바꿨고 정확도(F1)는 재지 않았다.", size=11, color=GRAY)
 
 # ================================================================ 18 차별점
 s = new_slide("차별점: 점수를 믿게 만드는 검증", "못 찾은 것의 원인을 확인하고, 일반화까지 시험해 모델을 골랐다")
