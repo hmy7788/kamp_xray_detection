@@ -434,6 +434,11 @@ def main():
     out_dir = ROOT / a.out
     dots, imgs, skipped, extra, man = generate(a.split, out_dir, a.dots_per_image, a.seed)
     save_outputs(out_dir, dots, imgs, skipped)
+    made = {r["image"] for r in imgs}
+    for sub in ("images", "labels"):      # 이전 실행(다른 옵션)이 남긴 파일이 평가에 섞이지 않게 지운다
+        for f in (out_dir / sub).iterdir():
+            if f.stem + ".png" not in made:
+                f.unlink()
     qa = qa_report(extra, imgs, skipped, man)
     by_m = {m: sum(1 for r in dots if r["machine"] == m) for m in ("1", "2", "3")}
     by_cell = {f"s{s}_f{f}": sum(1 for r in dots if r["s"] == s and r["f"] == f) for s, f in CELLS}
