@@ -15,3 +15,6 @@
 | `02_yolov3tiny_img640_v1` | YOLOv3-tiny(ultralytics 2020), COCO 사전학습, 입력 640, 100 epoch(선택 59번째) | test F1 0.989, 공식 라벨만 0.964, 임계값 0.06 | 코드 `src/minyeop/yolov3_tiny/`. `train.log`와 학습 배치 샘플 이미지는 Git 제외 |
 | `03_dot_removal_v1` | 점 제거 분석(학습 아님): 보간 방식·크기별 `ns_half*`, `mean_half*`, `meannoise_half6` | 점을 충분히 지우면 두 모델 검출이 거의 0 | 코드 `src/minyeop/dot_removal/`, 해석은 `docs/README.md` |
 | `04_frcnn_mobv3_min640_anc16_v1` | Faster R-CNN MobileNetV3-Large FPN, COCO 사전학습, 입력 640, 앵커 16~256, 20 epoch(선택 18) | test F1 0.986, 공식 라벨만 0.959, 임계값 0.93 | 코드 `src/minyeop/faster_rcnn_mobilenet/`. ResNet-50 대비 학습 20분, 추론 약 4배 빠름 |
+| `05_fake_normal_v1` | 가짜 정상(점 지움) 이미지의 이미지 단위 오경보 분석(학습 아님), 방식 4종 | 평균 보간 0~0.8%, 노이즈 보간에서 YOLO·MobileNet 22~64%, R50 0.5% 이하 | 코드 `src/minyeop/fake_normal/` |
+| `06_synth_insert_v1` | 점 합성 시험(학습 아님): 진하기 4 x 크기 3 격자, 원래/무작위 자리 | MobileNet은 무작위 자리 30%(실제 세기), R50·YOLO 약 90% | 코드 `src/minyeop/synth_insert/`, 합성 자국 한계 있음 |
+| `07_group_stats_v1` | 호기·해상도별 통계(학습 아님) | 뚜렷한 호기·해상도 효과 없음, 1호기·352x332는 공식 라벨 76%라 낮음 | 코드 `src/minyeop/group_stats/` |
