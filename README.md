@@ -150,7 +150,7 @@ data/
 - **평가 v2(중심 ≤ 5px, 제안)**: 세 모델이 test 정답 663개 중 663, 663, 662개를 찾았습니다(마지막 1건은 신뢰도 0.910이 임계값 0.93에 못 미친 경계 사례). "찾았는가"는 포화 상태입니다.
 - **점 제거 실험**: 정답의 어두운 점을 보간으로 지우면 두 모델의 검출이 거의 사라집니다(13x13 제거 시 Faster R-CNN 663개 중 2개). 결함의 점 자체가 핵심 단서이고 위치만 보는 지름길은 약해졌습니다(상세는 [docs/README.md](docs/README.md)).
 - 위 함정 8·9(고정 크기 라벨, 지름길·표시 흔적 미검증) 때문에 점수를 일반 성능으로 읽으면 안 됩니다.
-- 코드와 결과는 `src/minyeop/{faster_rcnn,yolov3_tiny,faster_rcnn_mobilenet,dot_removal}/`, `runs/minyeop/{01_…,02_…,03_dot_removal_v1,04_…}/`(그림은 `figures/`)에 있고, 브랜치 `feat/minyeop-faster-rcnn`에서 PR 전입니다.
+- 코드와 결과는 `src/minyeop/{faster_rcnn,yolov3_tiny,faster_rcnn_mobilenet,dot_removal}/`, `runs/minyeop/{01_…,02_…,03_dot_removal_v1,04_…}/`(그림은 `figures/`)에 있습니다.
 
 ## 이전 시도의 참고값 (삭제된 결과, 이전 데이터·분할 기준이라 새 결과와 직접 비교하지 않음)
 표시를 지운 라벨 500장 데이터, COCO 사전학습에서 시작, 100 epoch, 신뢰도 임계값은 val에서 정함, IoU 0.5, 640px 기준입니다.
