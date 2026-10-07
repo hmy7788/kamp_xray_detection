@@ -8,7 +8,7 @@
 | `report_draft.md` | 보고서 초안(양식의 6개 장 + 표지 + 설문 캡처). 빈 곳은 `[작성 필요]`, `[확정 필요]`, `[확인 필요]`로 표시, 맨 앞에 체크리스트 |
 | `make_figures.py` | `ppt/figures/`의 그림을 결과 파일에서 직접 만드는 스크립트 (`python ppt/make_figures.py`, `PYTHONUTF8=1`) |
 | `figures/` | 생성·복사된 그림(PNG) |
-| `presentation.pptx`, `presentation.pdf` | **발표자료** 27장(제출은 PDF+PPT). 최종 모델 D-FINE-N 기준, 팀명은 [확정 필요] |
+| `presentation.pptx`, `presentation.pdf` | **발표자료** 29장(제출은 PDF+PPT). 최종 모델 D-FINE-N 기준, 팀명은 [확정 필요] |
 | `make_example_figures.py` | 발표자료용 예시 사진·그래프(fig5a~e, fig3n) 생성. `PYTHONUTF8=1 python ppt/make_example_figures.py [a b c d e n]` |
 | `make_pptx.py` | 발표자료 생성 스크립트(`python ppt/make_pptx.py`, python-pptx). 숫자는 `docs/`와 같은 값이라 결과가 바뀌면 이 파일의 문자열을 고친다. 파일 속성(작성자 등)은 비운다 |
 | `export_pdf.ps1` | PowerPoint(Windows)로 PDF 변환, `-PngDir`로 슬라이드 PNG도 내보냄(레이아웃 점검용) |
@@ -39,6 +39,8 @@
 | `fig5c_fake_examples.png` | 가짜 정상 예시: 원본 / 평균 보간 / NS+노이즈, 모델별 반응 | 3, 발표 | `make_example_figures.py` |
 | `fig5d_fn_by_model.png` | 모델별 못 찾은 개수: IoU 0.5 / 중심 2px / 중심 5px | 2, 발표 | `make_example_figures.py` |
 | `fig5e_select_ci.png` | val mAP50-95와 95% 신뢰구간(모델 선정) | 2, 발표 | `make_example_figures.py` |
+| `fig6a_label_whole.png` | 라벨 예시: 이미지 전체에 박스(공식 라벨 / 팀 라벨, 1·3호기) | 1, 발표 | `make_example_figures.py` |
+| `fig6b_label_zoom.png` | 박스 확대: 공식은 6~21px 제각각, 팀은 10·13.4px 고정 | 1, 발표 | `make_example_figures.py` |
 | `fig3n_synth_dots.png` | 합성 점 조건별 확대(진하기·크기·대비) | 3, 발표 | 복사: `data_synth/test/preview_dots.png` |
 | `fig4a_threshold_tradeoff.png` | 임계값에 따른 옅은 점 검출 vs 오경보 → 재검사 구간 근거 | 4 | `make_figures.py` |
 

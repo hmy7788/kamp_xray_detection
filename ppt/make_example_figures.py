@@ -8,6 +8,8 @@
   fig5d_fn_by_model.png    모델별 못 찾은 개수: IoU 0.5 / 중심 5px / 중심 2px
   fig5e_select_ci.png      val mAP50-95 와 95% 신뢰구간(모델 선정)
   fig3n_synth_dots.png     합성 점 조건별 확대 (data_synth/test/preview_dots.png 복사)
+  fig6a_label_whole.png    라벨 예시: 이미지 전체에 박스(공식 라벨 / 팀 라벨, 1·3호기)
+  fig6b_label_zoom.png     박스 확대: 공식 라벨은 크기가 제각각, 팀 라벨은 고정 크기
 데이터 이미지가 그려진 그림이라 저장소가 비공개인 동안에만 Git 에 둔다. 원본 BMP 가 있는 PC 에서만 fig5a 를 만들 수 있다.
 fig5c 의 점 제거는 이미지마다 새 난수(시드 0)로 만든 예시라 robust_extra.py 의 집계 이미지와 노이즈 값이 다르다(예시 용도).
 """
@@ -361,10 +363,102 @@ def fig5e():
     print("저장 fig5e_select_ci.png")
 
 
+# ------------------------------------------------------------------ fig6 라벨 예시 (공식 라벨 / 팀 라벨)
+def _label_boxes(row):
+    """manifest 한 행의 라벨을 픽셀 xyxy 박스 목록으로."""
+    w, h = int(row["width"]), int(row["height"])
+    out = []
+    for ln in (ROOT / "data" / row["label_path"]).read_text(encoding="utf-8").splitlines():
+        if ln.strip():
+            _, cx, cy, bw, bh = (float(v) for v in ln.split()[:5])
+            out.append(((cx - bw / 2) * w, (cy - bh / 2) * h, (cx + bw / 2) * w, (cy + bh / 2) * h))
+    return out
+
+
+def fig6a():
+    """호기(1, 3) x 라벨 출처(공식, 팀)의 이미지 전체와 박스."""
+    rows = list(MAN.values())
+    picks = {}
+    for mc in ("1", "3"):
+        for src in ("official", "team"):
+            for r in sorted(rows, key=lambda x: x["image_id"]):
+                if r["machine"] == mc and r["source"] == src and r["split"] == "test" and len(_label_boxes(r)) == 3 and (mc != "1" or r["width"] == "352"):
+                    picks[(mc, src)] = r
+                    break
+    H = 360
+    cells = []
+    for (mc, src), r in picks.items():
+        img = Image.open(ROOT / "data" / r["image_path"]).convert("RGB")
+        s = H / img.height
+        big = img.resize((int(img.width * s), H), Image.LANCZOS)
+        d = ImageDraw.Draw(big)
+        color = (60, 220, 90) if src == "official" else (240, 60, 60)
+        for b in _label_boxes(r):
+            d.rectangle([b[0] * s - 1, b[1] * s - 1, b[2] * s + 1, b[3] * s + 1], outline=color, width=2)
+        cells.append(((mc, src), big, len(_label_boxes(r))))
+    cw = max(c[1].width for c in cells)
+    canvas = Image.new("RGB", (2 * (cw + 14) + 14, 40 + 2 * (H + 34)), (30, 30, 30))
+    d = ImageDraw.Draw(canvas)
+    d.text((14, 8), "라벨 예시: 이미지 전체에 박스를 그린 모습 (test 이미지)", fill=(255, 255, 255), font=font(18))
+    for (mc, src), big, n in cells:
+        col = 0 if src == "official" else 1
+        row = 0 if mc == "1" else 1
+        x = 14 + col * (cw + 14)
+        y = 40 + row * (H + 34)
+        name = "공식 라벨 (사람이 그림)" if src == "official" else "팀 라벨 (클릭 → 고정 크기 박스)"
+        d.text((x, y), f"{mc}호기 | {name} | 박스 {n}개", fill=(255, 255, 0), font=font(15))
+        canvas.paste(big, (x, y + 26))
+    canvas.save(OUT / "fig6a_label_whole.png")
+    print("저장 fig6a_label_whole.png")
+
+
+def fig6b():
+    """박스 확대: 공식(크기 제각각) 4개, 팀(고정 크기) 4개."""
+    rows = [r for r in MAN.values()]
+    boxes = {"official": [], "team": []}
+    for r in sorted(rows, key=lambda x: x["image_id"]):
+        w, h = int(r["width"]), int(r["height"])
+        for b in _label_boxes(r):
+            side = max(b[2] - b[0], b[3] - b[1])
+            cx, cy = center(b)
+            if 24 <= cx <= w - 24 and 24 <= cy <= h - 24:
+                boxes[r["source"]].append((side, r["machine"], r, b))
+
+    def pick(src, machine, target):
+        c = [x for x in boxes[src] if x[1] == machine]
+        return min(c, key=lambda x: (abs(x[0] - target), x[2]["image_id"]))
+
+    off = [pick("official", "1", 6), pick("official", "2", 11), pick("official", "3", 14), pick("official", "3", 21)]
+    def pick_nth(src, machine, target, n):
+        c = sorted((x for x in boxes[src] if x[1] == machine and abs(x[0] - target) < 0.3), key=lambda x: x[2]["image_id"])
+        return c[min(n, len(c) - 1)]
+
+    team = [pick("team", "1", 10), pick("team", "2", 10), pick("team", "3", 13.4), pick_nth("team", "3", 13.4, 400)]
+    half, scale = 20, 7
+    tw = 2 * half * scale
+    canvas = Image.new("RGB", (4 * (tw + 10) + 10, 50 + 2 * (tw + 62)), (30, 30, 30))
+    d = ImageDraw.Draw(canvas)
+    d.text((10, 8), "박스 확대(40x40px 를 7배): 공식 라벨은 크기가 제각각, 팀 라벨은 고정 크기", fill=(255, 255, 255), font=font(18))
+    for ri, (title, group, color) in enumerate((("공식 라벨", off, (60, 220, 90)), ("팀 라벨", team, (240, 60, 60)))):
+        y = 50 + ri * (tw + 62)
+        for ci, (side, mc, r, b) in enumerate(group):
+            img = Image.open(ROOT / "data" / r["image_path"]).convert("L")
+            cx, cy = center(b)
+            t_, x0, y0 = crop_tile(img, cx, cy, half, scale)
+            td = ImageDraw.Draw(t_)
+            box_on(td, b, x0, y0, scale, color, 2)
+            x = 10 + ci * (tw + 10)
+            d.text((x, y), f"{title} | {mc}호기 | 한 변 {side:.1f}px", fill=(255, 255, 0), font=font(15))
+            canvas.paste(t_, (x, y + 26))
+            d.text((x, y + tw + 30), r["image_id"][:26], fill=(180, 180, 180), font=font(12))
+    canvas.save(OUT / "fig6b_label_zoom.png")
+    print("저장 fig6b_label_zoom.png", [(round(x[0], 1), x[1]) for x in off], [(round(x[0], 1), x[1]) for x in team])
+
+
 if __name__ == "__main__":
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8")
-    which = set(sys.argv[1:]) or {"a", "b", "c", "d", "e", "n"}
+    which = set(sys.argv[1:]) or {"a", "b", "c", "d", "e", "n", "f", "g"}
     if "a" in which:
         fig5a()
     if "b" in which:
@@ -375,6 +469,10 @@ if __name__ == "__main__":
         fig5d()
     if "e" in which:
         fig5e()
+    if "f" in which:
+        fig6a()
+    if "g" in which:
+        fig6b()
     if "n" in which:
         src = ROOT / "data_synth" / "test" / "preview_dots.png"
         if src.exists():
