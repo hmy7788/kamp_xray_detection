@@ -28,6 +28,7 @@
 | `fig3j_synth_eval_bars.png` | 막대 안 합성 점 검출률(세 모델): 대비별, 호기별 | 3 | 복사: `runs/minyeop/08_synth_eval_v1/figures/` |
 | `fig3k_compare6.png` | 6개 모델 합성 점 비교: val 임계값, 임계값과 무관한 AP, 호기별 | 3 | 복사: `runs/minyeop/09_extra_models_v1/figures/` |
 | `fig3l_robust6.png` | 6개 모델 점 제거·가짜 정상 히트맵(오경보율, AUC) | 3 | 복사: `runs/minyeop/09_extra_models_v1/figures/` |
+| `fig4b_final_dfine.png` | 최종 모델 D-FINE-N: 실제 test 신뢰도 분포와 임계값별 검출·오경보 | 4 | 복사: `runs/minyeop/09_extra_models_v1/figures/` |
 | `fig3m_synth_bars.png` | 작대기 안 합성 점 미리보기(호기마다 1장) | 3 | `make_figures.py`(`fig3_bar_preview`, 임시 폴더에 시드 42로 다시 생성) |
 | `fig4a_threshold_tradeoff.png` | 임계값에 따른 옅은 점 검출 vs 오경보 → 재검사 구간 근거 | 4 | `make_figures.py` |
 
