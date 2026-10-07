@@ -8,17 +8,32 @@
   "images": "CPU: val 앞 50장 (5장 예열 제외) / GPU: val 전부 (30장 예열 제외)",
   "runs": [
     {
-      "tag": "torch_gpu",
+      "tag": "torch_gpu_fp32",
       "backend": "torch",
       "device": "0",
       "threads": null,
+      "fp16": false,
       "pinned_p_cores": false,
       "torch_threads": 16,
       "n_images": 339,
-      "ms_mean": 12.72,
-      "ms_median": 11.63,
-      "ms_p95": 16.72,
-      "fps": 78.6
+      "ms_mean": 11.65,
+      "ms_median": 11.14,
+      "ms_p95": 12.31,
+      "fps": 85.9
+    },
+    {
+      "tag": "torch_gpu_fp16",
+      "backend": "torch",
+      "device": "0",
+      "threads": null,
+      "fp16": true,
+      "pinned_p_cores": false,
+      "torch_threads": 16,
+      "n_images": 339,
+      "ms_mean": 27.08,
+      "ms_median": 12.44,
+      "ms_p95": 18.51,
+      "fps": 36.9
     },
     {
       "tag": "torch_cpu_t1",
@@ -31,7 +46,8 @@
       "ms_mean": 59.77,
       "ms_median": 59.88,
       "ms_p95": 63.25,
-      "fps": 16.7
+      "fps": 16.7,
+      "fp16": false
     },
     {
       "tag": "torch_cpu_t4",
@@ -44,7 +60,8 @@
       "ms_mean": 32.55,
       "ms_median": 32.18,
       "ms_p95": 40.36,
-      "fps": 30.7
+      "fps": 30.7,
+      "fp16": false
     },
     {
       "tag": "torch_cpu_t16",
@@ -57,7 +74,8 @@
       "ms_mean": 37.22,
       "ms_median": 37.03,
       "ms_p95": 43.71,
-      "fps": 26.9
+      "fps": 26.9,
+      "fp16": false
     },
     {
       "tag": "onnx_cpu_t1",
@@ -70,7 +88,8 @@
       "ms_mean": 63.19,
       "ms_median": 62.99,
       "ms_p95": 65.36,
-      "fps": 15.8
+      "fps": 15.8,
+      "fp16": false
     },
     {
       "tag": "onnx_cpu_t4",
@@ -83,7 +102,8 @@
       "ms_mean": 26.38,
       "ms_median": 26.34,
       "ms_p95": 29.32,
-      "fps": 37.9
+      "fps": 37.9,
+      "fp16": false
     },
     {
       "tag": "onnx_cpu_t16",
@@ -96,7 +116,8 @@
       "ms_mean": 76.11,
       "ms_median": 69.27,
       "ms_p95": 119.04,
-      "fps": 13.1
+      "fps": 13.1,
+      "fp16": false
     }
   ]
 }

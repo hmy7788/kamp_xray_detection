@@ -1,4 +1,4 @@
-"""팀 공통 속도 표용 측정: GPU 평균, CPU 1·4·16스레드 (PyTorch 와 ONNX Runtime), 한 장씩(batch 1), fp32.
+"""팀 공통 속도 표용 측정: GPU FP32·FP16, CPU 1·4·16스레드 (PyTorch 와 ONNX Runtime), 한 장씩(batch 1), fp32.
 
 팀 experiments.md "추론 속도" 표와 같은 조건(사진 1장, 배치 1, 모델 연산+후처리)으로 잰다. 사진은 CPU 가 val 앞 55장(5장 예열), GPU 가 val 전부(30장 예열).
 스레드 설정마다 별도 프로세스로 돌린다 (torch 스레드 수는 프로세스 안에서 한 번만 바꾸는 게 안전하고, ONNX 세션도 새로 만들어야 하므로).
@@ -50,7 +50,7 @@ def _worker(a):
     paths = a.paths.split(";")
 
     def one(p):
-        model.predict(p, imgsz=a.imgsz, conf=0.001, max_det=50, device=a.device, verbose=False)
+        model.predict(p, imgsz=a.imgsz, conf=0.001, max_det=50, device=a.device, half=a.half, verbose=False)
         if a.device != "cpu":
             torch.cuda.synchronize()
     warm = 5 if a.device == "cpu" else 30  # GPU 는 클럭이 올라오고 커널이 준비되는 데 더 걸린다 (5장이면 첫 측정이 4~5배 느리게 나옴)
@@ -72,6 +72,8 @@ def main():
     ap.add_argument("--n", type=int, default=50)
     ap.add_argument("--worker", action="store_true"); ap.add_argument("--backend"); ap.add_argument("--threads", type=int)
     ap.add_argument("--weights"); ap.add_argument("--imgsz", type=int); ap.add_argument("--device"); ap.add_argument("--paths")
+    ap.add_argument("--half", action="store_true", help="GPU FP16 (가중치·입력을 반정밀도로)")
+    ap.add_argument("--only", help="이 태그들만 다시 재서 기존 결과에 덮어씀 (쉼표 구분)")
     a = ap.parse_args()
     if a.worker:
         return _worker(a)
@@ -85,23 +87,30 @@ def main():
     out = {"exp_id": a.exp_id, "imgsz": imgsz, "weights": str(best.relative_to(kx.ROOT)), "onnx": a.onnx,
            "cpu": platform.processor(), "gpu": torch.cuda.get_device_name(0) if torch.cuda.is_available() else None,
            "images": "CPU: val 앞 %d장 (5장 예열 제외) / GPU: val 전부 (30장 예열 제외)" % a.n, "runs": []}
-    jobs = [("torch", "0", 0)] + [("torch", "cpu", t) for t in (1, 4, 16)]
+    jobs = [("torch", "0", 0, False), ("torch", "0", 0, True)] + [("torch", "cpu", t, False) for t in (1, 4, 16)]
     if a.onnx:
-        jobs += [("onnx", "cpu", t) for t in (1, 4, 16)]
-    for backend, device, threads in jobs:
+        jobs += [("onnx", "cpu", t, False) for t in (1, 4, 16)]
+    out_path = kx.RUNS / a.exp_id / "speed_threads.json"
+    if a.only and out_path.exists():
+        prev = kx.read_json(out_path); out["runs"] = [r for r in prev["runs"] if r["tag"] not in a.only.split(",")]
+    for backend, device, threads, half in jobs:
+        tag = (f"{backend}_gpu" + ("_fp16" if half else "_fp32")) if device != "cpu" else f"{backend}_cpu_t{threads}"
+        if a.only and tag not in a.only.split(","):
+            continue
         w = str(best) if backend == "torch" else str(kx.ROOT / a.onnx)
         cmd = [sys.executable, __file__, "--worker", "--backend", backend, "--threads", str(threads or 16), "--weights", w,
-               "--imgsz", str(imgsz), "--device", device, "--paths", paths_cpu if device == "cpu" else paths_gpu]
+               "--imgsz", str(imgsz), "--device", device, "--paths", paths_cpu if device == "cpu" else paths_gpu] + (["--half"] if half else [])
         r = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8", errors="replace")
         line = [l for l in r.stdout.splitlines() if l.startswith("RESULT ")]
         if not line:
             print(f"[{backend} {device} t{threads}] 실패:\n{r.stderr[-800:]}"); continue
         res = json.loads(line[0][7:])
-        tag = f"{backend}_gpu" if device != "cpu" else f"{backend}_cpu_t{threads}"
-        out["runs"].append({"tag": tag, "backend": backend, "device": device, "threads": threads or None,
+        out["runs"].append({"tag": tag, "backend": backend, "device": device, "threads": threads or None, "fp16": half,
                             "pinned_p_cores": device == "cpu" and threads < 16, **res})
         print(f"[{tag}] {res['ms_mean']} ms (p50 {res['ms_median']}, p95 {res['ms_p95']}) → {res['fps']} FPS", flush=True)
-    kx.write_json(kx.RUNS / a.exp_id / "speed_threads.json", out)
+    order = [t for t in ("torch_gpu_fp32", "torch_gpu_fp16", "torch_cpu_t1", "torch_cpu_t4", "torch_cpu_t16", "onnx_cpu_t1", "onnx_cpu_t4", "onnx_cpu_t16")]
+    out["runs"].sort(key=lambda r: order.index(r["tag"]) if r["tag"] in order else 99)
+    kx.write_json(out_path, out)
 
 
 if __name__ == "__main__":
