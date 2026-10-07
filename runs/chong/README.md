@@ -56,7 +56,7 @@
 | `train.log`, `score.log`, `synth.log` | 로그 (로컬 경로는 `<KAMP-harness>`, `<HOME>` 으로 치환) |
 | `harness_metrics.json` | 하네스 val 채점: 중심 적중 지표, 조건별 재현율, 임계값 훑기 |
 | `harness_metrics_test.json`, `preds_test.csv`, `final_mode.json` | (01) test 채점 결과, 예측 좌표, 채점 방식(재학습 없이 기존 가중치) |
-| `speed_seed42.json` | 한 장씩 넣었을 때 GPU·CPU 속도와 모델 크기 (01 은 `_under_load` = 다른 프로그램과 겹쳐 잰 값, 깨끗한 값은 09/compare.md) |
+| `speed_seed42.json` | 한 장씩 넣었을 때 GPU·CPU 속도와 모델 크기 (01: GPU 13ms / CPU 10스레드 58ms, 2026-10-06 측정. 설정별 비교는 09/compare.md) |
 | `synth_normal.md`, `synth_normal.json` | 합성 정상 사진 검사 (정정본) |
 | `false_positives.csv` | 오경보 예측 좌표 (정답 좌표 없음) |
 | `report_val.json` | (01) 팀 계산기 결과, 2026-10-06 |
