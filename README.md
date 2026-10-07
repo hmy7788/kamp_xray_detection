@@ -48,7 +48,8 @@ KAMP/
 ├─ notebooks/   shared/ + 개인 폴더 3개
 ├─ runs/        실험 결과: baseline/ + 개인 폴더 3개
 ├─ weights/     가중치 (Git 제외)
-└─ docs/        문서 (metrics.md, experiments.md, README.md)
+├─ docs/        문서 (metrics.md, experiments.md, analysis.md, README.md)
+└─ ppt/         보고서 초안, 보고서·발표용 그림과 생성 스크립트
 ```
 각 폴더의 README가 역할과 규칙을 설명합니다. **공유 영역**(`data/`, `scripts/`, `src/yolov3/`, `runs/baseline/`)은 PR과 팀 확인으로만 바꾸고, **개인 영역**(`src/<이름>/`, `notebooks/<이름>/`, `runs/<이름>/`)은 본인만 수정합니다.
 
