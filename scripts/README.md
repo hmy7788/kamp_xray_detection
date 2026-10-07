@@ -5,6 +5,23 @@
 ## 현재 상태: 비어 있음
 2026-10-05에 전부 새로 짜기로 해서 파일을 모두 지웠습니다.
 
+## 파일
+| 파일 | 역할 |
+|---|---|
+| `synth_eval.py` | **합성 점 평가 데이터 생성**(시드 42). test 이미지의 실제 점을 지우고, 작대기(막대) 안에만 옅은 점을 합성한다. 팀 모두가 같은 평가 데이터를 만들고 `--verify`로 확인한다 |
+| `synth_eval_reference/` | `synth_eval.py --verify`가 비교하는 기준본(점 위치·조건 CSV, 이미지 픽셀 해시). 바꾸면 모든 합성 평가가 비교 불가가 되므로 **함부로 갱신하지 말 것** |
+
+### 합성 점 평가 데이터 (`synth_eval.py`)
+```bash
+PYTHONUTF8=1 python scripts/synth_eval.py --split test --out data_synth/test --preview   # 생성 + 미리보기 그림 2장
+PYTHONUTF8=1 python scripts/synth_eval.py --split test --out data_synth/test --verify    # 기준본과 같은지 확인
+```
+- 결과 `data_synth/test/`: `images/`, `labels/`(합성 점 박스, 중심 거리 R=5px로 채점 권장), `dots.csv`(점별 위치·진하기·크기·대비), `images.sha256`, `dataset.sha256`, `summary.json`, `skipped.csv`, 미리보기.
+- 현재 기준본(test, 시드 42): 이미지 386장, 합성 점 1,436개, 데이터셋 해시 `bc98e02e…b017d0`. 제외된 10장은 막대가 없는 빈 라벨 사진이다.
+- 막대 검출 검증: 실제 점 663개 전부가 검출된 막대(9px 확장)에 닿는다. 합성 점은 막대 가장자리에서 3px 이상 안쪽에만 놓는다.
+- 평가에 쓰는 모델은 이 이미지에서 검출 결과(JSON)를 만들어 `dots.csv`의 `contrast`, `s`, `f`로 나눠 본다. 해석 시 합성 점은 실제와 약 10%p 차이가 있고 사각 흔적이 있다는 한계를 같이 적는다([docs/analysis.md](../docs/analysis.md)).
+- 기준본을 만든 환경: numpy 2.2, opencv-python 5.0, Pillow. 위치·조건이 같고 픽셀만 다르면 라이브러리 버전 차이다.
+
 공통 평가 코드 역할은 임시로 `src/minyeop/faster_rcnn/`의 `metrics.py`(AP·P/R/F1)와 `report.py`(보고 표 계산)가 대신합니다. 모델과 무관한 검출 결과 JSON을 입력으로 받습니다([docs/README.md](../docs/README.md)). 모두가 쓰는 코드로 `scripts/evaluate.py`에 옮길지는 팀 확인이 필요합니다.
 
 ## 담당
