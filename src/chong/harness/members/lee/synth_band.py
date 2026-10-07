@@ -418,7 +418,7 @@ def report(a):
         rows.append(kx.read_json(p))
     L = ["# 띠 안 합성 이물질 + 경량화 비교 (val 369장, 합성 {}개)".format(rows[0]["n_samples"] if rows else 0), "",
          "검출 = 넣은 뒤 확신도가 임계값 이상이고 넣기 전에는 미만. 속도는 한 장씩(batch 1), 전처리·추론·후처리 포함, 처음 5장 제외.", "",
-         "주의: ONNX CPU 줄의 원본 val F1 은 앞 65장만 채점한 값이라 GPU 줄(369장)과 직접 비교하지 않는다. 합성 검출률은 전부 5,930개 동일 조건.",
+         "주의: 아래 첫 표(F1·중심)의 ONNX CPU 줄은 evaluate 가 앞 65장만 채점한 값이라 GPU 줄(369장)과 직접 비교하지 않는다. 설정별 mAP50 과 369장 전체 비교는 둘째 표(val_full.py, 하네스 계산기). 합성 검출률은 전부 5,930개 동일 조건.",
          "CPU 속도는 하이브리드 CPU(P코어 6 + E코어 4)에서 E코어 배정 시 3~4배 느려져, P코어에 고정해 다시 잰 값이다(라벨 PC i7-13세대 노트북).", "",
          "## 원본 val 성능과 속도", "",
          "| 설정 | 입력 | 실행 | F1@0.42 (IoU0.5) | 중심 재현율@0.42 | F1@0.10 | 중심 재현율@0.10 | 한 장 p50 ms | p95 ms | FPS |", "|---|---|---|---|---|---|---|---|---|---|"]
@@ -426,6 +426,14 @@ def report(a):
         v42, v10 = r["val"][0], r["val"][1]
         run = f"{r['backend']} {r['device']}" + (f" {r['threads']}스레드" if r.get("threads") else "")
         L.append(f"| {r['tag']} | {r['imgsz']} | {run} | {v42['f1']:.4f} | {v42['center_recall']:.4f} | {v10['f1']:.4f} | {v10['center_recall']:.4f} | {r['speed']['ms_p50']} | {r['speed']['ms_p95']} | {r['speed']['fps']} |")
+    full = [kx.read_json(OUT / r["tag"] / "val_full.json") for r in rows if (OUT / r["tag"] / "val_full.json").exists()]
+    if full:
+        L += ["", "## 원본 val 369장 전체, 하네스 계산기 (members/lee/val_full.py, conf 0.001 전 예측으로 mAP)", "",
+              "| 설정 | 입력 | 실행 | mAP50 | mAP50-95 | F1@0.42 (IoU0.5) | TP / FN / FP | 중심 재현율@0.42 | F1@0.10 |", "|---|---|---|---|---|---|---|---|---|"]
+        for f in full:
+            a42, a10 = f["at"]["0.42"], f["at"]["0.1"]
+            run = f"{f['backend']} {f['device']}" + (f" {f['threads']}스레드" if f.get("threads") else "")
+            L.append(f"| {f['tag']} | {f['imgsz']} | {run} | {f['map50']:.4f} | {f['map50_95']:.4f} | {a42['f1']:.4f} | {a42['tp']} / {a42['fn']} / {a42['fp']} | {a42['center_hit_recall']:.4f} | {a10['f1']:.4f} |")
     for thr in ("0.42", "0.1"):
         key = f"hit@{thr}"
         L += ["", f"## 띠 안 합성 검출률 (임계값 {thr}) — 진하기별", "", "| 설정 | " + " | ".join(f"진하기 {s}" for s in SCALES) + " | 전체 |", "|---|" + "---|" * (len(SCALES) + 1)]

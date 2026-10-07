@@ -1,0 +1,8 @@
+{
+  "mode": "existing_weights",
+  "weights": [
+    "C:\\Users\\lee\\projects\\kamp\\v1\\kamp-xray\\runs\\lee_003\\work\\seed42\\train\\weights\\best.pt"
+  ],
+  "note": "val 분석에 쓴 학습 가중치 그대로 test 채점",
+  "scored_at": "2026-10-07T18:47:20"
+}
