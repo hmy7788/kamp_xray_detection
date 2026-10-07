@@ -49,24 +49,26 @@ def read_csv(p):
 
 # ------------------------------------------------------------------ 0. 이야기 흐름
 def fig0_story():
-    fig, ax = plt.subplots(figsize=(13, 3.6))
+    fig, ax = plt.subplots(figsize=(14, 3.7))
     ax.axis("off")
-    steps = [("① 문제", "IoU 기준 F1이\n6개 모델 모두 0.99\n→ 구분 불가", "#dde6f7"),
-             ("② 의심", "점수가 부풀려진 건\n아닌가?\n(고정 크기 라벨)", "#fbe7cc"),
-             ("③ 검증", "평가 재설계\n점 제거 · 합성 점\n가짜 정상", "#d6ecdc"),
-             ("④ 발견", "FN은 박스 크기 문제\n진짜 약점: 옅은 점,\n노이즈, 위치 의존", "#f5d9d9"),
-             ("⑤ 조치", "모델 선택 가이드\n재검사 구간\n현장 적용", "#e6dcf0")]
+    steps = [("① 학습·검증·평가", "6개 모델\n임계값은 val에서 고정\ntest는 한 번", "#dde6f7"),
+             ("② 몇 개 못 찾음", "정답 663개 중 6~9개\nF1 0.99 안팎", "#fbe7cc"),
+             ("③ 라벨 문제", "공식 라벨 박스 크기\n중심 거리로 재채점\n→ 거의 다 찾음", "#d6ecdc"),
+             ("④ 일반화·robust", "점 제거 · 가짜 정상\n합성 점(진하기·크기·\n위치) · 호기별", "#f5d9d9"),
+             ("⑤ 종합 → 베스트", "val 동률 선두\n미탐지 강건성 최상\n→ D-FINE-N", "#e6dcf0"),
+             ("⑥ 현장 활용", "3단 판정·재검사\n모델 선택 가이드", "#f1ecd2")]
     n = len(steps)
+    step_w, box_w = 2.3, 2.0
     for i, (t, b, c) in enumerate(steps):
-        x = i * 2.6
-        ax.add_patch(FancyBboxPatch((x, 0.2), 2.2, 2.6, boxstyle="round,pad=0.05,rounding_size=0.15", fc=c, ec="#555", lw=1.2))
-        ax.text(x + 1.1, 2.35, t, ha="center", va="center", fontsize=15, fontweight="bold")
-        ax.text(x + 1.1, 1.2, b, ha="center", va="center", fontsize=11.5, linespacing=1.5)
+        x = i * step_w
+        ax.add_patch(FancyBboxPatch((x, 0.2), box_w, 2.6, boxstyle="round,pad=0.05,rounding_size=0.15", fc=c, ec="#555", lw=1.2))
+        ax.text(x + box_w / 2, 2.35, t, ha="center", va="center", fontsize=12.5, fontweight="bold")
+        ax.text(x + box_w / 2, 1.2, b, ha="center", va="center", fontsize=10.5, linespacing=1.5)
         if i < n - 1:
-            ax.add_patch(FancyArrowPatch((x + 2.28, 1.5), (x + 2.58, 1.5), arrowstyle="-|>", mutation_scale=18, color="#444", lw=1.8))
-    ax.set_xlim(-0.2, n * 2.6 - 0.2)
+            ax.add_patch(FancyArrowPatch((x + box_w + 0.08, 1.5), (x + step_w - 0.05, 1.5), arrowstyle="-|>", mutation_scale=16, color="#444", lw=1.6))
+    ax.set_xlim(-0.2, n * step_w - 0.1)
     ax.set_ylim(0, 3.1)
-    ax.set_title("이 보고서의 이야기: 점수가 포화된 데이터에서 점수 뒤의 진짜 성능을 검증한다", fontsize=14, pad=8)
+    ax.set_title("실험 흐름: 학습·평가 → 못 찾은 것의 원인 → 일반화·robust 평가 → 베스트 모델", fontsize=14, pad=8)
     save(fig, "fig0_story_flow.png")
 
 
