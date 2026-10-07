@@ -88,6 +88,14 @@ python src/minyeop/fake_normal/false_alarm.py --work-dir <임시 폴더> --out r
 python src/minyeop/synth_insert/insert_dots.py --work-dir <임시 폴더> --out runs/minyeop/06_synth_insert_v1 [--strengths 0.15,0.3,0.5,1.0 --scales 0.67,1.0,1.5]
 ```
 
+## 분석: 막대 안 합성 점 평가 (`synth_eval/`)
+`eval_synth.py`: `scripts/synth_eval.py`가 만든 합성 데이터(`data_synth/test`, 시드 42)를 세 모델로 추론해 점 단위 검출률(중심 5px, R=2도 함께)과 오경보를 진하기·크기·대비·호기별로 낸다. 임계값은 모델별 val 값으로 고정. `figures.py`: 결과 그림.
+```bash
+python scripts/synth_eval.py --split test --out data_synth/test
+python src/minyeop/synth_eval/eval_synth.py --out runs/minyeop/08_synth_eval_v1
+python src/minyeop/synth_eval/figures.py --run runs/minyeop/08_synth_eval_v1
+```
+
 ## 분석: 호기·해상도별 통계 (`group_stats/`)
 `group_stats.py`: `manifest.csv`와 `preds_<split>.json`을 합쳐 호기·해상도·호기×해상도별 F1, mAP50-95, FN, 평가 v2 결과를 낸다(`--official-only`로 공식 라벨만). `figures.py`: 막대 그래프와 그룹별 검출 예시 그림.
 ```bash
