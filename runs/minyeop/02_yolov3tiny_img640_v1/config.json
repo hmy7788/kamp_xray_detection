@@ -1,0 +1,17 @@
+{
+  "name": "02_yolov3tiny_img640_v1",
+  "model": "yolov3-tiny (ultralytics 2020, COCO 사전학습)",
+  "epochs": 100,
+  "batch_size": 16,
+  "img_size": 640,
+  "cfg": "yolov3-tiny.cfg",
+  "weights": "weights/pretrained/yolov3-tiny.pt",
+  "device": "0",
+  "data": {
+    "train": "data/train/images",
+    "valid": "data/val/images (test 는 학습에 쓰지 않음)"
+  },
+  "command": "train.py --cfg ../../../src/yolov3/yolov3-tiny.cfg --data kamp.data --weights ../../../weights/pretrained/yolov3-tiny.pt --epochs 100 --batch-size 16 --img-size 640 640 640 --device 0",
+  "started_at": "2026-10-06T10:41:09",
+  "pid": 17284
+}

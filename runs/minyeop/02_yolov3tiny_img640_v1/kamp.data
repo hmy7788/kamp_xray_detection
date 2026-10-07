@@ -1,0 +1,4 @@
+classes=1
+train=../../../data/train/images
+valid=../../../data/val/images
+names=../../../src/yolov3/classes.names

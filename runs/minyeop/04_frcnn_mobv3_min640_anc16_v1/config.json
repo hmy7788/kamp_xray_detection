@@ -1,0 +1,23 @@
+{
+  "name": "04_frcnn_mobv3_min640_anc16_v1",
+  "owner": "minyeop",
+  "epochs": 20,
+  "batch_size": 4,
+  "lr": 0.005,
+  "min_size": 640,
+  "max_size": 1000,
+  "anchor_sizes": "16,32,64,128,256",
+  "workers": 4,
+  "no_amp": false,
+  "seed": 0,
+  "limit_train": null,
+  "limit_val": null,
+  "anchor_sizes_list": [
+    16,
+    32,
+    64,
+    128,
+    256
+  ],
+  "model": "fasterrcnn_mobilenet_v3_large_fpn(COCO_V1)"
+}
