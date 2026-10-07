@@ -7,6 +7,7 @@
 |---|---|
 | [metrics.md](metrics.md) | 검출 모델의 성능 지표 정리 (박스·이미지 단위, 조건별 분해, 신뢰도, 불확실성, 주의사항) |
 | [experiments.md](experiments.md) | 모델 공통 성능 지표 표만 모은 문서: val·test 결과, 라벨 출처별 결과 (Faster R-CNN 기록 포함) |
+| [analysis.md](analysis.md) | 추가 분석의 해석과 한계: 호기·해상도별 통계, 가짜 정상 오경보, 점 합성 시험, 추론 속도, 모델 선정 기준(제안), test 사용 이력 |
 
 2026-10-05에 이전 문서 7개를 지웠고, 새로 작성하는 문서를 이 폴더에 둡니다.
 
@@ -114,7 +115,7 @@ PYTHONUTF8=1 python src/minyeop/faster_rcnn_mobilenet/predict.py --name 04_frcnn
 PYTHONUTF8=1 python src/minyeop/faster_rcnn/report.py --name 04_frcnn_mobv3_min640_anc16_v1 [--center-r 5 --tag _v2]
 ```
 - 결과(test): F1 0.986, AP 0.985, mAP50-95 0.559, 공식 라벨 F1 0.959, 임계값 0.93. **찾는 능력은 ResNet-50·YOLOv3-tiny와 같은 수준**(평가 v2에서 663개 중 662개)이고, **박스 정밀도는 ResNet-50보다 낮다**(mAP50-95 0.559 대 0.611, R=2px F1 0.965 대 0.988). 이 FPN이 낮은 해상도 특징맵(stride 16 이상)만 쓰는 약점이 위치 정밀도에서만 드러났다.
-- ResNet-50 대비 파라미터 19.4M(41.8M), 학습 20분(67분), 같은 조건(배치 4, AMP)에서 추론 약 4배 빠름(8ms 대 31ms).
+- ResNet-50 대비 파라미터 19.0M(41.4M), 학습 20분(67분), 같은 조건(배치 4, AMP)에서 추론 약 4배 빠름(8ms 대 31ms).
 - 오류 9건(FP 9 / FN 9): 공식 라벨 7장(8건)은 박스 크기 차이, 팀 라벨 2장은 중복 검출 1건과 신뢰도 0.910이라 임계값 0.93에 못 미친 1건이다. 진짜로 결함을 놓친 것은 없다.
 - 한계: 앵커 16~256 설정 하나만 시험했고(기본 앵커와 비교 안 함), 시드 하나, 모델마다 학습 조건(증강, AMP, 배치, epoch)이 달라 우열을 단정할 수 없다.
 

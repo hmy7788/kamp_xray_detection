@@ -66,7 +66,7 @@ python src/minyeop/faster_rcnn/report.py  --name 02_yolov3tiny_img640_v1    # �
 python src/minyeop/faster_rcnn_mobilenet/train.py   --name 04_frcnn_mobv3_min640_anc16_v1 --epochs 20 --batch-size 4 --anchor-sizes 16,32,64,128,256
 python src/minyeop/faster_rcnn_mobilenet/predict.py --name 04_frcnn_mobv3_min640_anc16_v1 --split val --ckpt best
 ```
-- 결과: test F1 0.986(공식 라벨만 0.959), 임계값 0.93, 학습 20분, 파라미터 19.4M. 앵커는 16~256 한 가지만 시험했다(기본 앵커와 비교하지 않음).
+- 결과: test F1 0.986(공식 라벨만 0.959), 임계값 0.93, 학습 20분, 파라미터 19.0M. 앵커는 16~256 한 가지만 시험했다(기본 앵커와 비교하지 않음).
 
 ## 분석: 점 제거 (`dot_removal/`)
 `remove_dot.py`: test 이미지의 결함(어두운 점)을 보간으로 지운 이미지를 임시 폴더에 만들어 두 모델로 다시 추론하고, 같은 자리에서 검출이 남는지 센다. 원본 `data/`는 바꾸지 않는다.
@@ -75,3 +75,23 @@ python src/minyeop/dot_removal/remove_dot.py --work-dir <임시 폴더> --out ru
 python src/minyeop/dot_removal/remove_dot.py --work-dir <임시 폴더> --out runs/minyeop/03_dot_removal_v1/mean_half6 --half 6 --method mean --noise-gain 0
 ```
 `--half`는 제거 정사각형의 반변(6 → 13x13px), `--method`는 `ns`(Navier-Stokes) 또는 `mean`(주변 평균), `--noise-gain`은 메운 자리에 더할 노이즈 세기. 결과 해석은 [docs/README.md](../../docs/README.md)의 "점 제거 실험".
+
+## 분석: 가짜 정상 오경보 (`fake_normal/`)
+`false_alarm.py`: test 결함 369장의 점을 보간으로 지운 "가짜 정상" 이미지를 만들어 세 모델의 **이미지 단위 오경보**(오경보율, FPPI, ROC-AUC)를 센다. 지우는 방식(평균 보간 / Navier-Stokes+노이즈)과 크기(13x13, 17x17)를 바꿔 본다. 진짜 정상 제품이 아니므로 결과는 범위로 해석한다.
+```bash
+python src/minyeop/fake_normal/false_alarm.py --work-dir <임시 폴더> --out runs/minyeop/05_fake_normal_v1
+```
+
+## 분석: 점 합성 시험 (`synth_insert/`)
+`insert_dots.py`: 점을 지운 test 바탕에 **val의 실제 점**(투과율 조각)을 진하기 s, 크기 f로 바꿔 원래 자리와 무작위 자리에 넣고 세 모델의 검출률을 센다 (미탐지 조건 분석). 합성 점에 사각형 자국이 있어 절대 수치보다 모델 간 상대 비교로 쓴다.
+```bash
+python src/minyeop/synth_insert/insert_dots.py --work-dir <임시 폴더> --out runs/minyeop/06_synth_insert_v1 [--strengths 0.15,0.3,0.5,1.0 --scales 0.67,1.0,1.5]
+```
+
+## 분석: 호기·해상도별 통계 (`group_stats/`)
+`group_stats.py`: `manifest.csv`와 `preds_<split>.json`을 합쳐 호기·해상도·호기×해상도별 F1, mAP50-95, FN, 평가 v2 결과를 낸다(`--official-only`로 공식 라벨만). `figures.py`: 막대 그래프와 그룹별 검출 예시 그림.
+```bash
+python src/minyeop/group_stats/group_stats.py --split test      # 결과 runs/minyeop/07_group_stats_v1/
+python src/minyeop/group_stats/figures.py --split test
+```
+세 분석의 해석과 한계는 [docs/analysis.md](../../docs/analysis.md).

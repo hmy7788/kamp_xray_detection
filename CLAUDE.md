@@ -70,6 +70,10 @@ KAMP "X-ray 검사장비 AI 데이터셋" 프로젝트. X선 이물 검출기 �
 - `faster_rcnn_mobilenet/`: `faster_rcnn`의 학습·예측 코드를 재사용하고 모델만 `fasterrcnn_mobilenet_v3_large_fpn`으로 교체(COCO 사전학습, `--anchor-sizes`는 5개 크기를 3레벨에 적용). 이 FPN은 stride 16 이상만 쓴다. 결과 `runs/minyeop/04_frcnn_mobv3_min640_anc16_v1`: test F1 0.986(공식 라벨 0.959), 임계값 0.93, 학습 20분. 찾는 능력은 ResNet-50과 같은 수준이고 박스 정밀도만 낮다(mAP50-95 0.559 대 0.611). 같은 조건에서 추론 약 4배 빠름.
 - `faster_rcnn/report.py --center-r 5 --tag _v2`: 평가 v2(중심 거리 매칭, 임계값도 이 기준으로 val에서 재선정). R≥3px면 두 모델 모두 test 만점이라 구분은 R=1~2px에서만 된다. IoU 0.5 기준 F1은 사실상 중심 2px 이내 여부를 재고 있었다.
 - `dot_removal/remove_dot.py`: test 정답의 어두운 점을 보간(Navier-Stokes 또는 평균)으로 지운 뒤 두 모델에 다시 넣는 지름길 검증. 점을 충분히 지우면 검출이 거의 0이 된다(`runs/minyeop/03_dot_removal_v1/`, 해석은 `docs/README.md`).
+- `fake_normal/false_alarm.py`: 점을 지운 test 이미지(가짜 정상)에서 세 모델의 이미지 단위 오경보를 계산한다(`runs/minyeop/05_fake_normal_v1/`). 평균 보간은 0.8% 이하, 노이즈를 더한 보간은 YOLO·MobileNet 22~64%라 **오경보는 범위로 해석**한다(진짜 정상 제품이 아님).
+- `synth_insert/insert_dots.py`: val의 실제 점을 test 바탕에 s·f를 바꿔 합성해 검출률을 본다(`runs/minyeop/06_synth_insert_v1/`). MobileNet은 무작위 자리에서 30%(R50·YOLO 약 90%)라 위치 의존이 의심되지만, 합성 점의 사각형 자국이 교란 요인이다.
+- `group_stats/`: 호기·해상도별 통계(`runs/minyeop/07_group_stats_v1/`). 해상도별 공식 라벨 비율이 달라(10~76%) 순수한 호기·해상도 효과를 분리하지 못한다.
+- 이 세 분석과 속도 측정의 해석·한계·test 사용 이력은 `docs/analysis.md`. 강건성 시험은 test 이미지로 먼저 했으므로 모델 선정 근거로 쓰려면 val로 반복해야 한다.
 
 ## 구버전 코드 수정 이력 (`src/yolov3`, 되돌리지 말 것)
 최신 PyTorch/numpy/Windows 호환을 위해 수정했다.
