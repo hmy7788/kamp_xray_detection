@@ -88,6 +88,15 @@ python src/minyeop/fake_normal/false_alarm.py --work-dir <임시 폴더> --out r
 python src/minyeop/synth_insert/insert_dots.py --work-dir <임시 폴더> --out runs/minyeop/06_synth_insert_v1 [--strengths 0.15,0.3,0.5,1.0 --scales 0.67,1.0,1.5]
 ```
 
+## 분석: 6개 모델 비교 (`extra_models/`)
+`weights/pts/`의 팀원 모델 가중치(YOLO26n, RT-DETR-l, D-FINE-N)를 우리 모델과 같은 기준으로 평가한다. `predict_extra.py`: 세 모델 추론(필요: `pip install ultralytics transformers`), `eval_extra.py`: 6개 모델의 실제 test·합성 점 평가, `compare_synth.py`: 임계값과 무관한 비교(AP, 오경보 예산별 검출률), `figures.py`: 그림.
+```bash
+python src/minyeop/extra_models/predict_extra.py --out runs/minyeop/09_extra_models_v1
+python src/minyeop/extra_models/eval_extra.py --out runs/minyeop/09_extra_models_v1
+python src/minyeop/extra_models/compare_synth.py --out runs/minyeop/09_extra_models_v1
+python src/minyeop/extra_models/figures.py --run runs/minyeop/09_extra_models_v1
+```
+
 ## 분석: 막대 안 합성 점 평가 (`synth_eval/`)
 `eval_synth.py`: `scripts/synth_eval.py`가 만든 합성 데이터(`data_synth/test`, 시드 42)를 세 모델로 추론해 점 단위 검출률(중심 5px, R=2도 함께)과 오경보를 진하기·크기·대비·호기별로 낸다. 임계값은 모델별 val 값으로 고정. `figures.py`: 결과 그림.
 ```bash

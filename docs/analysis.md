@@ -71,6 +71,15 @@
 - **한계**: 합성 점의 사각 흔적과 실제와의 약 10%p 차이는 그대로다. 막대 검출은 실제 점 663개 전부가 검출된 막대에 닿는지로만 검증했고 사람이 그린 정답은 없다. s=0.15·0.3 칸의 점은 대부분 대비 10 미만이라 실제 결함 범위 밖일 수 있는데, 실제 점의 대비 분포와는 비교하지 않았다. s=0 대조군은 없다.
 - **test 사용**: 이 시험도 test 이미지가 바탕이다(6절).
 
+### 3-3. 6개 모델 비교 (팀원 모델 포함)
+- **방법**: `weights/pts/`의 가중치(우리 3 + YOLO26n·RT-DETR-l·D-FINE-N)를 같은 코드로 실제 val·test와 합성 데이터(3-2절)에 돌렸다. 팀원 모델은 만든 사람의 설정(YOLO26n 입력 1024·최대 검출 50, RT-DETR 640·300, D-FINE 640 직접 리사이즈·정규화 없음)을 따랐다. 임계값은 모델마다 val에서 F1 최대인 값.
+- **실제 test는 모두 포화**: F1 0.986~0.991, v2(R=5) 0.998~1.000. 구분은 박스 정밀도(mAP50-95)에서만 되고 D-FINE 0.659 > RT-DETR 0.639 > YOLO26n 0.633 > R50 0.611 > MobileNet 0.559 ≈ YOLOv3-tiny 0.558 순이다. 이 순서는 박스 정밀도이지 찾는 능력이 아니다(팀 라벨 고정 크기 영향 주의).
+- **합성 점, 모델마다 val 임계값**: D-FINE이 가장 많이 찾는다(전체 49.8%, 대비 14~20에서 87%). 그러나 이 우위는 대부분 **임계값 효과**다. D-FINE의 val 임계값(0.66)은 R50(0.95)보다 느슨해 오경보도 많다(24개 대 13개).
+- **합성 점, 임계값과 무관한 비교**: 합성 점 AP는 D-FINE 0.574 ≈ R50 0.567 > YOLOv3-tiny 0.515 ≈ YOLO26n 0.501 > RT-DETR 0.451 >> MobileNet 0.262. 오경보를 이미지당 0.03 이하로 맞추면 다섯 모델이 33~39%로 붙고(차이가 신뢰구간 안), MobileNet만 16%로 뒤처진다. 즉 **옅은 점을 찾는 능력은 MobileNet을 빼면 모델 간 차이가 작다.**
+- **호기별(대비 14 이상)**: MobileNet만 3호기에서 거의 못 찾는 것이 아니다. YOLO26n·RT-DETR도 3호기가 61%로 1·2호기(73~81%)보다 낮다. R50·YOLOv3-tiny·D-FINE은 호기 차이가 작다(D-FINE 3호기 89%). 3호기 합성 점의 약점이 모델 일부에 퍼져 있지만 원인은 검증하지 못했다(합성 점의 3호기 해상도·박스 크기와의 상호작용, 실제 점에만 있는 단서 등). n=212라 구간이 약 ±6%p다.
+- **한계**: 오경보 예산별 검출률의 임계값은 합성 이미지 자체로 골랐다(비교 분석용이며 모델 선정이 아님). FPPI 0.01 예산은 오경보 4개 수준이라 불안정해 표에서 뺐다. 팀원 모델의 임계값은 이 문서 규칙으로 다시 골랐다. 합성 점과 test 사용에 대한 한계는 3-2절과 6절과 같다.
+- **가중치 폴더 주의**: `weights/pts/faster r-cnn mobilenetv3/best.pt`는 MobileNet이 아니라 **R50**(우리 `01_…/weights/best.pt`와 md5 동일)이고 MobileNet은 `best(1).pt`다. `faster r-cnn resnet50/`는 비어 있다. `yolov3-tiny/best.pt`는 우리 `02_…/weights/best.pt`와 같다. 폴더 이름을 바로잡거나 README에 적어 둘 것.
+
 ## 4. 추론 속도
 - **방법**: 이미지 1장씩(배치 1), 연산 동기화, 디스크 읽기 제외, 모델 연산과 후처리(NMS 등) 포함. GPU RTX 4050 Laptop(200장), CPU Intel Core i7-13620H(30장, 스레드 1·4·8·16). 표는 experiments.md "추론 속도"
 - **결과**: GPU 4.8ms(YOLO) / 11.3ms(MobileNet) / 48.4ms(R50). CPU 16스레드 35 / 73 / 584ms, 1스레드 142 / 149 / 2,073ms
@@ -101,6 +110,7 @@
 | 가짜 정상 오경보 | `fake_normal/false_alarm.py` | `05_fake_normal_v1/` (`summary.json`, `per_image.csv`) |
 | 점 합성 시험 | `synth_insert/insert_dots.py` | `06_synth_insert_v1/` (`summary.json`, `per_dot.csv`, `figures/synth_check.png`, `synth_full.png`) |
 | 막대 안 합성 점 평가 | `scripts/synth_eval.py`(데이터 생성), `synth_eval/eval_synth.py`, `figures.py` | `08_synth_eval_v1/` (`summary.json`, `per_dot.csv`, `figures/synth_eval.png`) |
+| 6개 모델 비교(팀원 모델 포함) | `extra_models/predict_extra.py`, `eval_extra.py`, `compare_synth.py`, `figures.py` | `09_extra_models_v1/` (`summary.json`, `figures/compare6.png`, `preds_*.json`은 Git 제외) |
 | 점 제거 | `dot_removal/remove_dot.py` | `03_dot_removal_v1/` |
 | 추론 속도 | 일회성 스크립트 (저장소에 없음) | 이 문서와 experiments.md의 표 |
 
