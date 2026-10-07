@@ -144,6 +144,7 @@ def main():
     ap.add_argument("--n-rand", type=int, default=3)
     ap.add_argument("--r", type=float, default=5.0)
     ap.add_argument("--seed", type=int, default=0)
+    ap.add_argument("--extra", action="store_true", help="팀원 모델(YOLO26n, RT-DETR-l, D-FINE-N)도 평가한다(임계값은 09_extra_models_v1/summary.json)")
     a = ap.parse_args()
     S = [float(v) for v in a.strengths.split(",")]
     F = [float(v) for v in a.scales.split(",")]
@@ -162,6 +163,12 @@ def main():
             "YOLOv3-tiny": (ROOT / "runs/minyeop/02_yolov3tiny_img640_v1", 0.06),
             "Faster R-CNN MobileNetV3-FPN": (ROOT / "runs/minyeop/04_frcnn_mobv3_min640_anc16_v1", 0.93)}
     ycfg = json.loads((runs["YOLOv3-tiny"][0] / "config.json").read_text(encoding="utf-8"))
+    px = None
+    if a.extra:
+        px = load_module("predict_extra", ROOT / "src" / "minyeop" / "extra_models" / "predict_extra.py")
+        thr_real = json.loads((ROOT / "runs/minyeop/09_extra_models_v1/summary.json").read_text(encoding="utf-8"))["실제 val·test"]
+        for nm, key in (("YOLO26n", "yolo26n"), ("RT-DETR-l", "rtdetr_l"), ("D-FINE-N", "dfine_n")):
+            runs[nm] = (None, thr_real[nm]["임계값(val, IoU0.5)"])
     man = {r["image_id"] + ".png": r for r in csv.DictReader(open(ROOT / "data" / "manifest.csv", encoding="utf-8"))}
 
     # 1) 점 은행 (val)
@@ -219,6 +226,13 @@ def main():
             recs["Faster R-CNN R50-FPN"] = fr_r50.predict_split(runs["Faster R-CNN R50-FPN"][0], "test", "best", device, 4, data_dir=str(work))[0]
             recs["Faster R-CNN MobileNetV3-FPN"] = fr_mob.predict_split(runs["Faster R-CNN MobileNetV3-FPN"][0], "test", "best", device, 4, data_dir=str(work))[0]
             recs["YOLOv3-tiny"] = yo.predict_split(runs["YOLOv3-tiny"][0], "test", "best", torch_utils.select_device("0"), ycfg["img_size"], data_root=str(work))[0]
+            if a.extra:
+                paths = sorted((work / "test" / "images").glob("*.png"))
+                imgs = px.load_images(paths)
+                for nm, key in (("YOLO26n", "yolo26n"), ("RT-DETR-l", "rtdetr_l"), ("D-FINE-N", "dfine_n")):
+                    spec = px.MODELS[key]
+                    dets = (px.run_ultra if spec["kind"] == "ultra" else px.run_dfine)(spec, imgs, "cuda:0" if torch.cuda.is_available() else "cpu", 8)
+                    recs[nm] = [{"name": pth.name, "dets": dd} for pth, dd in zip(paths, dets)]
             rm = {m: {r["name"]: r for r in rl} for m, rl in recs.items()}
             for n in names:
                 for st, con in meta.get(n, []):

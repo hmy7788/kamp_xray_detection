@@ -327,7 +327,10 @@ def copy_figs():
              RUN / "08_synth_eval_v1/figures/synth_eval.png": "fig3j_synth_eval_bars.png",
              RUN / "09_extra_models_v1/figures/compare6.png": "fig3k_compare6.png",
              RUN / "09_extra_models_v1/figures/robust6.png": "fig3l_robust6.png",
-             RUN / "09_extra_models_v1/figures/final_dfine.png": "fig4b_final_dfine.png"}
+             RUN / "09_extra_models_v1/figures/final_dfine.png": "fig4b_final_dfine.png",
+             RUN / "09_extra_models_v1/figures/v2_sweep_6models.png": "fig7a_v2_sweep.png",
+             RUN / "09_extra_models_v1/figures/dot_removal_6models.png": "fig7b_dot_removal_6models.png",
+             RUN / "12_group_stats_6models_v1/figures/group_chart_test_6models.png": "fig7c_groups_6models.png"}
     for src, dst in pairs.items():
         shutil.copy(src, OUT / dst)
         print("복사", dst)
