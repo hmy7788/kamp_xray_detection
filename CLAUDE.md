@@ -17,9 +17,9 @@ KAMP "X-ray 검사장비 AI 데이터셋" 프로젝트. X선 이물 검출기 �
 
 ## 현재 상태 (2026-10-05)
 **데이터는 확정 v2이고, 코드·실험 결과·문서는 새로 만드는 단계다.**
-- `data/`에 확정 데이터 v2가 있다(아래 "데이터"). 이총이 전처리·라벨링·분할을 마쳤다.
+- `data/`에 확정 데이터 v2가 있다(아래 "데이터").
 - `scripts/`, `runs/baseline/`은 비어 있다. `docs/`에는 `metrics.md`(지표), `experiments.md`(모델 공통 결과 표), `README.md`(결과 기록 가이드)가 있다.
-- 첫 모델로 **Faster R-CNN**(`src/minyeop/faster_rcnn/`, 브랜치 `feat/minyeop-faster-rcnn`, PR 전)을 학습·평가했다. 아래 "Faster R-CNN" 절.
+- 첫 모델로 **Faster R-CNN**(`src/minyeop/faster_rcnn/`)을 학습·평가했다. 아래 "Faster R-CNN" 절.
 - 지운 코드·문서·결과는 Git 이력에 있다: 코드·결과 `71813fd`, 문서 `d151bfa`. (`git show d151bfa:docs/dataset.md`, `git checkout 71813fd -- scripts/<파일>`)
 - 위 이력의 수치와 문서는 **이전 데이터(라벨 500장)·분할 기준**이므로 새 결과와 직접 비교하지 말 것.
 
