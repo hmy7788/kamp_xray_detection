@@ -89,7 +89,7 @@ python src/minyeop/synth_insert/insert_dots.py --work-dir <임시 폴더> --out 
 ```
 
 ## 분석: 6개 모델 비교 (`extra_models/`)
-`weights/pts/`의 팀원 모델 가중치(YOLO26n, RT-DETR-l, D-FINE-N)를 우리 모델과 같은 기준으로 평가한다. `predict_extra.py`: 세 모델 추론(필요: `pip install ultralytics transformers`), `eval_extra.py`: 6개 모델의 실제 test·합성 점 평가, `compare_synth.py`: 임계값과 무관한 비교(AP, 오경보 예산별 검출률), `robust_extra.py`: 6개 모델의 점 제거·가짜 정상(기존 설정 8가지, `--work-dir` 필요), `figures.py`·`figures_robust.py`: 그림.
+`weights/pts/`의 팀원 모델 가중치(YOLO26n, RT-DETR-l, D-FINE-N)를 우리 모델과 같은 기준으로 평가한다. `predict_extra.py`: 세 모델 추론(필요: `pip install ultralytics transformers`), `eval_extra.py`: 6개 모델의 실제 test·합성 점 평가, `compare_synth.py`: 임계값과 무관한 비교(AP, 오경보 예산별 검출률), `robust_extra.py`: 6개 모델의 점 제거·가짜 정상(기존 설정 8가지, `--work-dir` 필요), `bootstrap_map.py`: val mAP50-95 부트스트랩(모델 선정), `speed_extra.py`: 팀원 모델 속도·크기, `final_model.py`·`figures_final.py`: 최종 모델 임계값 운영 분석과 그림, `figures.py`·`figures_robust.py`: 그림.
 ```bash
 python src/minyeop/extra_models/predict_extra.py --out runs/minyeop/09_extra_models_v1
 python src/minyeop/extra_models/eval_extra.py --out runs/minyeop/09_extra_models_v1
