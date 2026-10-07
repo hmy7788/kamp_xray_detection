@@ -86,3 +86,6 @@ events.out.tfevents.*
 Thumbs.db
 desktop.ini
 ~$*
+
+# 합성 평가 데이터 (scripts/synth_eval.py 로 다시 만들 수 있음)
+data_synth/

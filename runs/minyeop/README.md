@@ -18,3 +18,5 @@
 | `05_fake_normal_v1` | 가짜 정상(점 지움) 이미지의 이미지 단위 오경보 분석(학습 아님), 방식 4종 | 평균 보간 0~0.8%, 노이즈 보간에서 YOLO·MobileNet 22~64%, R50 0.5% 이하 | 코드 `src/minyeop/fake_normal/` |
 | `06_synth_insert_v1` | 점 합성 시험(학습 아님): 진하기 4 x 크기 3 격자, 원래/무작위 자리 | MobileNet은 무작위 자리 30%(실제 세기), R50·YOLO 약 90% | 코드 `src/minyeop/synth_insert/`, 합성 자국 한계 있음 |
 | `07_group_stats_v1` | 호기·해상도별 통계(학습 아님) | 뚜렷한 호기·해상도 효과 없음, 1호기·352x332는 공식 라벨 76%라 낮음 | 코드 `src/minyeop/group_stats/` |
+| `08_synth_eval_v1` | 막대 안 합성 점 평가(학습 아님): 시드 42, test 바탕 386장·점 1,436개 | 대비 6 미만 거의 못 찾음, MobileNet은 3호기 합성 점을 거의 못 찾음(2~4%) | 코드 `scripts/synth_eval.py`, `src/minyeop/synth_eval/` |
+| `09_extra_models_v1` | 팀원 모델(YOLO26n, RT-DETR-l, D-FINE-N) 가중치로 6개 모델 비교(학습 아님) | 실제 test는 모두 포화(F1 0.986~0.991), 합성 점은 임계값과 무관하게 보면 MobileNet만 뒤처짐, 점 제거·가짜 정상은 R50·YOLO26n만 노이즈 보간에 반응 없음 | 코드 `src/minyeop/extra_models/`, 가중치 `weights/pts/` |

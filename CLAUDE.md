@@ -73,7 +73,8 @@ KAMP "X-ray 검사장비 AI 데이터셋" 프로젝트. X선 이물 검출기 �
 - `fake_normal/false_alarm.py`: 점을 지운 test 이미지(가짜 정상)에서 세 모델의 이미지 단위 오경보를 계산한다(`runs/minyeop/05_fake_normal_v1/`). 평균 보간은 0.8% 이하, 노이즈를 더한 보간은 YOLO·MobileNet 22~64%라 **오경보는 범위로 해석**한다(진짜 정상 제품이 아님).
 - `synth_insert/insert_dots.py`: val의 실제 점을 test 바탕에 s·f를 바꿔 합성해 검출률을 본다(`runs/minyeop/06_synth_insert_v1/`). MobileNet은 무작위 자리에서 30%(R50·YOLO 약 90%)라 위치 의존이 의심되지만, 합성 점의 사각형 자국이 교란 요인이다.
 - `group_stats/`: 호기·해상도별 통계(`runs/minyeop/07_group_stats_v1/`). 해상도별 공식 라벨 비율이 달라(10~76%) 순수한 호기·해상도 효과를 분리하지 못한다.
-- 이 세 분석과 속도 측정의 해석·한계·test 사용 이력은 `docs/analysis.md`. 강건성 시험은 test 이미지로 먼저 했으므로 모델 선정 근거로 쓰려면 val로 반복해야 한다.
+- `extra_models/`: `weights/pts/`의 팀원 모델(YOLO26n, RT-DETR-l, D-FINE-N)을 우리 모델과 같은 기준으로 평가(`runs/minyeop/09_extra_models_v1/`). 실제 test는 6개 모두 포화(F1 0.986~0.991). 노이즈 보간 가짜 정상에는 R50·YOLO26n만 반응이 없다. 가중치 폴더 `faster r-cnn mobilenetv3/best.pt`는 실제로 R50이다.
+- 이 분석들과 속도 측정의 해석·한계·test 사용 이력은 `docs/analysis.md`. 강건성 시험은 test 이미지로 먼저 했으므로 모델 선정 근거로 쓰려면 val로 반복해야 한다.
 
 ## 구버전 코드 수정 이력 (`src/yolov3`, 되돌리지 말 것)
 최신 PyTorch/numpy/Windows 호환을 위해 수정했다.
