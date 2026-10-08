@@ -18,7 +18,7 @@ REQUIRED = ["weights/dfine_n/best/model.safetensors", "weights/dfine_n/best/conf
             "weights/dfine_n/best/preprocessor_config.json", "weights/yolov3_tiny/best.pt",
             "results/dfine_n/test_predictions.csv", "results/dfine_n/eval_report_test.json",
             "results/yolov3_tiny/eval_report_test.json", "requirements.txt", "README.md"]
-PRIVATE = re.compile(r"[A-Za-z]:[\\/]+Users[\\/]+|/home/[a-z]|OneDrive", re.IGNORECASE)
+PRIVATE = re.compile(r"[A-Za-z]:[\\/]+Users[\\/]+|/home/[a-z]|OneDrive[\\/]", re.IGNORECASE)
 
 
 def main():

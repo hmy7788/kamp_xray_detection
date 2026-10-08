@@ -12,7 +12,7 @@ param(
     [string]$Device = "0",
     [string]$Python = "python"
 )
-$ErrorActionPreference = "Stop"
+$ErrorActionPreference = "Continue"   # 파이썬 경고 메시지로 멈추지 않게 하고, 각 단계의 종료 코드로 실패를 판단한다
 $env:PYTHONUTF8 = "1"
 Set-Location -Path $PSScriptRoot
 
