@@ -1,7 +1,7 @@
 """4단계: 채점. 모든 모델에 같은 채점 코드(src/kamp_xray/metrics.py)를 쓴다.
 
-    python scripts/evaluate.py --model dfine_n --split val     # 임계값 결정 (val F1 최대)
-    python scripts/evaluate.py --model dfine_n --split test    # val 임계값을 그대로 적용해 최종 채점
+    python scripts/evaluate.py                         # 최종 모델: val 로 임계값을 정한 뒤 test 채점
+    python scripts/evaluate.py --model yolov3_tiny     # 베이스라인
 
 - val: 신뢰도 임계값을 F1(IoU 0.5) 최대값으로 정한다.  test: outputs/<model>/eval_report_val.json 의 임계값을 쓴다.
 - 지표: P/R/F1, TP/FP/FN, AP50, mAP50-95, 중심 거리 1~5px 매칭, 이미지 단위 판정, 출처·호기·해상도·월별 분해
@@ -15,6 +15,7 @@ import argparse
 import csv
 import time
 from pathlib import Path
+from types import SimpleNamespace
 
 from kamp_xray import metrics as M
 from kamp_xray.common import OUTPUTS, check_data_version, env_info, load_json, read_manifest, save_json
@@ -40,12 +41,17 @@ def write_csvs(out, recs, thr):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--model", required=True, choices=["dfine_n", "yolov3_tiny"])
-    ap.add_argument("--split", required=True, choices=["val", "test"])
+    ap.add_argument("--model", default="dfine_n", choices=["dfine_n", "yolov3_tiny"])
+    ap.add_argument("--split", default="all", choices=["all", "val", "test"])
     ap.add_argument("--out", default=None, help="기본: outputs/<model>")
     a = ap.parse_args()
+    for split in (["val", "test"] if a.split == "all" else [a.split]):
+        evaluate_split(a.model, split, Path(a.out) if a.out else OUTPUTS / a.model)
+
+
+def evaluate_split(model, split, out):
+    a = SimpleNamespace(model=model, split=split)
     digest = check_data_version()
-    out = Path(a.out) if a.out else OUTPUTS / a.model
     preds = load_json(out / f"preds_{a.split}.json")
     recs = preds["records"]
     if a.split == "val":

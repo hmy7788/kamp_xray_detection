@@ -103,7 +103,7 @@ def power_source():
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--model", required=True, choices=["dfine_n", "yolov3_tiny"])
+    ap.add_argument("--model", default="dfine_n", choices=["dfine_n", "yolov3_tiny"])
     ap.add_argument("--weights", default=None)
     ap.add_argument("--configs", default="cpu4", help="쉼표로 구분: cpu4, cpu1, gpu")
     ap.add_argument("--n", type=int, default=100)

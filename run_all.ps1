@@ -38,10 +38,8 @@ if ($Train) {
 }
 
 foreach ($m in $models) {
-    foreach ($s in @("val", "test")) {
-        Step "4. 추론: $m $s" @("scripts/predict.py", "--model", $m, "--split", $s, "--weights", $w[$m], "--device", $Device)
-        Step "5. 채점: $m $s" @("scripts/evaluate.py", "--model", $m, "--split", $s)
-    }
+    Step "4. 추론: $m" @("scripts/predict.py", "--model", $m, "--weights", $w[$m], "--device", $Device)
+    Step "5. 채점: $m" @("scripts/evaluate.py", "--model", $m)
     if (-not $SkipSpeed) {
         Step "6. 속도 (CPU 4스레드): $m" @("scripts/speed.py", "--model", $m, "--weights", $w[$m])
     }

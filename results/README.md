@@ -1,25 +1,26 @@
-# results 폴더
+# results
 
-보고서에 실린 수치의 근거가 되는 결과 파일을 모아 둔 폴더입니다. 다시 실행한 결과는 outputs 폴더에 따로 생기므로 이 폴더는 바뀌지 않습니다.
+보고서 수치의 근거가 되는 제출 결과임. 재현 실행 결과는 outputs 폴더에 별도로 생성됨
 
 | 위치 | 내용 |
 |---|---|
-| model_comparison.md | 여섯 모델의 평가용 영상 점수 비교표 |
-| dfine_n | 최종 모델 D-FINE-N의 결과 |
-| yolov3_tiny | 베이스라인 YOLOv3-tiny의 결과 |
-| comparison_models | 비교 모델 네 가지의 학습과 평가 기록, 여섯 모델을 같은 방식으로 채점한 결과와 속도 측정 기록 |
-| analysis | 오류 분석, 합성 이물질 실험, 이물질을 지운 영상 실험, 장비별 성능, 전처리 검증 결과 |
+| model_comparison.md | 6개 모델의 평가 데이터 성능 비교표 |
+| dfine_n | 최종 모델 D-FINE-N 결과 |
+| yolov3_tiny | 베이스라인 YOLOv3-tiny 결과 |
+| comparison_models | 비교 모델 4종의 학습 및 평가 기록, 6개 모델 공통 채점 결과, 속도 측정 기록 |
+| analysis | 오류 분석, 합성 이물질 실험, 이물질 제거 영상 실험, 호기별 성능, 전처리 검증 결과 |
 
-## 모델 폴더 안의 파일
+## 모델별 결과 파일
 
 | 파일 | 내용 |
 |---|---|
-| test_predictions.csv | 평가용 영상에서 찾은 이물질 상자. 영상 이름, 상자의 왼쪽 위와 오른쪽 아래 좌표, 신뢰도 |
-| test_image_decisions.csv | 평가용 영상마다 찾은 상자 수, 가장 높은 신뢰도, 불량 정상 판정, 정답 이물질 수 |
-| eval_report_val.json | 검증용 영상 채점 결과와 판정 기준값 |
-| eval_report_test.json | 평가용 영상 채점 결과. 장비별, 해상도별, 촬영 월별, 라벨 종류별 점수 포함 |
-| preds_val.json, preds_test.json | 신뢰도 0.001 이상인 모든 예측 상자와 정답 상자 |
+| test_predictions.csv | 평가 데이터 예측 상자, 영상 이름과 좌표와 신뢰도 |
+| test_image_decisions.csv | 평가 데이터 영상별 최고 신뢰도와 불량 정상 판정 |
+| eval_report_val.json | 검증 데이터 채점 결과와 신뢰도 임계값 |
+| eval_report_test.json | 평가 데이터 채점 결과, 호기별, 해상도별, 월별, 라벨 출처별 성능 포함 |
+| preds_val.json, preds_test.json | 신뢰도 0.001 이상 전체 예측과 정답 상자 |
 | speed.json | 처리 속도 측정 결과 |
-| original_run | 제출한 가중치를 만든 학습의 설정, 로그, 에폭별 점수 |
+| original_run | 제출 가중치를 만든 학습의 설정, 로그, 에폭별 성능 |
 
-좌표는 모두 원본 영상의 픽셀 단위입니다. 기록 파일 속 개인 PC 경로는 지워 두었습니다.
+- 좌표는 원본 영상의 픽셀 단위임
+- 기록 파일의 개인 PC 경로는 제거함

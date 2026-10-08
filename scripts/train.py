@@ -1,6 +1,6 @@
 """2단계: 학습. train으로 학습하고 val로 체크포인트를 고른다 (test는 쓰지 않는다).
 
-    python scripts/train.py --model dfine_n        # 최종 모델 (RTX 4050 Laptop 기준 약 100분)
+    python scripts/train.py                        # 최종 모델 D-FINE-N (RTX 4050 Laptop 기준 약 100분)
     python scripts/train.py --model yolov3_tiny    # 베이스라인 (약 60분, 먼저 scripts/download_pretrained.py)
 
 결과: outputs/<model>/train/ (weights/, config.json, train.log, results.csv 또는 results.txt)
@@ -16,7 +16,7 @@ from kamp_xray.common import CONFIGS, OUTPUTS, load_yaml
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--model", required=True, choices=["dfine_n", "yolov3_tiny"])
+    ap.add_argument("--model", default="dfine_n", choices=["dfine_n", "yolov3_tiny"])
     ap.add_argument("--out", default=None, help="기본: outputs/<model>/train")
     ap.add_argument("--device", default="0", help="GPU 번호 또는 cpu")
     ap.add_argument("--epochs", type=int, default=None, help="설정 파일의 epoch 수를 바꿀 때 (동작 확인용)")
