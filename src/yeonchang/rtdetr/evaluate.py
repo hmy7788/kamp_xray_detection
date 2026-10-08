@@ -154,7 +154,9 @@ def main():
     args = ap.parse_args()
 
     exp_dir = RUNS / args.exp
-    if not (exp_dir / "weights" / "best.pt").exists():
+    reuse = args.reuse_preds and (exp_dir / f"preds_{args.split}.json").exists()
+    # 저장된 예측을 쓰면 모델 종류와 무관하게 채점한다 (D-FINE은 ../dfine/predict.py가 예측을 만든다)
+    if not reuse and not (exp_dir / "weights" / "best.pt").exists():
         sys.exit(f"best.pt가 없습니다: {exp_dir / 'weights'}")
     cfg = json.loads((exp_dir / "config.json").read_text(encoding="utf-8"))
     if "finished" not in cfg:
@@ -173,7 +175,7 @@ def main():
     gt = load_gt(args.split, manifest)
 
     pred_file = exp_dir / f"preds_{args.split}.json"
-    if args.reuse_preds and pred_file.exists():
+    if reuse:
         saved = json.loads(pred_file.read_text(encoding="utf-8"))
         preds, ms = {k: [tuple(p) for p in v] for k, v in saved["preds"].items()}, saved["ms_per_image"]
     else:
