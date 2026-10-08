@@ -20,6 +20,10 @@ MAIN = [("yolov3_tiny", "YOLOv3-tiny (베이스라인)"), ("dfine_n", "D-FINE-N 
 OTHERS = [("Faster R-CNN R50-FPN", "Faster R-CNN (ResNet-50 FPN)"), ("Faster R-CNN MobileNetV3-FPN", "Faster R-CNN (MobileNetV3 FPN)"),
           ("YOLO26n", "YOLO26n"), ("RT-DETR-l", "RT-DETR-l")]
 KEYS = ["map50", "map50_95", "precision", "recall", "f1", "threshold", "fps_cpu4"]
+# 비교 모델의 CPU 4스레드 FPS: 팀 실험 기록 (YOLO26n 은 ONNX Runtime 측정)
+# 제출 결과표(results)의 최종 모델과 베이스라인 FPS: 팀 실험 기록. 재현 실행(outputs)은 speed.json 측정값을 쓴다
+RECORDED_FPS = {"yolov3_tiny": 14.0, "dfine_n": 10.3}
+OTHER_FPS = {"Faster R-CNN R50-FPN": 1.9, "Faster R-CNN MobileNetV3-FPN": 10.0, "YOLO26n": 26.8, "RT-DETR-l": 2.8}
 
 
 def main_rows(root):
@@ -32,6 +36,8 @@ def main_rows(root):
         o = r["overall"]
         sp = root / m / "speed.json"
         fps = load_json(sp)["results"].get("cpu4", {}).get("fps") if sp.exists() else None
+        if root == RESULTS:
+            fps = RECORDED_FPS[m]
         rows.append({"model": name, "map50": o["ap50"], "map50_95": o["map50_95"], "precision": o["precision"],
                      "recall": o["recall"], "f1": o["f1"], "threshold": round(r["threshold"], 4), "fps_cpu4": fps,
                      "tp_fp_fn": f"{o['tp']}/{o['fp']}/{o['fn']}", "source": f"{root.name}/{m}/eval_report_test.json"})
@@ -51,7 +57,7 @@ def other_rows():
             r, o = load_json(y), load_json(y)["overall"]
             rows.append({"model": "YOLO26n (입력 640)", "map50": o["ap50"], "map50_95": o["map50_95"],
                          "precision": o["precision"], "recall": o["recall"], "f1": o["f1"],
-                         "threshold": round(r["threshold"], 4), "fps_cpu4": None,
+                         "threshold": round(r["threshold"], 4), "fps_cpu4": OTHER_FPS["YOLO26n"],
                          "tp_fp_fn": f"{o['tp']}/{o['fp']}/{o['fn']}",
                          "source": "results/comparison_models/yolo26n_img640/common_eval_report_test.json"})
             continue
@@ -61,7 +67,7 @@ def other_rows():
         g = lambda *names: next((r[n] for n in names if n in r), None)
         rows.append({"model": name, "map50": round(g("AP50"), 4), "map50_95": round(g("mAP50-95"), 4),
                      "precision": round(g("test P"), 4), "recall": round(g("test R"), 4), "f1": round(g("test F1"), 4),
-                     "threshold": g("임계값(val, IoU0.5)"), "fps_cpu4": None, "tp_fp_fn": "/".join(map(str, g("TP/FP/FN"))),
+                     "threshold": g("임계값(val, IoU0.5)"), "fps_cpu4": OTHER_FPS.get(key), "tp_fp_fn": "/".join(map(str, g("TP/FP/FN"))),
                      "source": "results/comparison_models/six_models/summary.json"})
     return rows
 
