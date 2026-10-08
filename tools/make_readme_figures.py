@@ -72,8 +72,8 @@ def detection_examples(man, recs, thr):
                 ax.set_xlim(x1, x2); ax.set_ylim(y2, y1)
                 ax.set_title("노란 영역 확대", fontsize=11)
             ax.set_xticks([]); ax.set_yticks([])
-    fig.legend(handles=[Rectangle((0, 0), 1, 1, fill=False, ec=GT_C, lw=2, label="정답 라벨"),
-                        Rectangle((0, 0), 1, 1, fill=False, ec=PR_C, lw=2, ls="--", label=f"D-FINE-N 검출 (신뢰도 {thr:.2f} 이상)")],
+    fig.legend(handles=[Rectangle((0, 0), 1, 1, fill=False, ec=GT_C, lw=2, label="라벨 바운딩 박스"),
+                        Rectangle((0, 0), 1, 1, fill=False, ec=PR_C, lw=2, ls="--", label=f"D-FINE-N 예측 바운딩 박스, 신뢰도 {thr:.2f} 이상")],
                loc="lower center", ncol=2, fontsize=11, frameon=False)
     fig.tight_layout(rect=(0, 0.04, 1, 1))
     fig.savefig(OUT / "detection_examples.png", dpi=110)

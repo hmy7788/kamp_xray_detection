@@ -14,11 +14,11 @@
 
 | 파일 | 내용 |
 |---|---|
-| test_predictions.csv | 평가 데이터 예측 상자, 영상 이름과 좌표와 신뢰도 |
+| test_predictions.csv | 평가 데이터 예측 바운딩 박스, 영상 이름과 좌표와 신뢰도 |
 | test_image_decisions.csv | 평가 데이터 영상별 최고 신뢰도와 불량 정상 판정 |
 | eval_report_val.json | 검증 데이터 채점 결과와 신뢰도 임계값 |
 | eval_report_test.json | 평가 데이터 채점 결과, 호기별, 해상도별, 월별, 라벨 출처별 성능 포함 |
-| preds_val.json, preds_test.json | 신뢰도 0.001 이상 전체 예측과 정답 상자 |
+| preds_val.json, preds_test.json | 신뢰도 0.001 이상 전체 예측 바운딩 박스와 라벨 |
 | speed.json | 처리 속도 측정 결과 |
 | original_run | 제출 가중치를 만든 학습의 설정, 로그, 에폭별 성능 |
 
