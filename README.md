@@ -120,16 +120,56 @@ python scripts/evaluate.py --model yolov3_tiny
 ## 폴더 구조
 
 ```
-├── configs/          학습 설정
-├── data/             학습용 데이터, 영상과 라벨, 분할 정보
-├── docs/             평가 지표 정의, 보고서 표와 결과 파일 대응표, README 그림
-├── experiments/      비교 모델 4종과 오류 분석 실험 코드
-├── preprocessing/    원본 영상에서 학습용 데이터를 만든 전처리, 라벨링, 분할 코드
-├── results/          제출 결과, 평가 리포트, 예측 결과, 학습 기록
-├── scripts/          데이터 검사, 학습, 추론, 채점, 속도 측정 스크립트
-├── src/kamp_xray/    데이터 로딩, 채점, 모델별 학습과 추론 코드
-├── third_party/      베이스라인 YOLOv3 모델 코드
-├── weights/          제출 가중치
+├── configs/
+│   ├── dfine_n.yaml                최종 모델 학습 설정
+│   └── yolov3_tiny.yaml            베이스라인 학습 설정
+├── data/                           학습용 데이터
+│   ├── train/ val/ test/           각 분할의 images, labels
+│   ├── manifest.csv                영상 목록, 호기, 해상도, 라벨 출처, 촬영 묶음
+│   ├── conditions.csv              상자별 크기, 대비, 배경 밝기 등 오류 분석용 조건
+│   └── split_info.json             분할 규칙과 데이터 버전 해시
+├── src/kamp_xray/
+│   ├── common.py                   경로, 데이터 버전 확인, 정답 읽기
+│   ├── metrics.py                  공통 채점 코드
+│   ├── dfine.py                    D-FINE-N 학습과 추론
+│   └── yolov3_tiny.py              YOLOv3-tiny 학습과 추론
+├── scripts/
+│   ├── check_data.py               데이터 검사
+│   ├── verify_preprocess.py        전처리 재현 검증
+│   ├── download_pretrained.py      사전학습 가중치 준비
+│   ├── train.py                    학습
+│   ├── predict.py                  추론
+│   ├── evaluate.py                 채점
+│   ├── speed.py                    처리 속도 측정
+│   ├── compare.py                  모델 비교표 생성, 제출 결과와 대조
+│   └── synth_eval.py               합성 이물질 평가 데이터 생성
+├── weights/
+│   ├── dfine_n/best/               최종 모델 가중치
+│   └── yolov3_tiny/best.pt         베이스라인 가중치
+├── results/
+│   ├── model_comparison.md         6개 모델 성능 비교표
+│   ├── dfine_n/                    최종 모델 결과
+│   │   ├── test_predictions.csv    평가 데이터 예측 결과
+│   │   ├── test_image_decisions.csv  영상별 불량 정상 판정
+│   │   ├── eval_report_test.json   평가 데이터 채점 결과
+│   │   ├── speed.json              처리 속도
+│   │   └── original_run/           학습 설정, 로그, 에폭별 성능
+│   ├── yolov3_tiny/                베이스라인 결과, 구성 동일
+│   ├── comparison_models/          비교 모델 4종 기록, 6개 모델 공통 채점 결과
+│   └── analysis/                   합성 이물질, 이물질 제거, 호기별 성능, 전처리 검증 결과
+├── preprocessing/
+│   ├── build_manifest.py           원본 목록 작성, 중복 제거, 촬영 묶음 구분
+│   ├── preprocess.py               장비 색상 표시 제거, 회색조 변환
+│   ├── make_splits_v2.py           묶음 단위 분할
+│   └── labeling/                   Label Studio 기반 팀 라벨링 도구
+├── experiments/
+│   ├── comparison_models/          Faster R-CNN 2종, RT-DETR-l, YOLO26n 학습 코드
+│   └── analysis/                   합성 이물질, 이물질 제거, 호기별 분석 코드
+├── third_party/yolov3/             베이스라인 YOLOv3 모델 코드
+├── docs/
+│   ├── metrics.md                  평가 지표 정의
+│   ├── report_mapping.md           보고서 표, 그림과 결과 파일 대응표
+│   └── figures/                    README 그림
 ├── requirements.txt
 ├── run_all.ps1
 └── run_all.sh
