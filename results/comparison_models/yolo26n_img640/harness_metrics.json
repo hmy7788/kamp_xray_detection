@@ -1,0 +1,384 @@
+{
+  "exp_id": "lee_003",
+  "part": "val",
+  "threshold": 0.3,
+  "n_seeds": 1,
+  "n_images": 369,
+  "n_boxes": 606,
+  "overall": {
+    "map50": {
+      "mean": 0.9858601122395665,
+      "std": 0.0,
+      "seeds": [
+        0.9858601122395665
+      ]
+    },
+    "map50_95": {
+      "mean": 0.6353511922950317,
+      "std": 0.0,
+      "seeds": [
+        0.6353511922950317
+      ]
+    },
+    "box_precision": {
+      "mean": 0.9900990099009901,
+      "std": 0.0,
+      "seeds": [
+        0.9900990099009901
+      ]
+    },
+    "box_recall": {
+      "mean": 0.9900990099009901,
+      "std": 0.0,
+      "seeds": [
+        0.9900990099009901
+      ]
+    },
+    "box_f1": {
+      "mean": 0.9900990099009901,
+      "std": 0.0,
+      "seeds": [
+        0.9900990099009901
+      ]
+    },
+    "center_hit_precision": {
+      "mean": 1.0,
+      "std": 0.0,
+      "seeds": [
+        1.0
+      ]
+    },
+    "center_hit_recall": {
+      "mean": 1.0,
+      "std": 0.0,
+      "seeds": [
+        1.0
+      ]
+    },
+    "img_f1": {
+      "mean": 1.0,
+      "std": 0.0,
+      "seeds": [
+        1.0
+      ]
+    },
+    "img_recall": {
+      "mean": 1.0,
+      "std": 0.0,
+      "seeds": [
+        1.0
+      ]
+    }
+  },
+  "by_condition": {
+    "machine": {
+      "1": {
+        "box_recall": 0.9912663755458515,
+        "center_hit_recall": 1.0,
+        "n": 229
+      },
+      "2": {
+        "box_recall": 0.9904761904761905,
+        "center_hit_recall": 1.0,
+        "n": 210
+      },
+      "3": {
+        "box_recall": 0.9880239520958084,
+        "center_hit_recall": 1.0,
+        "n": 167
+      }
+    },
+    "resolution": {
+      "316x332": {
+        "box_recall": 0.992,
+        "center_hit_recall": 1.0,
+        "n": 250
+      },
+      "352x332": {
+        "box_recall": 0.9893048128342246,
+        "center_hit_recall": 1.0,
+        "n": 187
+      },
+      "412x332": {
+        "box_recall": 1.0,
+        "center_hit_recall": 1.0,
+        "n": 2
+      },
+      "576x444": {
+        "box_recall": 0.9880239520958084,
+        "center_hit_recall": 1.0,
+        "n": 167
+      }
+    },
+    "month": {
+      "6": {
+        "box_recall": 0.9722222222222222,
+        "center_hit_recall": 1.0,
+        "n": 180
+      },
+      "7": {
+        "box_recall": 1.0,
+        "center_hit_recall": 1.0,
+        "n": 246
+      },
+      "8": {
+        "box_recall": 0.9545454545454546,
+        "center_hit_recall": 1.0,
+        "n": 22
+      },
+      "9": {
+        "box_recall": 1.0,
+        "center_hit_recall": 1.0,
+        "n": 158
+      }
+    },
+    "n_objects": {
+      "1": {
+        "box_recall": 0.9954954954954955,
+        "center_hit_recall": 1.0,
+        "n": 222
+      },
+      "3": {
+        "box_recall": 0.9869791666666666,
+        "center_hit_recall": 1.0,
+        "n": 384
+      }
+    },
+    "source": {
+      "official": {
+        "box_recall": 0.9568345323741008,
+        "center_hit_recall": 1.0,
+        "n": 139
+      },
+      "team": {
+        "box_recall": 1.0,
+        "center_hit_recall": 1.0,
+        "n": 467
+      }
+    },
+    "size_bin": {
+      "large": {
+        "box_recall": 0.9886363636363636,
+        "center_hit_recall": 1.0,
+        "n": 176
+      },
+      "mid": {
+        "box_recall": 0.9736842105263158,
+        "center_hit_recall": 1.0,
+        "n": 38
+      },
+      "small": {
+        "box_recall": 0.9923469387755102,
+        "center_hit_recall": 1.0,
+        "n": 392
+      }
+    },
+    "contrast_bin": {
+      "high": {
+        "box_recall": 0.985,
+        "center_hit_recall": 1.0,
+        "n": 200
+      },
+      "low": {
+        "box_recall": 0.9896373056994818,
+        "center_hit_recall": 1.0,
+        "n": 193
+      },
+      "mid": {
+        "box_recall": 0.9953051643192489,
+        "center_hit_recall": 1.0,
+        "n": 213
+      }
+    },
+    "bg_bin": {
+      "bright": {
+        "box_recall": 0.990909090909091,
+        "center_hit_recall": 1.0,
+        "n": 220
+      },
+      "dark": {
+        "box_recall": 1.0,
+        "center_hit_recall": 1.0,
+        "n": 208
+      },
+      "mid": {
+        "box_recall": 0.9775280898876404,
+        "center_hit_recall": 1.0,
+        "n": 178
+      }
+    },
+    "edge_dist_bin": {
+      "center": {
+        "box_recall": 0.9900497512437811,
+        "center_hit_recall": 1.0,
+        "n": 603
+      },
+      "near": {
+        "box_recall": 1.0,
+        "center_hit_recall": 1.0,
+        "n": 3
+      }
+    }
+  },
+  "threshold_sweep": [
+    {
+      "thr": 0.05,
+      "recall": 0.9900990099009901,
+      "precision": 0.9868421052631579,
+      "f1": 0.9884678747940692,
+      "recheck_rate": 0.948509485094851,
+      "missed": 6
+    },
+    {
+      "thr": 0.1,
+      "recall": 0.9900990099009901,
+      "precision": 0.9884678747940692,
+      "f1": 0.989282769991756,
+      "recheck_rate": 0.948509485094851,
+      "missed": 6
+    },
+    {
+      "thr": 0.15,
+      "recall": 0.9900990099009901,
+      "precision": 0.9884678747940692,
+      "f1": 0.989282769991756,
+      "recheck_rate": 0.948509485094851,
+      "missed": 6
+    },
+    {
+      "thr": 0.2,
+      "recall": 0.9900990099009901,
+      "precision": 0.9884678747940692,
+      "f1": 0.989282769991756,
+      "recheck_rate": 0.948509485094851,
+      "missed": 6
+    },
+    {
+      "thr": 0.25,
+      "recall": 0.9900990099009901,
+      "precision": 0.9884678747940692,
+      "f1": 0.989282769991756,
+      "recheck_rate": 0.948509485094851,
+      "missed": 6
+    },
+    {
+      "thr": 0.3,
+      "recall": 0.9900990099009901,
+      "precision": 0.9900990099009901,
+      "f1": 0.9900990099009901,
+      "recheck_rate": 0.948509485094851,
+      "missed": 6
+    },
+    {
+      "thr": 0.35,
+      "recall": 0.9900990099009901,
+      "precision": 0.9900990099009901,
+      "f1": 0.9900990099009901,
+      "recheck_rate": 0.948509485094851,
+      "missed": 6
+    },
+    {
+      "thr": 0.4,
+      "recall": 0.9900990099009901,
+      "precision": 0.9900990099009901,
+      "f1": 0.9900990099009901,
+      "recheck_rate": 0.948509485094851,
+      "missed": 6
+    },
+    {
+      "thr": 0.45,
+      "recall": 0.9900990099009901,
+      "precision": 0.9900990099009901,
+      "f1": 0.9900990099009901,
+      "recheck_rate": 0.948509485094851,
+      "missed": 6
+    },
+    {
+      "thr": 0.5,
+      "recall": 0.9900990099009901,
+      "precision": 0.9900990099009901,
+      "f1": 0.9900990099009901,
+      "recheck_rate": 0.948509485094851,
+      "missed": 6
+    },
+    {
+      "thr": 0.55,
+      "recall": 0.9900990099009901,
+      "precision": 0.9900990099009901,
+      "f1": 0.9900990099009901,
+      "recheck_rate": 0.948509485094851,
+      "missed": 6
+    },
+    {
+      "thr": 0.6,
+      "recall": 0.9900990099009901,
+      "precision": 0.9900990099009901,
+      "f1": 0.9900990099009901,
+      "recheck_rate": 0.948509485094851,
+      "missed": 6
+    },
+    {
+      "thr": 0.65,
+      "recall": 0.9900990099009901,
+      "precision": 0.9900990099009901,
+      "f1": 0.9900990099009901,
+      "recheck_rate": 0.948509485094851,
+      "missed": 6
+    },
+    {
+      "thr": 0.7,
+      "recall": 0.9900990099009901,
+      "precision": 0.9900990099009901,
+      "f1": 0.9900990099009901,
+      "recheck_rate": 0.948509485094851,
+      "missed": 6
+    },
+    {
+      "thr": 0.75,
+      "recall": 0.9884488448844885,
+      "precision": 0.9900826446280991,
+      "f1": 0.9892650701899256,
+      "recheck_rate": 0.94579945799458,
+      "missed": 7
+    },
+    {
+      "thr": 0.8,
+      "recall": 0.8184818481848185,
+      "precision": 0.992,
+      "f1": 0.8969258589511753,
+      "recheck_rate": 0.8943089430894309,
+      "missed": 110
+    },
+    {
+      "thr": 0.85,
+      "recall": 0.006600660066006601,
+      "precision": 1.0,
+      "f1": 0.013114754098360654,
+      "recheck_rate": 0.01084010840108401,
+      "missed": 602
+    },
+    {
+      "thr": 0.9,
+      "recall": 0.0,
+      "precision": 0.0,
+      "f1": 0.0,
+      "recheck_rate": 0.0,
+      "missed": 606
+    },
+    {
+      "thr": 0.95,
+      "recall": 0.0,
+      "precision": 0.0,
+      "f1": 0.0,
+      "recheck_rate": 0.0,
+      "missed": 606
+    }
+  ],
+  "safety": {
+    "target_recall": 0.99,
+    "threshold": 0.7,
+    "recheck_rate": 0.948509485094851,
+    "note": ""
+  },
+  "evaluated_at": "2026-10-07T14:10:42"
+}

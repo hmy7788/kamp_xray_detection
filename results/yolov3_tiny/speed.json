@@ -1,0 +1,49 @@
+{
+  "model": "yolov3_tiny",
+  "batch": 1,
+  "images": "val 앞 100장",
+  "warmup": 10,
+  "repeats": 3,
+  "affinity": null,
+  "power": "AC",
+  "cpu": "Intel64 Family 6 Model 186 Stepping 2, GenuineIntel",
+  "gpu": "NVIDIA GeForce RTX 4050 Laptop GPU",
+  "torch": "2.6.0+cu124",
+  "measured": "2026-10-08T16:49:32",
+  "timing": "전처리+추론+후처리, 파일 읽기 제외, 회차별 평균의 중앙값",
+  "results": {
+    "cpu4": {
+      "ms_per_image": 74.07,
+      "fps": 13.5,
+      "runs": [
+        {
+          "pre_ms": 1.6509620002761949,
+          "infer_ms": 70.89665100022103,
+          "post_ms": 1.1431109992554411,
+          "mean_ms": 73.69072399975266,
+          "median_ms": 80.05790000606794,
+          "p95_ms": 90.656364995084,
+          "torch_threads": 4
+        },
+        {
+          "pre_ms": 1.8204559989681002,
+          "infer_ms": 76.99160800082609,
+          "post_ms": 1.2496109999483451,
+          "mean_ms": 80.06167499974254,
+          "median_ms": 77.54255000327248,
+          "p95_ms": 99.50762001171825,
+          "torch_threads": 4
+        },
+        {
+          "pre_ms": 1.70877200042014,
+          "infer_ms": 71.17630100008682,
+          "post_ms": 1.1820319999242201,
+          "mean_ms": 74.06710500043118,
+          "median_ms": 73.13944999623345,
+          "p95_ms": 84.69811000250047,
+          "torch_threads": 4
+        }
+      ]
+    }
+  }
+}

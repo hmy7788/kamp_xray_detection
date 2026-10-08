@@ -1,162 +1,215 @@
-# X-ray 영상 기반 완제품 이물질 탐지 — 소스코드
+# X선 영상 기반 완제품 이물질 탐지
 
-제6회 K-인공지능 제조데이터 분석 경진대회 · 일반국민/대학(원)생 부문 · **팀 엽총창** (정연창, 허민엽, 이총)
+제6회 K-인공지능 제조데이터 분석 경진대회 일반국민 및 대학생 부문에 참가한 팀 엽총창의 소스코드입니다.
+팀원은 정연창, 허민엽, 이총입니다.
 
-KAMP "X-ray 검사장비 AI 데이터셋"의 완제품 X선 영상에서 약 10px 크기의 이물질(1클래스)을 검출한다.
-**최종 모델은 D-FINE-N**(파라미터 3.7M), **베이스라인은 YOLOv3-tiny**이며, 두 모델 모두 이 저장소의 같은 데이터·분할·채점 코드로 학습하고 평가한다.
+## 이 프로젝트는 무엇인가요
 
-## 결과 요약 (test 396장, 정답 상자 663개)
+X선 검사 장비가 찍은 완제품 영상에서 이물질을 자동으로 찾아내는 인공지능 모델을 만들었습니다.
+이물질은 영상 속에서 지름이 몇 픽셀밖에 안 되는 검은 점으로 보이며, 대부분 한 변이 10픽셀 안팎인 아주 작은 물체입니다.
 
-| 모델 | mAP50 | mAP50-95 | Precision | Recall | F1 | FPS (CPU 4스레드) |
+데이터는 KAMP가 제공한 X선 검사장비 AI 데이터셋의 영상 2,532장이고, 영상 속 이물질은 모두 4,494개입니다.
+검사 장비는 3대이며 장비마다 영상 크기와 밝기가 조금씩 다릅니다.
+
+최종 모델은 **D-FINE-N**입니다. 파라미터가 370만 개인 가벼운 트랜스포머 기반 검출 모델로, GPU가 없는 일반 PC에서도 1초에 10장 정도를 처리합니다.
+성능을 견주는 기준 모델인 베이스라인은 **YOLOv3-tiny**입니다.
+두 모델은 이 저장소 안에서 같은 데이터, 같은 학습과 평가 분할, 같은 채점 코드로 학습하고 평가합니다.
+
+## 결과
+
+평가용 영상 396장에 들어 있는 이물질 663개로 채점한 결과입니다.
+
+| 모델 | mAP50 | mAP50-95 | 정밀도 | 재현율 | F1 | CPU 4스레드 초당 처리 장수 |
 |---|---|---|---|---|---|---|
-| YOLOv3-tiny (베이스라인) | 0.981 | 0.558 | 0.989 | 0.989 | 0.989 | 14.0 |
-| **D-FINE-N (최종 모델)** | **0.989** | **0.655** | 0.988 | 0.989 | 0.989 | 10.3 |
+| YOLOv3-tiny, 베이스라인 | 0.981 | 0.558 | 0.989 | 0.989 | 0.989 | 13.5 |
+| **D-FINE-N, 최종 모델** | **0.989** | **0.655** | 0.988 | 0.989 | 0.989 | 10.3 |
 
-- 보고서 표 2-5의 값이다. 신뢰도 임계값은 모델마다 val에서 F1이 최대인 값으로 정하고(D-FINE-N 0.7114), test는 그 값으로 한 번만 채점했다.
-- 근거 파일: `results/<모델>/eval_report_test.json`, 최종 모델의 test 예측 결과는 **`results/dfine_n/test_predictions.csv`**.
-- 비교 모델 4종(Faster R-CNN 2종, YOLO26n, RT-DETR-l)의 결과는 `results/model_comparison.md`, 코드는 `experiments/comparison_models/`.
+- 두 모델 모두 이물질을 거의 다 찾습니다. 차이는 상자를 얼마나 정확한 위치와 크기로 그리는지를 보는 mAP50-95에서 크게 납니다.
+- D-FINE-N은 평가용 영상 중 이물질이 있는 369장을 모두 불량으로 판정했고, 이물질이 없는 27장은 모두 정상으로 판정했습니다.
+- 처리 속도는 노트북 CPU의 4개 스레드만 써서 영상을 한 장씩 처리할 때의 값입니다.
 
-## 빠른 재현 (제출 가중치로 추론·채점, GPU 기준 약 5분)
+비교를 위해 구조가 다른 모델 네 가지를 더 학습했습니다. 채점 방식은 위와 같습니다.
+
+| 모델 | mAP50 | mAP50-95 | 정밀도 | 재현율 | F1 |
+|---|---|---|---|---|---|
+| Faster R-CNN, ResNet-50 백본 | 0.988 | 0.611 | 0.989 | 0.989 | 0.989 |
+| Faster R-CNN, MobileNetV3 백본 | 0.985 | 0.559 | 0.986 | 0.986 | 0.986 |
+| YOLO26n | 0.987 | 0.621 | 0.991 | 0.991 | 0.991 |
+| RT-DETR-l | 0.987 | 0.639 | 0.988 | 0.988 | 0.988 |
+
+### 지표 읽는 법
+
+- **mAP50**은 예측 상자가 정답 상자와 절반 이상 겹치면 맞힌 것으로 보고 계산한 점수입니다. 이물질을 찾는 능력을 봅니다.
+- **mAP50-95**는 겹침 기준을 50%부터 95%까지 점점 엄격하게 올려 가며 구한 점수의 평균입니다. 상자를 얼마나 정확하게 그리는지를 봅니다.
+- **정밀도**는 모델이 이물질이라고 한 것 중 실제 이물질의 비율입니다. 낮으면 멀쩡한 제품을 불량으로 잘못 걸러냅니다.
+- **재현율**은 실제 이물질 중 모델이 찾아낸 비율입니다. 낮으면 불량품이 그대로 출하됩니다.
+- **F1**은 정밀도와 재현율을 하나로 합친 점수입니다.
+
+## 폴더 구성
+
+| 폴더 | 들어 있는 것 |
+|---|---|
+| data | 학습과 평가에 쓴 영상 2,532장과 정답 라벨, 영상 목록, 학습 검증 평가 분할 정보 |
+| src | 데이터 읽기, 채점, 두 모델의 학습과 추론을 담은 공통 코드 |
+| scripts | 데이터 검사부터 학습, 추론, 채점, 속도 측정, 비교표 작성까지 단계별 실행 파일 |
+| configs | 두 모델의 학습 설정 |
+| third_party | 베이스라인 YOLOv3-tiny의 모델 코드 |
+| weights | 제출한 두 모델의 학습된 가중치 |
+| results | 제출 시점의 평가 결과, 최종 모델의 평가용 영상 예측 결과, 학습 기록, 비교 모델과 분석 실험 결과 |
+| preprocessing | KAMP 원본 영상에서 data 폴더의 영상을 만든 전처리, 라벨링, 분할 코드 |
+| experiments | 비교 모델 네 가지와 오류 분석 실험의 원래 코드 |
+| docs | 평가 지표 설명, 보고서의 표와 그림이 어느 결과 파일에서 나왔는지 정리한 표 |
+
+실행하면 outputs 폴더가 새로 생기고, 새로 만든 결과는 모두 그 안에 저장됩니다.
+
+## 실행 방법
+
+### 1. 환경 준비
+
+Python 3.10과 PyTorch 2.6을 씁니다. Windows 11과 NVIDIA RTX 4050 노트북 GPU에서 검증했습니다.
+아래 명령을 차례로 실행하면 새 환경에 필요한 패키지가 모두 설치됩니다.
 
 ```powershell
 conda create -n kamp python=3.10 -y
 conda activate kamp
 pip install torch==2.6.0 torchvision==0.21.0 --index-url https://download.pytorch.org/whl/cu124
 pip install -r requirements.txt
-.\run_all.ps1                     # Linux/macOS: bash run_all.sh
 ```
 
-`run_all`은 **데이터 검사 → 추론(val, test) → 채점 → 속도 측정 → 비교표 → 제출 결과와 대조**를 차례로 실행한다.
-결과는 `outputs/`에 새로 생기고, 마지막 단계에서 `results/`(제출 시점 결과)와 지표가 같은지 출력한다.
-**처음부터 학습까지** 재현하려면 `.\run_all.ps1 -Train`을 쓴다(RTX 4050 Laptop 기준 약 3시간).
-
-## 폴더 구조
-
-```text
-.
-├─ README.md                 이 문서 (평가자용 안내)
-├─ requirements.txt          파이썬 의존성 (버전 고정)
-├─ run_all.ps1 / run_all.sh  전체 파이프라인 자동 실행
-├─ configs/                  학습 설정 (dfine_n.yaml = 최종 모델, yolov3_tiny.yaml = 베이스라인)
-├─ data/                     학습용 데이터 (확정 v2: 회색조 PNG 2,532장 + YOLO 라벨, 분할 고정)
-├─ src/kamp_xray/            공통 코드 패키지
-│   ├─ common.py             경로, 데이터 버전 확인, 정답 읽기, 공통 예측 형식
-│   ├─ metrics.py            모든 모델이 함께 쓰는 채점 (AP50, mAP50-95, P/R/F1, 임계값)
-│   ├─ dfine.py              최종 모델 D-FINE-N 학습·추론
-│   └─ yolov3_tiny.py        베이스라인 YOLOv3-tiny 학습·추론
-├─ scripts/                  실행 단계별 스크립트 (아래 "단계별 실행")
-├─ third_party/yolov3/       베이스라인 모델 코드 (ultralytics YOLOv3 2020년 버전 수정본, GPL-3.0)
-├─ weights/                  제출 가중치 (dfine_n/best, yolov3_tiny/best.pt) + 사전학습 가중치 자리
-├─ results/                  제출 시점 결과 (보고서 수치의 근거, 읽기 전용)
-│   ├─ dfine_n/              최종 모델: 평가 리포트, test 예측 결과, 속도, 학습 기록
-│   ├─ yolov3_tiny/          베이스라인: 같은 구성
-│   ├─ comparison_models/    비교 모델 4종의 평가 기록과 6개 모델 통합 채점
-│   ├─ analysis/             오류분석·합성 이물질·전처리 검증 결과 (보고서 3장, 5장)
-│   └─ model_comparison.md   모델 비교표 (보고서 표 2-5)
-├─ preprocessing/            KAMP 원본 → data/ 를 만든 전처리·라벨링·분할 코드 (기록)
-├─ experiments/              비교 모델 4종과 분석 실험의 원 코드 (참고용)
-├─ docs/                     지표 정의, 보고서 표·그림과 파일의 대응표
-└─ outputs/                  재현 실행 결과가 생기는 곳 (처음에는 없음)
-```
-
-## 1. 환경 설치
-
-| 항목 | 검증한 버전 |
-|---|---|
-| OS / GPU | Windows 11 Pro, NVIDIA GeForce RTX 4050 Laptop 6GB (CPU: Intel Core i7-13620H) |
-| Python | 3.10 |
-| PyTorch / torchvision | 2.6.0 / 0.21.0 (CUDA 12.4) |
-| transformers (D-FINE-N) | 5.19.0 |
-| numpy / OpenCV | 2.2.6 / 5.0.0 |
-
-- 위 "빠른 재현"의 설치 명령을 그대로 쓴다. GPU가 없으면 PyTorch를 `pip install torch==2.6.0 torchvision==0.21.0`으로 설치하고 `.\run_all.ps1 -Device cpu`로 실행한다.
-- 새 conda 환경에 `requirements.txt`만으로 설치해 전 과정이 동작하는 것을 확인했다.
-- 경로에 한글이 있어도 동작하도록 이미지는 `cv2.imdecode`로 읽고, 스크립트는 UTF-8 모드(`PYTHONUTF8=1`)로 실행된다.
-- PowerShell에서 스크립트 실행이 막혀 있으면 `powershell -ExecutionPolicy Bypass -File run_all.ps1`로 실행한다.
-
-## 2. 데이터
-
-`data/`에 학습·평가에 쓴 확정 데이터 전체가 들어 있다. 자세한 설명은 `data/README.md`.
-
-| | train | val | test | 합계 |
-|---|---|---|---|---|
-| 이미지 | 1,767 | 369 | 396 | 2,532 |
-| 이물질 상자 | 3,225 | 606 | 663 | 4,494 |
-| 공식 라벨 / 팀 라벨 이미지 | 356 / 1,411 | 59 / 310 | 85 / 311 | 500 / 2,032 |
-
-- **형식**: 회색조 PNG, YOLO 라벨 `0 cx cy w h`(0~1 비율). `images/`와 `labels/`는 형제 폴더다.
-- **버전 확인**: `manifest.csv`의 sha256이 `1942bf34...623c623`이어야 한다. 모든 스크립트가 실행할 때마다 확인하고, 다르면 멈춘다.
-- **분할은 고정**되어 있다. 60초 이내 연속 촬영 묶음 547개 단위로 무작위 분할(seed 42)했으며 다시 만들지 않는다.
-- **전처리**: KAMP 원본 BMP에서 중복 제거, 장비가 그린 색상 상자 제거(주변 5×5 회색 평균으로 메움), 회색조 PNG 변환을 거쳤다.
-  코드는 `preprocessing/`에 있고, 원본 BMP에 다시 적용하면 `data/`와 픽셀 단위로 같은지 검증할 수 있다.
+GPU가 없는 PC라면 세 번째 줄 대신 아래 명령으로 PyTorch를 설치합니다.
 
 ```powershell
-python scripts/verify_preprocess.py --raw "<KAMP 원본>/dataset/test1/yolov3"   # 2,532장 모두 일치해야 함
+pip install torch==2.6.0 torchvision==0.21.0
 ```
 
-## 3. 단계별 실행
+### 2. 한 번에 실행하기
 
-`run_all`이 아래를 순서대로 부른다. 모두 저장소 루트에서 실행한다.
+저장소 폴더에서 아래 명령 하나만 실행하면 됩니다. GPU가 있으면 5분 정도 걸립니다.
 
-| 단계 | 명령 | 결과 |
+```powershell
+.\run_all.ps1
+```
+
+이 명령은 다음 일을 차례로 합니다.
+
+1. 데이터가 제출한 것과 같은지 검사합니다.
+2. 제출한 가중치로 두 모델이 검증용 영상과 평가용 영상을 예측합니다.
+3. 검증용 영상으로 판정 기준값을 정하고, 그 값으로 평가용 영상을 채점합니다.
+4. 두 모델의 처리 속도를 잽니다.
+5. 모델 비교표를 만들고, 새로 낸 점수가 제출한 점수와 같은지 비교해 보여 줍니다.
+
+Linux나 macOS에서는 아래 명령을 씁니다.
+
+```bash
+bash run_all.sh
+```
+
+GPU가 없으면 아래처럼 실행합니다.
+
+```powershell
+.\run_all.ps1 -Device cpu
+```
+
+PowerShell이 스크립트 실행을 막으면 아래처럼 실행합니다.
+
+```powershell
+powershell -ExecutionPolicy Bypass -File run_all.ps1
+```
+
+### 3. 처음부터 학습까지 다시 하기
+
+학습부터 다시 하려면 아래 명령을 씁니다. RTX 4050 노트북 GPU에서 3시간 정도 걸립니다.
+COCO 데이터로 미리 학습된 가중치를 내려받은 뒤 두 모델을 학습하고, 그 가중치로 예측과 채점을 합니다.
+
+```powershell
+.\run_all.ps1 -Train
+```
+
+### 4. 한 단계씩 실행하기
+
+각 단계를 직접 실행할 수도 있습니다. 베이스라인은 dfine_n 자리에 yolov3_tiny를 넣으면 됩니다.
+
+```powershell
+python scripts/check_data.py                                  # 데이터 검사
+python scripts/download_pretrained.py                         # 미리 학습된 가중치 내려받기, 학습할 때만 필요
+python scripts/train.py --model dfine_n                       # 학습
+python scripts/predict.py --model dfine_n --split val         # 검증용 영상 예측
+python scripts/evaluate.py --model dfine_n --split val        # 판정 기준값 정하기
+python scripts/predict.py --model dfine_n --split test        # 평가용 영상 예측
+python scripts/evaluate.py --model dfine_n --split test       # 평가용 영상 채점
+python scripts/speed.py --model dfine_n                       # 처리 속도 측정
+python scripts/compare.py                                     # 모델 비교표 만들기
+python scripts/compare.py --check                             # 제출한 점수와 비교
+```
+
+## 데이터
+
+| 구분 | 학습용 | 검증용 | 평가용 | 합계 |
+|---|---|---|---|---|
+| 영상 수 | 1,767 | 369 | 396 | 2,532 |
+| 이물질 수 | 3,225 | 606 | 663 | 4,494 |
+
+- 영상은 흑백 PNG 파일이고, 라벨은 이물질마다 상자 하나를 적은 YOLO 형식의 텍스트 파일입니다.
+- 라벨은 두 종류입니다. KAMP가 제공한 공식 라벨이 500장이고, 나머지 2,032장은 팀원 세 명이 직접 라벨링했습니다.
+  팀 라벨은 이물질 한가운데를 클릭하면 정해진 크기의 정사각형 상자가 자동으로 그려지는 방식으로 만들었습니다.
+- 60초 안에 연달아 찍힌 영상은 거의 똑같기 때문에 하나의 묶음으로 보고, 묶음 단위로 학습용, 검증용, 평가용을 나눴습니다.
+  같은 묶음이 학습과 평가에 동시에 들어가지 않습니다. 이 분할은 고정되어 있으며 다시 만들지 않습니다.
+- 모든 실행 파일은 시작할 때 영상 목록 파일의 해시값을 확인해서, 데이터가 제출한 것과 다르면 멈춥니다.
+
+### 전처리
+
+원본 영상에는 검사 장비가 이물질 위에 그려 넣은 색깔 상자가 있습니다. 그대로 학습하면 모델이 이물질이 아니라 색깔 상자를 찾도록 배우게 됩니다.
+그래서 색깔이 있는 픽셀만 주변 회색 픽셀의 평균값으로 메우고, 이물질 자체는 그대로 둔 채 흑백 영상으로 저장했습니다.
+같은 처리를 원본 영상에 다시 적용하면 data 폴더의 영상 2,532장과 모든 픽셀이 똑같이 나옵니다. 원본 영상이 있으면 아래 명령으로 직접 확인할 수 있습니다.
+
+```powershell
+python scripts/verify_preprocess.py --raw "원본 데이터셋 폴더/dataset/test1/yolov3"
+```
+
+## 학습 설정
+
+| 항목 | D-FINE-N, 최종 모델 | YOLOv3-tiny, 베이스라인 |
 |---|---|---|
-| 데이터 검사 | `python scripts/check_data.py` | `outputs/data_check.json` |
-| (학습 시) 사전학습 가중치 | `python scripts/download_pretrained.py` | Hugging Face 캐시, `weights/pretrained/yolov3-tiny.pt` |
-| (학습 시) 학습 | `python scripts/train.py --model dfine_n` | `outputs/dfine_n/train/` |
-| 추론 | `python scripts/predict.py --model dfine_n --split val` (test도 같게) | `outputs/dfine_n/preds_val.json` |
-| 채점 | `python scripts/evaluate.py --model dfine_n --split val` → `--split test` | `eval_report_{val,test}.json`, `test_predictions.csv` |
-| 속도 | `python scripts/speed.py --model dfine_n` | `outputs/dfine_n/speed.json` |
-| 비교표 | `python scripts/compare.py` | `outputs/model_comparison.md` |
-| 제출 결과와 대조 | `python scripts/compare.py --check` | 화면 출력 |
+| 시작 가중치 | COCO 데이터로 미리 학습된 가중치 | COCO 데이터로 미리 학습된 가중치 |
+| 입력 크기 | 640 x 640 | 640 x 640 |
+| 학습 횟수 | 최대 50 에폭, 10 에폭 동안 나아지지 않으면 중단 | 100 에폭 |
+| 배치 크기 | 16 | 16 |
+| 학습 시간 | 약 98분 | 약 59분 |
 
-베이스라인은 `--model yolov3_tiny`로 같은 명령을 쓴다. 직접 학습한 가중치로 추론하려면 `--weights outputs/<model>/train/weights/...`를 붙인다.
+- 이물질이 10픽셀 정도로 작아서, 영상을 크게 줄이거나 여러 장을 이어 붙이는 증강은 쓰지 않았습니다.
+- 흑백 영상이라 색상 증강도 쓰지 않았고, 밝기 변화와 좌우 상하 뒤집기, 약간의 이동과 확대 축소만 썼습니다.
+- 학습 중에는 검증용 영상의 점수로 가장 좋은 시점의 가중치를 골랐습니다. 평가용 영상은 학습과 모델 선택에 전혀 쓰지 않았습니다.
 
-### 학습 설정 요약 (`configs/`)
+## 평가 방식
 
-| | D-FINE-N (최종) | YOLOv3-tiny (베이스라인) |
-|---|---|---|
-| 시작 가중치 | COCO 사전학습 `ustc-community/dfine-nano-coco` | COCO 사전학습 yolov3-tiny |
-| 입력 | 640×640 (늘림) | 640 (letterbox) |
-| epoch | 최대 50, patience 10 (제출 모델: 43에서 종료, 최적 33) | 100 |
-| batch | 16 | 16 |
-| 증강 | 밝기 ±30%, 좌우·상하 뒤집기, 이동 0.1, 크기 ±0.2 | yolov3 기본값 |
-| 체크포인트 선택 | val 0.1×AP50 + 0.9×AP50-95 | val 0.99×mAP50 + 0.01×R |
-| 학습 시간 (RTX 4050 Laptop) | 약 98분 | 약 59분 |
+- 예측 상자와 정답 상자가 절반 이상 겹치면 맞힌 것으로 봅니다. 정답 하나에는 예측 하나만 짝지어집니다.
+- 모델은 상자마다 0에서 1 사이의 신뢰도를 냅니다. 신뢰도가 얼마 이상이면 이물질로 판정할지 정하는 기준값은 검증용 영상에서 F1이 가장 높은 값으로 정했습니다.
+  평가용 영상은 그 기준값을 그대로 써서 한 번만 채점했습니다. D-FINE-N의 기준값은 0.7114입니다.
+- 현장에서는 영상 한 장에서 가장 높은 신뢰도가 기준값 이상이면 불량, 아니면 정상으로 판정합니다.
+- 처리 속도는 영상을 한 장씩 넣고 크기 조정, 모델 계산, 결과 정리까지 걸린 시간으로 잽니다. 파일을 읽는 시간은 빼고, 검증용 영상 100장으로 세 번 재서 가운데 값을 씁니다.
 
-약 10px 이물질이 더 작아지지 않도록 mosaic과 큰 축소 증강은 쓰지 않았고, 회색조 영상이라 색상 증강도 쓰지 않았다.
-
-## 4. 평가 규칙 (`src/kamp_xray/metrics.py`)
-
-- **매칭**: 이미지마다 신뢰도가 높은 검출부터, IoU 0.5 이상이며 아직 짝이 없는 정답 중 IoU가 가장 큰 것과 짝짓는다. 정답 하나에는 검출 하나만 대응한다.
-- **AP**: 신뢰도 0.001 이상의 모든 검출로 정밀도-재현율 곡선을 만들고 전 구간 보간(VOC)으로 면적을 구한다. mAP50-95는 IoU 0.50~0.95(0.05 간격) AP의 평균이다.
-- **임계값**: val에서 F1이 최대인 신뢰도로 정하고 test에는 그 값을 그대로 쓴다. test는 모델 선택과 임계값 결정에 쓰지 않았다.
-- **보조 지표**: 중심 거리 1~5px 매칭(상자 크기와 무관한 위치 정확도), 이미지 단위 판정(영상 내 최고 신뢰도 ≥ 임계값이면 불합격), 라벨 출처·호기·해상도·월별 분해.
-- **속도**: 배치 1, CPU 4스레드, val 100장, 예열 10장, 3회 반복의 중앙값. 전처리·추론·후처리를 포함하고 파일 읽기는 제외한다.
-
-## 5. 제출 결과물 (`results/`)
+## 결과 파일
 
 | 파일 | 내용 |
 |---|---|
-| `results/dfine_n/test_predictions.csv` | **최종 모델의 test 예측 결과** (임계값 이상 상자: image_id, x1, y1, x2, y2, score, 원본 픽셀 좌표) |
-| `results/dfine_n/test_image_decisions.csv` | test 이미지별 최고 신뢰도와 불합격·합격 판정 |
-| `results/dfine_n/preds_test.json` | 신뢰도 0.001 이상 전체 검출 (채점 입력) |
-| `results/<모델>/eval_report_{val,test}.json` | 임계값, 전체 지표, IoU별 AP, 중심 거리 지표, 조건별 분해 |
-| `results/<모델>/speed.json` | 처리 속도 |
-| `results/<모델>/original_run/` | 제출 가중치를 만든 원 학습 실행의 설정·로그·학습 곡선 |
-| `results/model_comparison.md` | 6개 모델 비교표 |
+| results/dfine_n/test_predictions.csv | 최종 모델이 평가용 영상에서 찾은 이물질 상자. 영상 이름, 상자 좌표, 신뢰도 |
+| results/dfine_n/test_image_decisions.csv | 평가용 영상마다 가장 높은 신뢰도와 불량 정상 판정 |
+| results/dfine_n/eval_report_test.json | 최종 모델의 평가용 영상 채점 결과 전체. 장비별, 해상도별, 라벨 종류별 점수 포함 |
+| results/yolov3_tiny | 베이스라인의 같은 결과 파일 |
+| results/model_comparison.md | 여섯 모델의 비교표 |
+| results/dfine_n/original_run | 제출한 가중치를 만든 학습의 설정, 로그, 에폭별 점수 |
 
-보고서의 표·그림과 파일의 대응은 `docs/report_mapping.md`에 있다.
+보고서의 표와 그림이 어느 파일에서 나왔는지는 docs 폴더의 report_mapping.md에 정리했습니다.
 
-## 6. 재현할 때 알아 둘 점
+## 재현할 때 참고할 점
 
-- **제출 가중치로 추론·채점하면 같은 수치가 나온다.** 다시 학습하면 GPU 연산의 비결정성 때문에 수치가 조금 달라질 수 있다.
-- 속도는 하드웨어와 전원 상태에 크게 좌우된다. 보고서 수치는 노트북 AC 전원, 전원 모드 "최고 성능", 고성능 코어 고정(`--affinity 0,2,4,6`)에서 쟀다.
-- 데이터에는 기존 검사 장비가 불량으로 판정한 영상만 있고 정상 제품 영상은 없다. 그래서 정상품 오검출률은 검증 범위 밖이다(보고서 1.1절, 4.1절).
-- 팀 라벨은 클릭한 점을 중심으로 고정 크기 상자를 만든 것이라 상자 크기 정보가 없다. IoU 기준 오류는 대부분 공식 라벨과의 크기 차이에서 생긴다(보고서 3.2절).
+- 제출한 가중치로 예측하고 채점하면 위 표와 같은 점수가 나옵니다.
+- 학습부터 다시 하면 GPU 연산 특성상 점수가 조금 달라질 수 있습니다.
+- 처리 속도는 컴퓨터 사양, 전원 상태, 동시에 실행 중인 프로그램에 따라 크게 달라집니다. 위 표의 속도는 Intel i7-13620H 노트북 CPU에서 전원을 연결하고 잰 값이며, 다른 프로그램을 모두 끄고 재는 것이 좋습니다.
+- 이 데이터에는 기존 검사 장비가 불량으로 판정한 영상만 있고 정상 제품 영상은 없습니다. 그래서 정상 제품을 불량으로 잘못 판정하는 비율은 이 데이터로 측정할 수 없습니다.
 
-## 7. 출처와 라이선스
+## 출처와 라이선스
 
-- 데이터: KAMP(한국인공지능제조플랫폼) "X-ray 검사장비 AI 데이터셋". 대회 제출 목적으로만 포함했다.
-- D-FINE-N: Hugging Face `transformers`의 `DFineForObjectDetection`, 사전학습 가중치 `ustc-community/dfine-nano-coco`(Apache-2.0).
-- YOLOv3-tiny: [ultralytics/yolov3](https://github.com/ultralytics/yolov3) 2020년 버전 수정본(GPL-3.0). 수정 내역은 `third_party/yolov3/README.md`.
-- 사전학습 YOLOv3-tiny 가중치: Darknet 공식 COCO 가중치(pjreddie.com)를 변환해 쓴다(`scripts/download_pretrained.py`).
+- 데이터는 KAMP 한국인공지능제조플랫폼의 X선 검사장비 AI 데이터셋이며, 대회 제출 목적으로만 포함했습니다.
+- D-FINE-N은 Hugging Face transformers 라이브러리의 구현과 ustc-community/dfine-nano-coco 사전학습 가중치를 썼습니다. Apache 2.0 라이선스입니다.
+- YOLOv3-tiny는 ultralytics/yolov3 저장소의 2020년 버전을 최신 PyTorch에서 돌아가도록 고쳐서 썼습니다. GPL 3.0 라이선스입니다.

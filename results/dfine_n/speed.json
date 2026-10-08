@@ -1,0 +1,30 @@
+{
+  "model": "dfine_n",
+  "batch": 1,
+  "images": "val 앞 200장",
+  "source": "original_run/speed_cpu_pinned.json, original_run/speed_gpu_repeat.json",
+  "conditions": "AC 전원, 전원 모드 최고 성능, CPU 1스레드는 논리 코어 0, 4스레드는 0,2,4,6 에 고정, 3회 반복 중앙값",
+  "cpu": "13th Gen Intel(R) Core(TM) i7-13620H",
+  "gpu": "NVIDIA GeForce RTX 4050 Laptop GPU",
+  "measured": "2026-10-07T20:19:04",
+  "timing": "전처리+추론+후처리, 파일 읽기 제외",
+  "results": {
+    "cpu1": {
+      "ms_per_image": 171.59,
+      "fps": 5.8,
+      "affinity": "0",
+      "repeats": 3
+    },
+    "cpu4": {
+      "ms_per_image": 96.89,
+      "fps": 10.3,
+      "affinity": "0,2,4,6",
+      "repeats": 3
+    },
+    "gpu": {
+      "ms_per_image": 32.34,
+      "fps": 30.9,
+      "repeats": 3
+    }
+  }
+}

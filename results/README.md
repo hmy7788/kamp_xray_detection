@@ -1,20 +1,25 @@
-# results/ — 제출 시점 결과 (보고서 수치의 근거)
+# results 폴더
 
-이 폴더는 **읽기 전용**으로 취급한다. 재현 실행(`run_all`)은 `outputs/`에 결과를 만들고,
-`python scripts/compare.py --check`가 두 폴더의 test 지표를 비교한다.
+보고서에 실린 수치의 근거가 되는 결과 파일을 모아 둔 폴더입니다. 다시 실행한 결과는 outputs 폴더에 따로 생기므로 이 폴더는 바뀌지 않습니다.
 
-| 경로 | 내용 |
+| 위치 | 내용 |
 |---|---|
-| `model_comparison.md`, `.csv` | 6개 모델 비교표 (보고서 표 2-5) |
-| `dfine_n/` | **최종 모델 D-FINE-N** |
-| `dfine_n/test_predictions.csv` | test 예측 결과: 임계값(0.7114) 이상 상자 (image_id, file_name, class, x1, y1, x2, y2, score; 원본 픽셀 좌표) |
-| `dfine_n/test_image_decisions.csv` | test 이미지별 검출 수, 최고 신뢰도, 판정(불합격/합격), 정답 상자 수 |
-| `dfine_n/preds_{val,test}.json` | 신뢰도 0.001 이상 전체 검출과 정답 (채점 입력, 형식은 `src/kamp_xray/common.py`) |
-| `dfine_n/eval_report_{val,test}.json` | 임계값, 전체 지표, IoU별 AP, 중심 거리 지표, 이미지 단위 판정, 조건별 분해 |
-| `dfine_n/speed.json` | 처리 속도 (`scripts/speed.py`) |
-| `dfine_n/original_run/` | 제출 가중치를 만든 원 학습 실행 기록: `config.json`, `train.log`, `results.csv`(epoch별 val AP), 원 평가·속도 기록 |
-| `yolov3_tiny/` | **베이스라인 YOLOv3-tiny**, 구성은 위와 같음 (`original_run/results.txt`가 epoch별 학습 기록) |
-| `comparison_models/` | 비교 모델 4종의 원 평가 기록, `six_models/`는 6개 모델 통합 채점·속도 |
-| `analysis/` | 오류분석·합성 이물질·이물질 제거·호기별 통계·전처리 검증 결과 |
+| model_comparison.md | 여섯 모델의 평가용 영상 점수 비교표 |
+| dfine_n | 최종 모델 D-FINE-N의 결과 |
+| yolov3_tiny | 베이스라인 YOLOv3-tiny의 결과 |
+| comparison_models | 비교 모델 네 가지의 학습과 평가 기록, 여섯 모델을 같은 방식으로 채점한 결과와 속도 측정 기록 |
+| analysis | 오류 분석, 합성 이물질 실험, 이물질을 지운 영상 실험, 장비별 성능, 전처리 검증 결과 |
 
-`original_run/` 의 로그·설정에 있는 경로는 개인 PC 경로를 `<KAMP>`, `<HOME>` 등으로 바꿔 두었다.
+## 모델 폴더 안의 파일
+
+| 파일 | 내용 |
+|---|---|
+| test_predictions.csv | 평가용 영상에서 찾은 이물질 상자. 영상 이름, 상자의 왼쪽 위와 오른쪽 아래 좌표, 신뢰도 |
+| test_image_decisions.csv | 평가용 영상마다 찾은 상자 수, 가장 높은 신뢰도, 불량 정상 판정, 정답 이물질 수 |
+| eval_report_val.json | 검증용 영상 채점 결과와 판정 기준값 |
+| eval_report_test.json | 평가용 영상 채점 결과. 장비별, 해상도별, 촬영 월별, 라벨 종류별 점수 포함 |
+| preds_val.json, preds_test.json | 신뢰도 0.001 이상인 모든 예측 상자와 정답 상자 |
+| speed.json | 처리 속도 측정 결과 |
+| original_run | 제출한 가중치를 만든 학습의 설정, 로그, 에폭별 점수 |
+
+좌표는 모두 원본 영상의 픽셀 단위입니다. 기록 파일 속 개인 PC 경로는 지워 두었습니다.

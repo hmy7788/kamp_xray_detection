@@ -45,6 +45,16 @@ def other_rows():
     real = list(load_json(p).values())[0]
     rows = []
     for key, name in OTHERS:
+        y = RESULTS / "comparison_models" / "yolo26n_img640" / "common_eval_report_test.json"
+        if key == "YOLO26n" and y.exists():
+            # YOLO26n 은 보고서 2.3절대로 입력 640 모델을 쓴다 (experiments/comparison_models/yolo26/rescore_common.py 로 공통 채점)
+            r, o = load_json(y), load_json(y)["overall"]
+            rows.append({"model": "YOLO26n (입력 640)", "map50": o["ap50"], "map50_95": o["map50_95"],
+                         "precision": o["precision"], "recall": o["recall"], "f1": o["f1"],
+                         "threshold": round(r["threshold"], 4), "fps_cpu4": None,
+                         "tp_fp_fn": f"{o['tp']}/{o['fp']}/{o['fn']}",
+                         "source": "results/comparison_models/yolo26n_img640/common_eval_report_test.json"})
+            continue
         r = real.get(key)
         if not r:
             continue

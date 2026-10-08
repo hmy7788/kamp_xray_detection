@@ -1,0 +1,7 @@
+﻿model,map50,map50_95,precision,recall,f1,threshold,fps_cpu4,tp_fp_fn,source
+YOLOv3-tiny (베이스라인),0.9812,0.5579,0.9894,0.9894,0.9894,0.0753,13.5,656/7/7,results/yolov3_tiny/eval_report_test.json
+D-FINE-N (최종 모델),0.9886,0.655,0.988,0.9894,0.9887,0.7114,10.3,656/8/7,results/dfine_n/eval_report_test.json
+Faster R-CNN (ResNet-50 FPN),0.9877,0.6114,0.9894,0.9894,0.9894,0.95,,656/7/7,results/comparison_models/six_models/summary.json
+Faster R-CNN (MobileNetV3 FPN),0.9846,0.5587,0.9864,0.9864,0.9864,0.93,,654/9/9,results/comparison_models/six_models/summary.json
+YOLO26n (입력 640),0.9872,0.6214,0.991,0.991,0.991,0.7417,,657/6/6,results/comparison_models/yolo26n_img640/common_eval_report_test.json
+RT-DETR-l,0.9866,0.6387,0.9879,0.9879,0.9879,0.74,,655/8/8,results/comparison_models/six_models/summary.json
