@@ -1,0 +1,84 @@
+{
+  "exp": "03_dfinen_img640_e50",
+  "model": "D-FINE-N",
+  "params": 3719545,
+  "imgsz": 640,
+  "batch": 1,
+  "images": "val 앞 200장 (이름순)",
+  "timing": "perf_counter, GPU는 구간마다 synchronize",
+  "cpu": "13th Gen Intel(R) Core(TM) i7-13620H",
+  "gpu": "NVIDIA GeForce RTX 4050 Laptop GPU",
+  "torch": "2.6.0+cu124",
+  "measured": "2026-10-07T17:17:13",
+  "results": [
+    {
+      "device": "cuda",
+      "precision": "fp32",
+      "threads": null,
+      "n_images": 200,
+      "warmup": 20,
+      "pre_ms": 6.58,
+      "infer_ms": 77.98,
+      "post_ms": 3.37,
+      "total_ms_mean": 87.92,
+      "total_ms_median": 82.24,
+      "total_ms_p95": 129.63,
+      "fps": 11.4
+    },
+    {
+      "device": "cuda",
+      "precision": "fp16",
+      "threads": null,
+      "n_images": 200,
+      "warmup": 20,
+      "pre_ms": 5.75,
+      "infer_ms": 91.05,
+      "post_ms": 2.94,
+      "total_ms_mean": 99.74,
+      "total_ms_median": 93.76,
+      "total_ms_p95": 130.39,
+      "fps": 10.0
+    },
+    {
+      "device": "cpu",
+      "precision": "fp32",
+      "threads": 4,
+      "n_images": 200,
+      "warmup": 20,
+      "pre_ms": 3.62,
+      "infer_ms": 309.72,
+      "post_ms": 0.95,
+      "total_ms_mean": 314.3,
+      "total_ms_median": 308.68,
+      "total_ms_p95": 352.31,
+      "fps": 3.2
+    },
+    {
+      "device": "cpu",
+      "precision": "fp32",
+      "threads": 1,
+      "n_images": 200,
+      "warmup": 20,
+      "pre_ms": 5.9,
+      "infer_ms": 604.76,
+      "post_ms": 1.07,
+      "total_ms_mean": 611.73,
+      "total_ms_median": 601.63,
+      "total_ms_p95": 717.93,
+      "fps": 1.6
+    }
+  ],
+  "diagnosis": {
+    "gpu_fp32_model_only_random_input": {
+      "batch1_ms_per_img": 88.4,
+      "batch8_ms_per_img": 16.55,
+      "batch16_ms_per_img": 15.3
+    },
+    "profiler_batch1": {
+      "self_cpu_ms": 120.6,
+      "self_cuda_ms": 146.5,
+      "note": "수천 개의 작은 연산(reshape 261, mul 208, add 197회 등)이 각각 30~70us씩 걸림"
+    },
+    "conclusion": "batch 1 지연은 연산량이 아니라 연산 호출 오버헤드(transformers 구현의 작은 연산 다수 + Windows/Python 디스패치)가 지배. batch 8에서 장당 16.5ms로 5배 이상 빨라짐. ONNX Runtime/TensorRT 변환 시 개선 여지(미검증)"
+  }
+}

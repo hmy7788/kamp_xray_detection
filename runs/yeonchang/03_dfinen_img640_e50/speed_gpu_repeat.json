@@ -1,0 +1,92 @@
+{
+  "exp": "03_dfinen_img640_e50",
+  "power_at_start": "AC",
+  "power_at_end": "AC",
+  "power_mode": "최고 성능 (AC overlay ded574b5)",
+  "gpu": "NVIDIA GeForce RTX 4050 Laptop GPU",
+  "batch": 1,
+  "measured": "2026-10-07T20:25:34",
+  "note": "실험들을 번갈아 반복 측정",
+  "results": [
+    {
+      "precision": "fp32",
+      "fp16_method": null,
+      "repeats": 3,
+      "n_images_each": 100,
+      "total_ms_median_of_medians": 32.34,
+      "total_ms_median_each": [
+        32.34,
+        22.57,
+        33.45
+      ],
+      "total_ms_mean_each": [
+        36.14,
+        22.97,
+        36.87
+      ],
+      "total_ms_p95_each": [
+        59.58,
+        25.91,
+        60.93
+      ],
+      "pre_infer_post_ms_mean_each": [
+        [
+          2.6,
+          32.58,
+          0.96
+        ],
+        [
+          2.21,
+          20.03,
+          0.74
+        ],
+        [
+          2.67,
+          33.19,
+          1.0
+        ]
+      ],
+      "fps_from_median": 30.92
+    },
+    {
+      "precision": "fp16",
+      "fp16_method": "model.half() + 입력 half (autocast 아님)",
+      "repeats": 3,
+      "n_images_each": 100,
+      "total_ms_median_of_medians": 29.98,
+      "total_ms_median_each": [
+        23.49,
+        29.98,
+        30.25
+      ],
+      "total_ms_mean_each": [
+        25.47,
+        34.04,
+        34.86
+      ],
+      "total_ms_p95_each": [
+        34.12,
+        55.11,
+        56.88
+      ],
+      "pre_infer_post_ms_mean_each": [
+        [
+          2.31,
+          22.33,
+          0.82
+        ],
+        [
+          2.65,
+          30.3,
+          1.09
+        ],
+        [
+          2.63,
+          31.15,
+          1.07
+        ]
+      ],
+      "fps_from_median": 33.36
+    }
+  ]
+}
