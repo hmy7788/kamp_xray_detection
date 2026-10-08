@@ -1,27 +1,29 @@
-# 이 프로젝트의 파이썬 의존성 (Python 3.10, Windows 11에서 검증한 버전)
+# 팀 엽총창 - X-ray 영상 기반 완제품 이물질 탐지 : 파이썬 의존성
+# 검증 환경: Windows 11, Python 3.10, NVIDIA RTX 4050 Laptop (CUDA 12.4)  (보고서 표 2-3)
 #
-# 설치 순서
-#   1) PyTorch를 먼저 환경에 맞게 설치한다 (README 3-3)
-#        NVIDIA GPU(CUDA 12.4):  pip install torch==2.6.0 torchvision==0.21.0 --index-url https://download.pytorch.org/whl/cu124
-#        CPU 전용:               pip install torch==2.6.0 torchvision==0.21.0
-#   2) 나머지를 설치한다:        pip install -r requirements.txt
+# 설치 순서 (README "1. 환경 설치")
+#   1) PyTorch 를 환경에 맞게 먼저 설치
+#        NVIDIA GPU (CUDA 12.4): pip install torch==2.6.0 torchvision==0.21.0 --index-url https://download.pytorch.org/whl/cu124
+#        CPU 전용             : pip install torch==2.6.0 torchvision==0.21.0
+#   2) 나머지 설치            : pip install -r requirements.txt
 #
-# torch / torchvision 은 GPU 빌드(+cu124)와 CPU 빌드가 다르므로 아래에서는 버전만 고정한다.
-# 이미 1)로 설치했다면 이 파일은 "이미 설치됨"으로 처리하고 건너뛴다.
+# torch / torchvision 은 GPU 빌드(+cu124)와 CPU 빌드가 달라 버전만 고정한다 (1)에서 설치했다면 그대로 통과).
 
-# --- 딥러닝 (src/yolov3 가 요구) ---
+# --- 딥러닝 공통 ---
 torch==2.6.0
 torchvision==0.21.0
 numpy==2.2.6
 opencv-python==5.0.0.93
 pillow==12.3.0
-scipy==1.15.3
-matplotlib==3.10.9
 PyYAML==6.0.3
 tqdm==4.70.1
-tensorboard==2.21.0
-Cython==3.3.0
+psutil==7.2.2
 
-# --- 노트북 실행 (notebooks/*.ipynb) ---
-jupyter==1.1.1
-ipykernel==7.3.0
+# --- 최종 모델 D-FINE-N (Hugging Face 구현) ---
+transformers==5.19.0
+safetensors
+
+# --- 베이스라인 YOLOv3-tiny (third_party/yolov3 가 요구) ---
+scipy==1.15.3
+matplotlib==3.10.9
+tensorboard==2.21.0

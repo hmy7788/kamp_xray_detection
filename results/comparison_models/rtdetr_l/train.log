@@ -1,0 +1,150 @@
+2026-10-06 09:55:21,562 Ultralytics 8.4.173 🚀 Python-3.10.22 torch-2.6.0+cu124 CUDA:0 (NVIDIA GeForce RTX 4050 Laptop GPU, 6140MiB)
+2026-10-06 09:55:21,749 [34m[1mengine\trainer: [0magnostic_nms=False, amp=True, angle=1.0, augment=False, auto_augment=randaugment, batch=4, bgr=0.0, box=7.5, cache=ram, cfg=None, channels_last=None, classes=None, close_mosaic=10, cls=0.5, cls_pw=0.0, cls_remap=True, compile=False, conf=None, copy_paste=0.0, copy_paste_mode=flip, cos_lr=True, cutmix=0.0, data=<KAMP>\runs\yeonchang\02_rtdetrl_img640_e30\weights\data.yaml, degrees=0.0, deterministic=False, device=0, dfl=1.5, dgrad=0.5, dis=6.0, distill_model=None, dlam=1.0, dlog=1.0, dnn=False, dropout=0.0, dynamic=False, embed=None, epochs=30, erasing=0.4, exist_ok=True, fliplr=0.5, flipud=0.5, format=torchscript, fraction=1.0, freeze=None, hsv_h=0.0, hsv_s=0.0, hsv_v=0.3, imgsz=640, iou=0.7, kobj=1.0, line_width=None, lr0=0.0001, lrf=0.1, mask_ratio=4, max_det=300, mixup=0.0, mode=train, model=<KAMP>\weights\rtdetr-l.pt, momentum=0.937, mosaic=0.0, multi_scale=0.0, name=02_rtdetrl_img640_e30, nbs=16, nms=None, opset=None, optimize=False, optimizer=AdamW, overlap_mask=True, patience=10, perspective=0.0, plots=True, pose=12.0, pretrained=True, profile=False, project=<KAMP>\runs\yeonchang, quantize=None, rect=False, resume=False, retina_masks=False, rle=1.0, save=True, save_conf=False, save_crop=False, save_dir=<KAMP>\runs\yeonchang\02_rtdetrl_img640_e30, save_frames=False, save_json=False, save_period=-1, save_txt=False, scale=0.2, seed=0, shear=0.0, show=False, show_boxes=True, show_conf=True, show_labels=True, simplify=True, single_cls=False, source=None, split=val, stream_buffer=False, task=detect, time=None, tracker=tracktrack.yaml, translate=0.1, val=True, verbose=True, vid_stride=1, visualize=False, warmup_bias_lr=0.1, warmup_epochs=2, warmup_momentum=0.8, weight_decay=0.0001, workers=4, workspace=None
+2026-10-06 09:55:21,974 Overriding model.yaml nc=80 with nc=1
+2026-10-06 09:55:21,974 WARNING no model scale passed. Assuming scale='l'.
+2026-10-06 09:55:21,974 
+                   from  n    params  module                                       arguments                     
+2026-10-06 09:55:21,979   0                  -1  1     25248  ultralytics.nn.modules.block.HGStem          [3, 32, 48]                   
+2026-10-06 09:55:21,982   1                  -1  6    155072  ultralytics.nn.modules.block.HGBlock         [48, 48, 128, 3, 6]           
+2026-10-06 09:55:21,983   2                  -1  1      1408  ultralytics.nn.modules.conv.DWConv           [128, 128, 3, 2, 1, False]    
+2026-10-06 09:55:21,989   3                  -1  6    839296  ultralytics.nn.modules.block.HGBlock         [128, 96, 512, 3, 6]          
+2026-10-06 09:55:21,989   4                  -1  1      5632  ultralytics.nn.modules.conv.DWConv           [512, 512, 3, 2, 1, False]    
+2026-10-06 09:55:22,003   5                  -1  6   1695360  ultralytics.nn.modules.block.HGBlock         [512, 192, 1024, 5, 6, True, False]
+2026-10-06 09:55:22,014   6                  -1  6   2055808  ultralytics.nn.modules.block.HGBlock         [1024, 192, 1024, 5, 6, True, True]
+2026-10-06 09:55:22,030   7                  -1  6   2055808  ultralytics.nn.modules.block.HGBlock         [1024, 192, 1024, 5, 6, True, True]
+2026-10-06 09:55:22,035   8                  -1  1     11264  ultralytics.nn.modules.conv.DWConv           [1024, 1024, 3, 2, 1, False]  
+2026-10-06 09:55:22,076   9                  -1  6   6708480  ultralytics.nn.modules.block.HGBlock         [1024, 384, 2048, 5, 6, True, False]
+2026-10-06 09:55:22,079  10                  -1  1    524800  ultralytics.nn.modules.conv.Conv             [2048, 256, 1, 1, None, 1, 1, False]
+2026-10-06 09:55:22,085  11                  -1  1    789760  ultralytics.nn.modules.transformer.AIFI      [256, 1024, 8]                
+2026-10-06 09:55:22,085  12                  -1  1     66048  ultralytics.nn.modules.conv.Conv             [256, 256, 1, 1]              
+2026-10-06 09:55:22,086  13                  -1  1         0  torch.nn.modules.upsampling.Upsample         [None, 2, 'nearest']          
+2026-10-06 09:55:22,087  14                   7  1    262656  ultralytics.nn.modules.conv.Conv             [1024, 256, 1, 1, None, 1, 1, False]
+2026-10-06 09:55:22,087  15            [-2, -1]  1         0  ultralytics.nn.modules.conv.Concat           [1]                           
+2026-10-06 09:55:22,103  16                  -1  3   2232320  ultralytics.nn.modules.block.RepC3           [512, 256, 3]                 
+2026-10-06 09:55:22,104  17                  -1  1     66048  ultralytics.nn.modules.conv.Conv             [256, 256, 1, 1]              
+2026-10-06 09:55:22,104  18                  -1  1         0  torch.nn.modules.upsampling.Upsample         [None, 2, 'nearest']          
+2026-10-06 09:55:22,105  19                   3  1    131584  ultralytics.nn.modules.conv.Conv             [512, 256, 1, 1, None, 1, 1, False]
+2026-10-06 09:55:22,105  20            [-2, -1]  1         0  ultralytics.nn.modules.conv.Concat           [1]                           
+2026-10-06 09:55:22,117  21                  -1  3   2232320  ultralytics.nn.modules.block.RepC3           [512, 256, 3]                 
+2026-10-06 09:55:22,120  22                  -1  1    590336  ultralytics.nn.modules.conv.Conv             [256, 256, 3, 2]              
+2026-10-06 09:55:22,121  23            [-1, 17]  1         0  ultralytics.nn.modules.conv.Concat           [1]                           
+2026-10-06 09:55:22,134  24                  -1  3   2232320  ultralytics.nn.modules.block.RepC3           [512, 256, 3]                 
+2026-10-06 09:55:22,135  25                  -1  1    590336  ultralytics.nn.modules.conv.Conv             [256, 256, 3, 2]              
+2026-10-06 09:55:22,135  26            [-1, 12]  1         0  ultralytics.nn.modules.conv.Concat           [1]                           
+2026-10-06 09:55:22,149  27                  -1  3   2232320  ultralytics.nn.modules.block.RepC3           [512, 256, 3]                 
+2026-10-06 09:55:22,184  28        [21, 24, 27]  1   7303907  ultralytics.nn.modules.head.RTDETRDecoder    [1, [256, 256, 256]]          
+2026-10-06 09:55:23,504 rt-detr-l summary: 470 layers, 32,808,131 parameters, 32,808,131 gradients, 109.9 GFLOPs
+2026-10-06 09:55:23,504 
+2026-10-06 09:55:23,575 Transferred 926/941 items from pretrained weights
+2026-10-06 09:55:23,787 [34m[1mAMP: [0mrunning Automatic Mixed Precision (AMP) checks...
+2026-10-06 09:55:27,473 [34m[1mAMP: [0mchecks passed ✅
+2026-10-06 09:55:27,491 [34m[1mtrain: [0mFast image access ✅ (ping: 0.0±0.0 ms, read: 229.2±211.4 MB/s, size: 34.2 KB)
+2026-10-06 09:55:29,606 [34m[1mval: [0mFast image access ✅ (ping: 0.0±0.0 ms, read: 229.2±77.2 MB/s, size: 31.8 KB)
+2026-10-06 09:55:30,050 [34m[1moptimizer:[0m AdamW(lr=0.0001, momentum=0.937) with parameter groups 143 weight(decay=0.0), 206 weight(decay=0.0001), 226 bias(decay=0.0)
+2026-10-06 09:55:31,053 Plotting labels to <KAMP>\runs\yeonchang\02_rtdetrl_img640_e30\labels.jpg... 
+2026-10-06 09:55:31,642 Using 1767 train, 369 val images for fraction=1.0 at imgsz=640
+Using 4 dataloader workers
+Logging results to [1m<KAMP>\runs\yeonchang\02_rtdetrl_img640_e30[0m
+Starting training for 30 epochs...
+2026-10-06 09:55:48,266 
+      Epoch    GPU_mem  giou_loss   cls_loss    l1_loss  Instances       Size
+2026-10-06 10:02:40,062                    all        369        606     0.0385      0.888      0.108     0.0273
+2026-10-06 10:02:45,761 
+      Epoch    GPU_mem  giou_loss   cls_loss    l1_loss  Instances       Size
+2026-10-06 10:09:48,581                    all        369        606     0.0503      0.985      0.106     0.0621
+2026-10-06 10:09:54,112 
+      Epoch    GPU_mem  giou_loss   cls_loss    l1_loss  Instances       Size
+2026-10-06 10:16:42,206                    all        369        606      0.295      0.812      0.426      0.243
+2026-10-06 10:16:47,421 
+      Epoch    GPU_mem  giou_loss   cls_loss    l1_loss  Instances       Size
+2026-10-06 10:23:04,700                    all        369        606      0.748       0.98       0.86      0.392
+2026-10-06 10:23:09,800 
+      Epoch    GPU_mem  giou_loss   cls_loss    l1_loss  Instances       Size
+2026-10-06 10:27:41,282                    all        369        606      0.962      0.983      0.959       0.58
+2026-10-06 10:27:43,619 
+      Epoch    GPU_mem  giou_loss   cls_loss    l1_loss  Instances       Size
+2026-10-06 10:30:19,268                    all        369        606      0.987      0.983      0.982      0.597
+2026-10-06 10:30:20,767 
+      Epoch    GPU_mem  giou_loss   cls_loss    l1_loss  Instances       Size
+2026-10-06 10:32:54,371                    all        369        606      0.988      0.992      0.985      0.616
+2026-10-06 10:32:55,944 
+      Epoch    GPU_mem  giou_loss   cls_loss    l1_loss  Instances       Size
+2026-10-06 10:35:35,701                    all        369        606      0.979      0.989      0.986       0.61
+2026-10-06 10:35:39,075 
+      Epoch    GPU_mem  giou_loss   cls_loss    l1_loss  Instances       Size
+2026-10-06 10:41:03,649                    all        369        606      0.986       0.99      0.987      0.637
+2026-10-06 10:41:08,376 
+      Epoch    GPU_mem  giou_loss   cls_loss    l1_loss  Instances       Size
+2026-10-06 10:44:53,652                    all        369        606      0.975      0.988      0.976      0.626
+2026-10-06 10:44:55,420 
+      Epoch    GPU_mem  giou_loss   cls_loss    l1_loss  Instances       Size
+2026-10-06 10:47:54,842                    all        369        606      0.988       0.99       0.99      0.643
+2026-10-06 10:47:56,710 
+      Epoch    GPU_mem  giou_loss   cls_loss    l1_loss  Instances       Size
+2026-10-06 10:51:40,829                    all        369        606      0.982       0.99      0.984      0.614
+2026-10-06 10:51:46,673 
+      Epoch    GPU_mem  giou_loss   cls_loss    l1_loss  Instances       Size
+2026-10-06 10:56:41,444                    all        369        606      0.982      0.985      0.982      0.637
+2026-10-06 10:56:42,798 
+      Epoch    GPU_mem  giou_loss   cls_loss    l1_loss  Instances       Size
+2026-10-06 11:00:18,692                    all        369        606      0.986       0.99      0.989      0.641
+2026-10-06 11:00:23,581 
+      Epoch    GPU_mem  giou_loss   cls_loss    l1_loss  Instances       Size
+2026-10-06 11:05:12,198                    all        369        606      0.983      0.987      0.986      0.651
+2026-10-06 11:05:17,443 
+      Epoch    GPU_mem  giou_loss   cls_loss    l1_loss  Instances       Size
+2026-10-06 11:11:20,908                    all        369        606      0.988      0.988       0.99      0.655
+2026-10-06 11:11:25,215 
+      Epoch    GPU_mem  giou_loss   cls_loss    l1_loss  Instances       Size
+2026-10-06 11:17:56,883                    all        369        606      0.986       0.99      0.987      0.647
+2026-10-06 11:17:58,101 
+      Epoch    GPU_mem  giou_loss   cls_loss    l1_loss  Instances       Size
+2026-10-06 11:20:21,526                    all        369        606      0.985      0.988      0.987      0.655
+2026-10-06 11:20:22,719 
+      Epoch    GPU_mem  giou_loss   cls_loss    l1_loss  Instances       Size
+2026-10-06 11:22:46,610                    all        369        606      0.978      0.985      0.983      0.646
+2026-10-06 11:22:47,843 
+      Epoch    GPU_mem  giou_loss   cls_loss    l1_loss  Instances       Size
+2026-10-06 11:26:26,834                    all        369        606      0.982      0.985      0.982      0.659
+2026-10-06 11:26:30,594 Closing dataloader mosaic
+2026-10-06 11:26:32,141 
+      Epoch    GPU_mem  giou_loss   cls_loss    l1_loss  Instances       Size
+2026-10-06 11:32:05,416                    all        369        606       0.98      0.985      0.983      0.651
+2026-10-06 11:32:09,997 
+      Epoch    GPU_mem  giou_loss   cls_loss    l1_loss  Instances       Size
+2026-10-06 11:37:28,334                    all        369        606      0.988       0.99       0.99      0.654
+2026-10-06 11:37:33,403 
+      Epoch    GPU_mem  giou_loss   cls_loss    l1_loss  Instances       Size
+2026-10-06 11:43:03,029                    all        369        606      0.982       0.99      0.988      0.657
+2026-10-06 11:43:07,024 
+      Epoch    GPU_mem  giou_loss   cls_loss    l1_loss  Instances       Size
+2026-10-06 11:46:55,196                    all        369        606      0.987       0.99      0.989       0.66
+2026-10-06 11:46:56,846 
+      Epoch    GPU_mem  giou_loss   cls_loss    l1_loss  Instances       Size
+2026-10-06 11:49:34,348                    all        369        606      0.988      0.992       0.99      0.662
+2026-10-06 11:49:35,955 
+      Epoch    GPU_mem  giou_loss   cls_loss    l1_loss  Instances       Size
+2026-10-06 11:52:14,265                    all        369        606      0.993      0.993      0.991      0.662
+2026-10-06 11:52:15,651 
+      Epoch    GPU_mem  giou_loss   cls_loss    l1_loss  Instances       Size
+2026-10-06 11:54:53,766                    all        369        606      0.987      0.992      0.989      0.663
+2026-10-06 11:54:55,357 
+      Epoch    GPU_mem  giou_loss   cls_loss    l1_loss  Instances       Size
+2026-10-06 11:57:33,796                    all        369        606      0.983      0.987      0.983      0.663
+2026-10-06 11:57:35,454 
+      Epoch    GPU_mem  giou_loss   cls_loss    l1_loss  Instances       Size
+2026-10-06 12:00:14,268                    all        369        606      0.983      0.988      0.987      0.655
+2026-10-06 12:00:15,707 
+      Epoch    GPU_mem  giou_loss   cls_loss    l1_loss  Instances       Size
+2026-10-06 12:02:54,047                    all        369        606      0.988       0.99       0.99      0.661
+2026-10-06 12:02:55,433 
+30 epochs completed in 2.123 hours.
+2026-10-06 12:02:55,800 Optimizer stripped from <KAMP>\runs\yeonchang\02_rtdetrl_img640_e30\weights\last.pt, 66.2MB
+2026-10-06 12:02:56,314 Optimizer stripped from <KAMP>\runs\yeonchang\02_rtdetrl_img640_e30\weights\best.pt, 66.2MB
+2026-10-06 12:02:56,316 
+Validating <KAMP>\runs\yeonchang\02_rtdetrl_img640_e30\weights\best.pt...
+2026-10-06 12:02:56,316 Ultralytics 8.4.173 🚀 Python-3.10.22 torch-2.6.0+cu124 CUDA:0 (NVIDIA GeForce RTX 4050 Laptop GPU, 6140MiB)
+2026-10-06 12:02:56,924 rt-detr-l summary (fused): 315 layers, 31,985,795 parameters, 0 gradients, 105.3 GFLOPs
+2026-10-06 12:03:05,113                    all        369        606      0.983      0.987      0.983      0.659
+2026-10-06 12:03:05,113 Speed: 0.2ms preprocess, 16.3ms inference, 0.0ms loss, 0.2ms postprocess per image
+2026-10-06 12:03:05,113 Results saved to [1m<KAMP>\runs\yeonchang\02_rtdetrl_img640_e30[0m

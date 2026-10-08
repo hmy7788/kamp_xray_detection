@@ -1,0 +1,78 @@
+{
+  "exp": "02_rtdetrl_img640_e30",
+  "power_at_start": "AC",
+  "power_at_end": "AC",
+  "power_mode": "최고 성능 (AC overlay ded574b5)",
+  "cpu": "13th Gen Intel(R) Core(TM) i7-13620H",
+  "batch": 1,
+  "measured": "2026-10-07T20:19:02",
+  "note": "실험들을 번갈아 반복 측정. CPU 1스레드는 논리 CPU 0, 4스레드는 0,2,4,6에 고정",
+  "results": [
+    {
+      "threads": 1,
+      "affinity": "0",
+      "repeats": 3,
+      "n_images_each": 100,
+      "total_ms_median_of_medians": 1067.39,
+      "total_ms_median_each": [
+        1072.33,
+        1066.39,
+        1067.39
+      ],
+      "total_ms_mean_each": [
+        1088.38,
+        1055.29,
+        1065.21
+      ],
+      "total_ms_p95_each": [
+        1163.6,
+        1080.37,
+        1080.45
+      ],
+      "infer_ms_mean_each": [
+        1082.48,
+        1049.54,
+        1059.41
+      ],
+      "torch_threads_actual": [
+        1,
+        1,
+        1
+      ],
+      "fps_from_median": 0.94
+    },
+    {
+      "threads": 4,
+      "affinity": "0,2,4,6",
+      "repeats": 3,
+      "n_images_each": 100,
+      "total_ms_median_of_medians": 352.97,
+      "total_ms_median_each": [
+        342.13,
+        352.97,
+        359.15
+      ],
+      "total_ms_mean_each": [
+        344.82,
+        364.81,
+        376.32
+      ],
+      "total_ms_p95_each": [
+        367.43,
+        440.54,
+        493.91
+      ],
+      "infer_ms_mean_each": [
+        341.56,
+        361.55,
+        372.99
+      ],
+      "torch_threads_actual": [
+        4,
+        4,
+        4
+      ],
+      "fps_from_median": 2.83
+    }
+  ]
+}

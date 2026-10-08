@@ -1,0 +1,23 @@
+# 최종 모델 D-FINE-N 학습 설정 (보고서 표 2-4, 제출 가중치 weights/dfine_n/best 를 만든 설정과 같음)
+model: dfine_n
+pretrained: ustc-community/dfine-nano-coco   # COCO 사전학습 (Hugging Face, Apache-2.0). 처음 실행 시 자동 다운로드
+imgsz: 640            # 640x640으로 늘림 (비율 유지 안 함), /255, 정규화 없음 (체크포인트 기본값)
+epochs: 50            # patience로 조기 종료 (제출 모델: 43 epoch에서 종료, 최적 33 epoch)
+patience: 10
+batch: 16
+lr: 0.0002            # 인코더·디코더·헤드
+backbone_lr: 0.0001   # 사전학습 백본은 절반
+weight_decay: 0.0001  # bias·정규화 층 제외
+warmup_epochs: 1
+lrf: 0.1              # 코사인으로 lr*lrf까지
+clip: 0.1             # 기울기 클리핑
+ema_decay: 0.9999     # EMA (초반 tau 2000 반복 동안 완만)
+amp: true
+# 증강: 회색조라 색상 증강 없음. 약 10px 이물질이 더 작아지지 않게 mosaic·큰 축소 없음
+hsv_v: 0.3            # 밝기 ±30%
+fliplr: 0.5
+flipud: 0.5
+translate: 0.1
+scale: 0.2
+workers: 4
+seed: 0

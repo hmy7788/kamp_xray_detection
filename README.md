@@ -1,178 +1,162 @@
-# X-ray 검사장비 이물질 검출
+# X-ray 영상 기반 완제품 이물질 탐지 — 소스코드
 
-KAMP(K-인공지능 제조 플랫폼) **X-ray 검사장비 AI 데이터셋**으로 완제품 X선 영상의 이물질(`defect`)을 검출하는 프로젝트입니다.
-2026년 제6회 K-인공지능 제조데이터 분석 경진대회 과제(**영상 기반 완제품 이물질 탐지 및 AI 미탐지 조건 분석**)를 배경으로 합니다.
+제6회 K-인공지능 제조데이터 분석 경진대회 · 일반국민/대학(원)생 부문 · **팀 엽총창** (정연창, 허민엽, 이총)
 
-## 대회 정보
-- 마감: **2026-10-08 23:59** (서면평가 결과 10-26, 발표평가 10-30)
-- 서면평가(100점): 데이터 이해·진단 15 / **모델 개발 40**(베이스라인 포함 2개 이상 비교, F1 등) / 영향요인·오류분석 15(FN·FP가 집중되는 조건) / 현장 활용방안 10 / 창의성 10 / 코드·재현성 10(전처리부터 학습·추론·결과 생성까지 자동 실행). 이 표가 X-ray 과제 전용인지는 확인하지 못했습니다.
-- 제출물: 결과 보고서(PDF, 제공 양식), 소스코드 ZIP(`requirements.txt` 또는 `environment.yml`, 학습용 데이터, README, 테스트데이터 예측결과), 발표자료(PDF+PPT), 설문 캡처
-- **모든 제출물에 소속·로고 등 식별 정보를 넣을 수 없습니다.** 성명과 팀명만 허용됩니다. (코드, 문서, 커밋 내용 포함)
+KAMP "X-ray 검사장비 AI 데이터셋"의 완제품 X선 영상에서 약 10px 크기의 이물질(1클래스)을 검출한다.
+**최종 모델은 D-FINE-N**(파라미터 3.7M), **베이스라인은 YOLOv3-tiny**이며, 두 모델 모두 이 저장소의 같은 데이터·분할·채점 코드로 학습하고 평가한다.
 
-## 팀과 작업 폴더
-| 팀원 | 폴더 이름 | 맡은 일 |
-|---|---|---|
-| 허민엽 | `minyeop` | 모델 실험: **Faster R-CNN** (`src/minyeop/faster_rcnn/`, 첫 결과 있음) |
-| 정연창 | `yeonchang` | 모델 실험 _(담당 모델 미정)_ |
-| 이총 | `chong` | 모델 실험 (YOLO26) |
+## 결과 요약 (test 396장, 정답 상자 663개)
 
-폴더 이름은 영문만 씁니다. 한글 경로는 이미지 읽기와 인코딩 오류를 일으킵니다. 협업 규칙은 [CONTRIBUTING.md](CONTRIBUTING.md)를 보세요.
+| 모델 | mAP50 | mAP50-95 | Precision | Recall | F1 | FPS (CPU 4스레드) |
+|---|---|---|---|---|---|---|
+| YOLOv3-tiny (베이스라인) | 0.981 | 0.558 | 0.989 | 0.989 | 0.989 | 14.0 |
+| **D-FINE-N (최종 모델)** | **0.989** | **0.655** | 0.988 | 0.989 | 0.989 | 10.3 |
 
-## 현재 상태 (2026-10-05)
-**데이터는 확정(v2)됐고, 첫 모델(Faster R-CNN)의 학습·평가 결과가 나온 단계입니다.** 마감까지 3일 남았습니다.
+- 보고서 표 2-5의 값이다. 신뢰도 임계값은 모델마다 val에서 F1이 최대인 값으로 정하고(D-FINE-N 0.7114), test는 그 값으로 한 번만 채점했다.
+- 근거 파일: `results/<모델>/eval_report_test.json`, 최종 모델의 test 예측 결과는 **`results/dfine_n/test_predictions.csv`**.
+- 비교 모델 4종(Faster R-CNN 2종, YOLO26n, RT-DETR-l)의 결과는 `results/model_comparison.md`, 코드는 `experiments/comparison_models/`.
 
-| 항목 | 상태 |
-|---|---|
-| 데이터 | **확정 v2 완료**: 2,532장 전부 라벨 있음, train / val / test 분할 포함 (`data/`, 아래 "데이터") |
-| `scripts/` (공유 파이프라인) | 비어 있음. 공통 평가 코드 역할은 임시로 `src/minyeop/faster_rcnn/report.py`가 함 (이관은 팀 확인 후) |
-| 학습·평가 코드 | Faster R-CNN(`src/minyeop/faster_rcnn/`)과 YOLOv3-tiny(`src/minyeop/yolov3_tiny/`) 학습·예측·보고 코드 완성. MobileNetV3-FPN(`src/minyeop/faster_rcnn_mobilenet/`)까지 완성 |
-| 실험 결과 | 3개: Faster R-CNN R50, YOLOv3-tiny는 test F1 0.989(공식 라벨만 0.964), MobileNetV3-FPN은 0.986(0.959) (`runs/minyeop/01_…`, `02_…`, `04_…`). `runs/baseline`은 비어 있음 |
-| `docs/` | `metrics.md`(성능 지표 정리), `experiments.md`(모델 공통 결과 표), `README.md`(결과 기록 가이드) |
-| 시작하지 않은 평가 항목 | 오류분석(15점), 현장 활용방안(10점), 보고서 |
+## 빠른 재현 (제출 가중치로 추론·채점, GPU 기준 약 5분)
 
-**지운 코드·문서·결과는 Git 이력에 있습니다.** 마지막 커밋은 코드와 결과가 `71813fd`, 문서가 `d151bfa`입니다.
-```bash
-git show d151bfa:docs/dataset.md                  # 문서 보기
-git checkout 71813fd -- scripts/evaluate.py       # 코드 복구 (이전 파이프라인 9개 파일)
+```powershell
+conda create -n kamp python=3.10 -y
+conda activate kamp
+pip install torch==2.6.0 torchvision==0.21.0 --index-url https://download.pytorch.org/whl/cu124
+pip install -r requirements.txt
+.\run_all.ps1                     # Linux/macOS: bash run_all.sh
 ```
+
+`run_all`은 **데이터 검사 → 추론(val, test) → 채점 → 속도 측정 → 비교표 → 제출 결과와 대조**를 차례로 실행한다.
+결과는 `outputs/`에 새로 생기고, 마지막 단계에서 `results/`(제출 시점 결과)와 지표가 같은지 출력한다.
+**처음부터 학습까지** 재현하려면 `.\run_all.ps1 -Train`을 쓴다(RTX 4050 Laptop 기준 약 3시간).
 
 ## 폴더 구조
+
 ```text
-KAMP/
-├─ README.md  CONTRIBUTING.md  CLAUDE.md  requirements.txt
-├─ data/        [공유] 확정 데이터 v2 (이미지, 라벨, 분할, 매니페스트, 조건 파일)
-├─ scripts/     [공유] 전처리·학습 실행·평가 파이프라인 (현재 비어 있음)
-├─ src/
-│  ├─ yolov3/   [공유] 수정본 YOLOv3 베이스라인
-│  └─ minyeop/  yeonchang/  chong/        [개인] 각자의 모델 코드
-├─ notebooks/   shared/ + 개인 폴더 3개
-├─ runs/        실험 결과: baseline/ + 개인 폴더 3개
-├─ weights/     가중치 (Git 제외)
-└─ docs/        문서 (metrics.md, experiments.md, README.md)
+.
+├─ README.md                 이 문서 (평가자용 안내)
+├─ requirements.txt          파이썬 의존성 (버전 고정)
+├─ run_all.ps1 / run_all.sh  전체 파이프라인 자동 실행
+├─ configs/                  학습 설정 (dfine_n.yaml = 최종 모델, yolov3_tiny.yaml = 베이스라인)
+├─ data/                     학습용 데이터 (확정 v2: 회색조 PNG 2,532장 + YOLO 라벨, 분할 고정)
+├─ src/kamp_xray/            공통 코드 패키지
+│   ├─ common.py             경로, 데이터 버전 확인, 정답 읽기, 공통 예측 형식
+│   ├─ metrics.py            모든 모델이 함께 쓰는 채점 (AP50, mAP50-95, P/R/F1, 임계값)
+│   ├─ dfine.py              최종 모델 D-FINE-N 학습·추론
+│   └─ yolov3_tiny.py        베이스라인 YOLOv3-tiny 학습·추론
+├─ scripts/                  실행 단계별 스크립트 (아래 "단계별 실행")
+├─ third_party/yolov3/       베이스라인 모델 코드 (ultralytics YOLOv3 2020년 버전 수정본, GPL-3.0)
+├─ weights/                  제출 가중치 (dfine_n/best, yolov3_tiny/best.pt) + 사전학습 가중치 자리
+├─ results/                  제출 시점 결과 (보고서 수치의 근거, 읽기 전용)
+│   ├─ dfine_n/              최종 모델: 평가 리포트, test 예측 결과, 속도, 학습 기록
+│   ├─ yolov3_tiny/          베이스라인: 같은 구성
+│   ├─ comparison_models/    비교 모델 4종의 평가 기록과 6개 모델 통합 채점
+│   ├─ analysis/             오류분석·합성 이물질·전처리 검증 결과 (보고서 3장, 5장)
+│   └─ model_comparison.md   모델 비교표 (보고서 표 2-5)
+├─ preprocessing/            KAMP 원본 → data/ 를 만든 전처리·라벨링·분할 코드 (기록)
+├─ experiments/              비교 모델 4종과 분석 실험의 원 코드 (참고용)
+├─ docs/                     지표 정의, 보고서 표·그림과 파일의 대응표
+└─ outputs/                  재현 실행 결과가 생기는 곳 (처음에는 없음)
 ```
-각 폴더의 README가 역할과 규칙을 설명합니다. **공유 영역**(`data/`, `scripts/`, `src/yolov3/`, `runs/baseline/`)은 PR과 팀 확인으로만 바꾸고, **개인 영역**(`src/<이름>/`, `notebooks/<이름>/`, `runs/<이름>/`)은 본인만 수정합니다.
 
-## 환경 설치 (conda)
-Windows 11에서만 검증했습니다. GPU는 NVIDIA RTX 4050 Laptop 6GB였고, GPU가 없으면 `--device cpu`로 돌릴 수 있지만 매우 느립니다.
+## 1. 환경 설치
 
-```bash
-git clone https://github.com/hmy7788/kamp_xray_detection.git KAMP
-cd KAMP
-conda create -n KAMP python=3.10 -y
-conda activate KAMP
+| 항목 | 검증한 버전 |
+|---|---|
+| OS / GPU | Windows 11 Pro, NVIDIA GeForce RTX 4050 Laptop 6GB (CPU: Intel Core i7-13620H) |
+| Python | 3.10 |
+| PyTorch / torchvision | 2.6.0 / 0.21.0 (CUDA 12.4) |
+| transformers (D-FINE-N) | 5.19.0 |
+| numpy / OpenCV | 2.2.6 / 5.0.0 |
 
-# PyTorch는 환경에 맞는 것 하나만
-pip install torch==2.6.0 torchvision==0.21.0 --index-url https://download.pytorch.org/whl/cu124   # NVIDIA GPU (CUDA 12.4)
-pip install torch==2.6.0 torchvision==0.21.0                                                      # CPU 전용
+- 위 "빠른 재현"의 설치 명령을 그대로 쓴다. GPU가 없으면 PyTorch를 `pip install torch==2.6.0 torchvision==0.21.0`으로 설치하고 `.\run_all.ps1 -Device cpu`로 실행한다.
+- 새 conda 환경에 `requirements.txt`만으로 설치해 전 과정이 동작하는 것을 확인했다.
+- 경로에 한글이 있어도 동작하도록 이미지는 `cv2.imdecode`로 읽고, 스크립트는 UTF-8 모드(`PYTHONUTF8=1`)로 실행된다.
+- PowerShell에서 스크립트 실행이 막혀 있으면 `powershell -ExecutionPolicy Bypass -File run_all.ps1`로 실행한다.
 
-pip install -r requirements.txt
-python -m ipykernel install --user --name kamp --display-name KAMP
-python -c "import torch; print(torch.__version__, 'CUDA:', torch.cuda.is_available())"
-```
-`requirements.txt`는 검증한 버전으로 고정되어 있고 노트북용 jupyter도 포함합니다. 새 환경에서 처음부터 설치해 본 적은 없고 작성 당시 환경과의 일치만 확인했습니다.
+## 2. 데이터
 
-**터미널에서 파이썬을 직접 실행할 때는 `PYTHONUTF8=1`을 설정하세요.** 프로젝트 경로에 한글이 들어갈 수 있어 설정 파일을 cp949로 읽다가 실패합니다. (`set PYTHONUTF8=1`, PowerShell은 `$env:PYTHONUTF8="1"`)
+`data/`에 학습·평가에 쓴 확정 데이터 전체가 들어 있다. 자세한 설명은 `data/README.md`.
 
-사전학습 가중치(COCO)는 [weights/README.md](weights/README.md)의 방법으로 받습니다.
-
-## 데이터 (확정 v2, 2026-10-05)
-설명 원문은 `data/README.md`에 있습니다. 아래는 직접 검증한 요약입니다.
-
-**구성**
-```text
-data/
-├─ train/images/*.png  train/labels/*.txt     학습 (1,767장)
-├─ val/images, val/labels                     검증, 평소 실험 채점 (369장)
-├─ test/images, test/labels                   최종 테스트, 최종 후보만 한 번 채점 (396장)
-├─ manifest.csv        사진 목록 (split, source, labeler, machine, 크기, 촬영 시각, burst_id, 경로)
-├─ conditions.csv      박스별 조건 (오류분석용, 4,494행)
-├─ conditions_thresholds.json   조건 구간의 경계값
-├─ split_info.json  manifest.sha256  PASS  README.md
-```
-- 이미지: **회색조 PNG**. 장비가 그린 색 박스(표시)를 지운 상태입니다(표본 300장에서 색 픽셀이 남은 이미지 0장).
-- 라벨: YOLO txt, 한 줄에 박스 하나 `0 cx cy w h`(0~1 비율), 클래스 0 = defect. 이미지와 같은 이름이고 `images/`와 `labels/`가 형제 폴더입니다.
-- **버전 확인**: `manifest.csv`의 sha256이 `1942bf3452defc08022b11f464092d46b095ea2bb31961b15b072bc9d623c623`이어야 합니다(`manifest.sha256`, `PASS` 참고). 모두가 같은 데이터로 학습하는지 확인하는 용도입니다.
-- 분할은 **촬영 묶음(burst, 60초 이내 연속) 단위 무작위**(test 0.15, val 0.15, 나머지 train, seed 42)입니다. 같은 묶음은 한쪽에만 들어갑니다. **분할을 다시 만들지 마세요.** 바꾸면 모든 사람의 결과가 비교 불가가 됩니다.
-- 저장소는 **비공개를 전제**로 데이터를 Git에 둡니다. 공개로 바꾸면 KAMP 데이터가 그대로 공개되므로 그 전에 `data/`를 이력에서 제거해야 합니다(KAMP 재배포 조건은 확인하지 못했습니다).
-
-**수치**
 | | train | val | test | 합계 |
 |---|---|---|---|---|
 | 이미지 | 1,767 | 369 | 396 | 2,532 |
-| 박스 | 3,225 | 606 | 663 | 4,494 |
-| 1호기 / 2호기 / 3호기 | 672 / 573 / 522 | 134 / 102 / 133 | 137 / 130 / 129 | 943 / 805 / 784 |
-| 공식 라벨 / 팀 라벨 | 356 / 1,411 | 59 / 310 | 85 / 311 | 500 / 2,032 |
+| 이물질 상자 | 3,225 | 606 | 663 | 4,494 |
+| 공식 라벨 / 팀 라벨 이미지 | 356 / 1,411 | 59 / 310 | 85 / 311 | 500 / 2,032 |
 
-- 해상도: 1호기 316x332(431장)·352x332(392장)·412x332(120장), 2호기 316x332(805장), 3호기 576x444(784장)
-- 촬영 월: 6월 447 / 7월 841 / 8월 184 / 9월 1,060장
-- 사진당 박스 수: 0개 105장, 1개 1,393장, 2개 1장, 3개 1,033장
+- **형식**: 회색조 PNG, YOLO 라벨 `0 cx cy w h`(0~1 비율). `images/`와 `labels/`는 형제 폴더다.
+- **버전 확인**: `manifest.csv`의 sha256이 `1942bf34...623c623`이어야 한다. 모든 스크립트가 실행할 때마다 확인하고, 다르면 멈춘다.
+- **분할은 고정**되어 있다. 60초 이내 연속 촬영 묶음 547개 단위로 무작위 분할(seed 42)했으며 다시 만들지 않는다.
+- **전처리**: KAMP 원본 BMP에서 중복 제거, 장비가 그린 색상 상자 제거(주변 5×5 회색 평균으로 메움), 회색조 PNG 변환을 거쳤다.
+  코드는 `preprocessing/`에 있고, 원본 BMP에 다시 적용하면 `data/`와 픽셀 단위로 같은지 검증할 수 있다.
 
-**라벨의 두 종류 (중요)**
-- **공식 라벨 500장**(KAMP 제공, 박스 1,147개): 사람이 그린 박스라 크기가 실제 결함을 반영합니다(한 변 5~21px, 1·2호기 중앙값 10px, 3호기 13px).
-- **팀 라벨 2,032장**(heo 674 / jung 678 / lee 680장, 박스 3,347개): 클릭한 중심에 **같은 크기의 네모를 자동 생성**했습니다(1·2호기 10px 고정, 3호기 약 13px). 그래서 팀 라벨의 박스 크기에는 결함 크기 정보가 없습니다.
-- 따라서 **결함 크기별 분석은 공식 라벨 박스로만 의미가 있고**, 작은 박스(약 10px)의 IoU는 중심 위치에 매우 민감합니다. val·test에 공식 라벨 59장·85장이 들어 있어 따로 평가할 수 있습니다.
+```powershell
+python scripts/verify_preprocess.py --raw "<KAMP 원본>/dataset/test1/yolov3"   # 2,532장 모두 일치해야 함
+```
 
-**빈 라벨 105장** (train 59 / val 19 / test 27): 제품이 반만 찍혀 테스트피스가 없는 사진(7월 27일 1호기 104장 등)입니다. 이물질 없음 사진으로 쓸 수 있지만 일반적인 정상 제품 이미지는 아닙니다.
+## 3. 단계별 실행
 
-**조건 파일** `conditions.csv`: 박스마다 크기(`box_side_px`), 대비(`local_contrast`), 배경 밝기(`ring_mean`), 가장자리 거리, 호기, 해상도, 월, 출처, 작성자와 구간(`size_bin` 등)이 있습니다. 구간 경계는 `conditions_thresholds.json`에 있습니다. 오류분석(조건별 미탐지)에 쓸 수 있지만 다음을 조심하세요.
-- `size_bin`(small 2,731 / mid 277 / large 1,486)은 팀 라벨이 고정 크기라 크기보다 **호기를 반영**합니다.
-- `contrast_bin`, `bg_bin`은 3등분(각 1,498)이고, `edge_dist_bin`은 center 4,486 / near 8개라 가장자리 분석은 사실상 불가능합니다.
+`run_all`이 아래를 순서대로 부른다. 모두 저장소 루트에서 실행한다.
 
-**데이터 계보** (`data/README.md` 기준): KAMP 원본 BMP → 중복 제거 → 장비 색상 박스 제거(주변 회색으로 메움) → 회색조 PNG. 이 가공을 한 코드는 이 저장소에 없습니다.
+| 단계 | 명령 | 결과 |
+|---|---|---|
+| 데이터 검사 | `python scripts/check_data.py` | `outputs/data_check.json` |
+| (학습 시) 사전학습 가중치 | `python scripts/download_pretrained.py` | Hugging Face 캐시, `weights/pretrained/yolov3-tiny.pt` |
+| (학습 시) 학습 | `python scripts/train.py --model dfine_n` | `outputs/dfine_n/train/` |
+| 추론 | `python scripts/predict.py --model dfine_n --split val` (test도 같게) | `outputs/dfine_n/preds_val.json` |
+| 채점 | `python scripts/evaluate.py --model dfine_n --split val` → `--split test` | `eval_report_{val,test}.json`, `test_predictions.csv` |
+| 속도 | `python scripts/speed.py --model dfine_n` | `outputs/dfine_n/speed.json` |
+| 비교표 | `python scripts/compare.py` | `outputs/model_comparison.md` |
+| 제출 결과와 대조 | `python scripts/compare.py --check` | 화면 출력 |
 
-## 전처리와 모델링에서 알아야 할 것 (이전 시도에서 겪은 함정)
-1~7번은 이전 시도에서, 8·9번은 v2 실험에서 확인한 사실입니다. 1~7번의 근거는 지운 문서(`git show d151bfa:docs/dataset.md`, `docs/troubleshooting.md`)에 있습니다.
+베이스라인은 `--model yolov3_tiny`로 같은 명령을 쓴다. 직접 학습한 가중치로 추론하려면 `--weights outputs/<model>/train/weights/...`를 붙인다.
 
-1. **원본 이미지에는 장비가 그린 색 박스(표시)가 찍혀 있고, 지우지 않고 학습하면 모델이 결함이 아니라 표시를 보고 맞힙니다.** 표시가 있는 이미지로 학습한 모델은 표시를 지운 입력에서 **하나도 찾지 못했습니다**(TP 0). v2는 이 표시를 지운 상태입니다.
-2. **표시를 어떻게 지웠는지가 중요합니다.** 주변 픽셀로 메우기만 하면 메운 자리가 주변보다 매끈해서 윤곽이 남고, 질감 통계 하나로 윤곽 자리를 AUC 0.73~0.75로 구분할 수 있었습니다. 주변과 같은 세기의 노이즈를 더하면 AUC 0.57로 내려갔습니다. **v2의 윤곽 흔적은 아직 검증하지 않았습니다**(결함이 없는 자리에 가짜 표시를 그렸다 지운 이미지에서 모델이 반응하는지로 확인).
-3. **파일명 앞의 001/002는 호기(장비) 번호가 아닙니다.** 002는 1호기와 2호기가 섞여 있고 001이 3호기입니다. 호기는 `manifest.csv`의 `machine`을 쓰세요. 해상도는 호기별 고정이 아니라 1호기 안에도 세 가지가 섞여 있습니다.
-4. **정상(결함 없음) 이미지는 사실상 없습니다.** 원본은 모두 장비가 NG로 판정한 이미지입니다. 빈 라벨 105장이 유일한 예외지만 제품이 반만 찍힌 특수한 사진입니다. 이미지 단위 오검출(FP)은 이것으로 제한적으로만 잴 수 있습니다. 원본 bmp 2,809장 중 277장은 같은 호기 안의 동일 파일 중복이었고 v2에서 제거되어 고유 이미지는 2,532장입니다.
-5. **분할은 촬영 묶음 단위여야 합니다.** 연속 촬영본은 서로 매우 닮아 train과 test에 갈라 넣으면 평가가 부풀려집니다. v2가 이미 이렇게 나눴습니다.
-6. **평가는 신뢰도 임계값을 val에서 정해 고정하고 test는 한 번만 봅니다.** YOLOv3 `test.py`의 P/R/F1은 신뢰도 0.1 한 지점 값이라 같은 가중치도 평가 해상도에 따라 F1이 0.70~0.92로 흔들렸습니다. 이전 모델은 신뢰도가 낮아 0.5 이상에서 아무것도 못 찾았습니다.
-7. **한글 경로와 운영 함정**: `cv2.imread`가 한글 경로를 못 읽습니다(`cv2.imdecode(np.fromfile(...))` 필요). 학습 결과가 공용 `last.pt`를 덮어써서 원본 가중치를 잃은 적이 있습니다. 프로젝트가 OneDrive 폴더 안이면 상태 파일 교체가 거부되어(WinError 5) 기록 프로세스가 죽은 적이 있습니다. 긴 학습 중에는 PC 절전을 꺼야 합니다.
+### 학습 설정 요약 (`configs/`)
 
-8. **IoU 0.5 기준 점수는 박스 크기 차이에 민감해 쉽게 포화됩니다.** (v2 실험에서 새로 확인) 팀 라벨이 고정 크기라 모델도 고정 크기 박스를 내고, 공식 라벨의 오류는 대부분 "같은 점을 찾았지만 크기가 달라 IoU 0.5 미달"이었습니다. 전체 점수만으로 모델을 비교하지 말고 **공식 라벨 줄**을 함께 보세요.
-9. **결함 위치에 규칙성이 있을 수 있습니다 (미검증).** 확인한 그림 일부에서 결함이 모두 어두운 막대(테스트피스)의 끝에 있었습니다. 모델이 이 위치를 지름길로 쓰는지, 표시를 지운 흔적을 쓰는지는 검증하지 않았습니다. 높은 점수를 일반 성능으로 해석하지 마세요.
+| | D-FINE-N (최종) | YOLOv3-tiny (베이스라인) |
+|---|---|---|
+| 시작 가중치 | COCO 사전학습 `ustc-community/dfine-nano-coco` | COCO 사전학습 yolov3-tiny |
+| 입력 | 640×640 (늘림) | 640 (letterbox) |
+| epoch | 최대 50, patience 10 (제출 모델: 43에서 종료, 최적 33) | 100 |
+| batch | 16 | 16 |
+| 증강 | 밝기 ±30%, 좌우·상하 뒤집기, 이동 0.1, 크기 ±0.2 | yolov3 기본값 |
+| 체크포인트 선택 | val 0.1×AP50 + 0.9×AP50-95 | val 0.99×mAP50 + 0.01×R |
+| 학습 시간 (RTX 4050 Laptop) | 약 98분 | 약 59분 |
 
-## 실험 결과 (확정 v2 데이터)
-**Faster R-CNN ResNet-50 FPN**(COCO 사전학습, 입력 짧은 변 640, 20 epoch 중 val AP가 최대인 epoch 7). 임계값 0.95는 val에서 정했고 test는 한 번만 평가했습니다. 학습 1시간 07분, 추론 약 31ms/장(RTX 4050 6GB). 모델 공통 표와 규칙은 [docs/experiments.md](docs/experiments.md), [docs/README.md](docs/README.md)에 있습니다.
+약 10px 이물질이 더 작아지지 않도록 mosaic과 큰 축소 증강은 쓰지 않았고, 회색조 영상이라 색상 증강도 쓰지 않았다.
 
-| 평가셋 | 이미지 / 박스 | AP@0.5 | F1 | TP / FP / FN |
-|---|---|---|---|---|
-| test 전체 | 396 / 663 | 0.988 | 0.989 | 656 / 7 / 7 |
-| test 공식 라벨 | 85 / 193 | 0.952 | 0.964 | 186 / 7 / 7 |
-| test 팀 라벨 | 311 / 470 | 1.000 | 1.000 | 470 / 0 / 0 |
+## 4. 평가 규칙 (`src/kamp_xray/metrics.py`)
 
-- val(369장)은 F1 0.992로 test와 비슷해 val에 과하게 맞춘 흔적은 보이지 않습니다.
-- 오류 7건은 모두 공식 라벨 이미지이고, 같은 점을 중심 1.2px 이내에서 신뢰도 0.95 이상으로 찾았지만 박스 크기가 달라 IoU가 0.42~0.50이었습니다(중심 3px 이내로 짝지으면 FN 0). 빈 라벨 27장은 오검출 0입니다(쉬운 사진이라 정상 제품의 오경보율로 해석하지 말 것).
-- **YOLOv3-tiny**(COCO 사전학습, 입력 640, 100 epoch 59분)도 test F1 0.989(TP 656 / FP 7 / FN 7, 공식 라벨 F1 0.964)로 **숫자까지 같고**, 오류 이미지도 Faster R-CNN의 5장을 모두 포함합니다. 오류는 모델이 아니라 라벨 박스 크기와 IoU 기준 문제입니다. 구분은 mAP50-95(test 0.611 대 0.558)와 중심 거리 1~2px 구간에서만 보입니다. 임계값은 0.95 대 0.06으로 모델마다 다릅니다.
-- **Faster R-CNN MobileNetV3-FPN**(입력 640, 앵커 16~256, 20 epoch 20분)은 test F1 0.986(공식 라벨 0.959), mAP50-95 0.559로 찾는 능력은 같은 수준이고 박스 정밀도만 ResNet-50(0.611)보다 낮습니다. 파라미터 19.0M(ResNet-50은 41.4M), 같은 조건에서 추론 약 4배 빠릅니다.
-- **평가 v2(중심 ≤ 5px, 제안)**: 세 모델이 test 정답 663개 중 663, 663, 662개를 찾았습니다(마지막 1건은 신뢰도 0.910이 임계값 0.93에 못 미친 경계 사례). "찾았는가"는 포화 상태입니다.
-- **점 제거 실험**: 정답의 어두운 점을 보간으로 지우면 두 모델의 검출이 거의 사라집니다(13x13 제거 시 Faster R-CNN 663개 중 2개). 결함의 점 자체가 핵심 단서이고 위치만 보는 지름길은 약해졌습니다(상세는 [docs/README.md](docs/README.md)).
-- 위 함정 8·9(고정 크기 라벨, 지름길·표시 흔적 미검증) 때문에 점수를 일반 성능으로 읽으면 안 됩니다.
-- 코드와 결과는 `src/minyeop/{faster_rcnn,yolov3_tiny,faster_rcnn_mobilenet,dot_removal}/`, `runs/minyeop/{01_…,02_…,03_dot_removal_v1,04_…}/`(그림은 `figures/`)에 있습니다.
+- **매칭**: 이미지마다 신뢰도가 높은 검출부터, IoU 0.5 이상이며 아직 짝이 없는 정답 중 IoU가 가장 큰 것과 짝짓는다. 정답 하나에는 검출 하나만 대응한다.
+- **AP**: 신뢰도 0.001 이상의 모든 검출로 정밀도-재현율 곡선을 만들고 전 구간 보간(VOC)으로 면적을 구한다. mAP50-95는 IoU 0.50~0.95(0.05 간격) AP의 평균이다.
+- **임계값**: val에서 F1이 최대인 신뢰도로 정하고 test에는 그 값을 그대로 쓴다. test는 모델 선택과 임계값 결정에 쓰지 않았다.
+- **보조 지표**: 중심 거리 1~5px 매칭(상자 크기와 무관한 위치 정확도), 이미지 단위 판정(영상 내 최고 신뢰도 ≥ 임계값이면 불합격), 라벨 출처·호기·해상도·월별 분해.
+- **속도**: 배치 1, CPU 4스레드, val 100장, 예열 10장, 3회 반복의 중앙값. 전처리·추론·후처리를 포함하고 파일 읽기는 제외한다.
 
-## 이전 시도의 참고값 (삭제된 결과, 이전 데이터·분할 기준이라 새 결과와 직접 비교하지 않음)
-표시를 지운 라벨 500장 데이터, COCO 사전학습에서 시작, 100 epoch, 신뢰도 임계값은 val에서 정함, IoU 0.5, 640px 기준입니다.
+## 5. 제출 결과물 (`results/`)
 
-| 모델 | 임계값 | test F1 | TP / FP / FN | test 이미지 |
-|---|---|---|---|---|
-| YOLOv3-tiny | 0.05 | 0.940 | 109 / 7 / 7 | 49장 (정답 116개) |
-| YOLOv3-SPP | 0.07 | 0.966 | 112 / 4 / 4 | 49장 |
+| 파일 | 내용 |
+|---|---|
+| `results/dfine_n/test_predictions.csv` | **최종 모델의 test 예측 결과** (임계값 이상 상자: image_id, x1, y1, x2, y2, score, 원본 픽셀 좌표) |
+| `results/dfine_n/test_image_decisions.csv` | test 이미지별 최고 신뢰도와 불합격·합격 판정 |
+| `results/dfine_n/preds_test.json` | 신뢰도 0.001 이상 전체 검출 (채점 입력) |
+| `results/<모델>/eval_report_{val,test}.json` | 임계값, 전체 지표, IoU별 AP, 중심 거리 지표, 조건별 분해 |
+| `results/<모델>/speed.json` | 처리 속도 |
+| `results/<모델>/original_run/` | 제출 가중치를 만든 원 학습 실행의 설정·로그·학습 곡선 |
+| `results/model_comparison.md` | 6개 모델 비교표 |
 
-- 두 모델의 test F1 차이는 +0.026이고 이미지 단위 부트스트랩 95% 구간이 +0.003 ~ +0.054로 0에 가까워 **우열을 확정하지 못했습니다.** 당시 val·test는 49~51장이었고 학습 시드가 하나뿐이었습니다. 지금 val·test(369장, 396장)는 훨씬 큽니다.
-- 학습 시간은 tiny 약 10분, SPP 약 50분(RTX 4050 6GB, SPP는 batch 3, 학습 400장 기준).
+보고서의 표·그림과 파일의 대응은 `docs/report_mapping.md`에 있다.
 
-## 할 일
-| 우선순위 | 할 일 | 평가 항목 | 담당 |
-|---|---|---|---|
-| 1 | 공통 평가 코드: 임시 계산기(`report.py`)는 있음 → `scripts/evaluate.py`로 옮길지, 중심 거리 매칭을 병행할지 팀 결정 | 모델 개발(40) | minyeop(임시 코드), 결정 _(미정)_ |
-| 2 | 베이스라인 2개 이상 학습·평가 (Faster R-CNN, YOLOv3-tiny, MobileNetV3-FPN 완료. 이총 YOLO26n 640·1024 test 완료, 정연창 모델 필요) | 모델 개발(40) | 각자 (minyeop: 3개 완료) |
-| 3 | FN/FP 오류분석 (`conditions.csv` 활용: 호기, 대비, 배경, 월 등. 크기는 공식 라벨만). 호기·해상도별 통계와 합성 점 시험은 있고(`docs/analysis.md`) `conditions.csv` 기반 조건별 분해는 아직 | 오류분석(15) | _(미정)_ |
-| 4 | 표시를 지운 자리의 윤곽 흔적 검증 (v2 대상) | 데이터 이해(15) | _(미정)_ |
-| 5 | `environment.yml` 또는 한 번에 도는 실행 스크립트, 예측결과 CSV | 재현성(10) | _(미정)_ |
-| 6 | 현장 활용방안, 보고서(KAMP 제공 양식), 발표자료 | 활용(10), 전 항목 | _(미정)_ |
+## 6. 재현할 때 알아 둘 점
 
-## 라이선스와 출처
-- 학습 코드: [ultralytics/yolov3](https://github.com/ultralytics/yolov3) (GPL-3.0) 2020년 버전을 수정해 `src/yolov3`에 포함. **원본 LICENSE 파일은 아직 없습니다.** 공개 저장소로 올리기 전에 추가해야 합니다.
-- 데이터셋: KAMP (https://www.kamp-ai.kr). 이용 약관은 각자 확인하세요.
+- **제출 가중치로 추론·채점하면 같은 수치가 나온다.** 다시 학습하면 GPU 연산의 비결정성 때문에 수치가 조금 달라질 수 있다.
+- 속도는 하드웨어와 전원 상태에 크게 좌우된다. 보고서 수치는 노트북 AC 전원, 전원 모드 "최고 성능", 고성능 코어 고정(`--affinity 0,2,4,6`)에서 쟀다.
+- 데이터에는 기존 검사 장비가 불량으로 판정한 영상만 있고 정상 제품 영상은 없다. 그래서 정상품 오검출률은 검증 범위 밖이다(보고서 1.1절, 4.1절).
+- 팀 라벨은 클릭한 점을 중심으로 고정 크기 상자를 만든 것이라 상자 크기 정보가 없다. IoU 기준 오류는 대부분 공식 라벨과의 크기 차이에서 생긴다(보고서 3.2절).
+
+## 7. 출처와 라이선스
+
+- 데이터: KAMP(한국인공지능제조플랫폼) "X-ray 검사장비 AI 데이터셋". 대회 제출 목적으로만 포함했다.
+- D-FINE-N: Hugging Face `transformers`의 `DFineForObjectDetection`, 사전학습 가중치 `ustc-community/dfine-nano-coco`(Apache-2.0).
+- YOLOv3-tiny: [ultralytics/yolov3](https://github.com/ultralytics/yolov3) 2020년 버전 수정본(GPL-3.0). 수정 내역은 `third_party/yolov3/README.md`.
+- 사전학습 YOLOv3-tiny 가중치: Darknet 공식 COCO 가중치(pjreddie.com)를 변환해 쓴다(`scripts/download_pretrained.py`).

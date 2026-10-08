@@ -1,0 +1,10 @@
+# 베이스라인 YOLOv3-tiny 학습 설정 (보고서 2.2절, 표 2-4)
+model: yolov3_tiny
+cfg: yolov3-tiny.cfg                          # third_party/yolov3/yolov3-tiny.cfg (1클래스로 변환)
+pretrained: weights/pretrained/yolov3-tiny.pt  # COCO 사전학습. scripts/download_pretrained.py 로 받는다
+img_size: 640
+epochs: 100
+batch_size: 16
+nms_iou: 0.6                                  # 추론 시 NMS IoU
+# best.pt 선택 규칙: third_party/yolov3/train.py 기본값 (val 0.99*mAP@0.5 + 0.01*R)
+# 그 밖의 하이퍼파라미터와 증강은 third_party/yolov3/train.py 의 hyp 기본값을 그대로 쓴다

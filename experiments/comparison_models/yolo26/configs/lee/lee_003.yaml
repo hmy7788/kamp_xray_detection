@@ -1,0 +1,19 @@
+# lee_001 대비 변경점 하나: 입력 1024 -> 640. 현장용 경량화 실험 (YOLO 버전은 그대로 26n, 가장 작은 크기).
+# 사진은 316~576px 이라 640 이면 거의 원본 해상도다. 1024 는 2~3배 키운 것이라 연산이 2.6배 많다.
+# 이 실험부터 entry.py 가 속도(FPS, ms/장, 파라미터, GFLOPs, 파일 크기)를 runs/<exp_id>/speed_seed42.json 에 남긴다.
+exp_id: lee_003
+member: lee
+family: yolo26
+seeds: [42]
+parent_exp: lee_001
+change: "입력 1024 -> 640 (원본 해상도 수준, 현장 경량화)"
+rubric_items: [2, 3, 4]
+reason: "지시(2026-10-06, lee): 현장에 맞는 아주 가벼운 YOLO 로 가고, FPS 를 결과에 넣는다. YOLO 버전은 26 그대로 두고 그 안에서 경량화한다. 26n 이 이미 가장 작은 크기라 남은 큰 손잡이는 입력 크기다. 사진이 316~576px 이라 640 이 원본 수준이고, 1024 대비 연산이 1/2.6 로 줄어 CPU 에서도 실시간에 가까워진다. 대가로 10px 이물질이 8px 격자(P3) 한 칸 크기가 되어 재현율이 떨어질 수 있어 lee_001 과 비교한다."
+entry: members/lee/entry.py
+model:
+  arch: yolo26n
+  imgsz: 640
+  epochs: 40
+  batch: 8
+  conf_min: 0.001
+  max_det: 50

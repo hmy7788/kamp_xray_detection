@@ -1,0 +1,52 @@
+{
+  "exp": "03_dfinen_img640_e50",
+  "model": "D-FINE-N",
+  "params": 3719545,
+  "init_weights": "ustc-community/dfine-nano-coco (COCO 사전학습, HuggingFace, Apache-2.0)",
+  "data": "data/ v2 (train 학습, val 학습 중 선택·임계값, test 최종 1회)",
+  "manifest_sha256": "1942bf3452defc08022b11f464092d46b095ea2bb31961b15b072bc9d623c623",
+  "preprocess": "640x640로 늘림(비율 유지 안 함), /255, 정규화 없음 (체크포인트 기본값)",
+  "select": "val 0.1*AP50 + 0.9*AP50-95 (VOC 보간, EMA 가중치)",
+  "hyp": {
+    "imgsz": 640,
+    "epochs": 50,
+    "patience": 10,
+    "batch": 16,
+    "lr": 0.0002,
+    "backbone_lr": 0.0001,
+    "weight_decay": 0.0001,
+    "warmup_epochs": 1,
+    "lrf": 0.1,
+    "clip": 0.1,
+    "ema_decay": 0.9999,
+    "amp": true,
+    "hsv_v": 0.3,
+    "fliplr": 0.5,
+    "flipud": 0.5,
+    "translate": 0.1,
+    "scale": 0.2,
+    "workers": 4,
+    "seed": 0
+  },
+  "env": {
+    "python": "3.10.22",
+    "gpu": "NVIDIA GeForce RTX 4050 Laptop GPU",
+    "torch": "2.6.0+cu124",
+    "ultralytics": "8.4.173",
+    "numpy": "2.2.6",
+    "PYTHONUTF8": "1",
+    "transformers": "5.18.0"
+  },
+  "started": "2026-10-06T18:56:08",
+  "finished": "2026-10-07T12:09:45",
+  "train_minutes": 1033.6,
+  "epochs_run": 43,
+  "best_epoch": 33,
+  "best_fitness": 0.6867,
+  "pause": {
+    "epoch": 36,
+    "pause_minutes": 935.7,
+    "reason": "노트북 덮개를 닫아 절전(2026-10-06 20:19 ~ 2026-10-07 11:55 무렵). 프로세스는 재개되어 학습은 이어짐",
+    "train_minutes_active": 97.9
+  }
+}
