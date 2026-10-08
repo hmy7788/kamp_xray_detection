@@ -1,6 +1,6 @@
 """띠 안 합성 결과 갤러리: runs/synth_band/gallery/index.html (+ 공유용 zip).
 
-배경 사진마다 (1) 전체 사진에 자리 표시 — 색 = 기준 설정(lee001_gpu1024)이 잡은 가장 옅은 진하기,
+배경 사진마다 (1) 전체 사진에 자리 표시 — 색 = 기준 설정(lee003_gpu640)이 잡은 가장 옅은 진하기,
 (2) 자리별 조각 띠: 넣기 전 | 진하기 1.0 | 0.7 | 0.5 | 0.35 | 0.25, 조각 아래 설정별 확신도.
 사용: python members/lee/synth_band_gallery.py [--zip]
 """
@@ -26,7 +26,7 @@ G = OUT / "gallery"
 F = ImageFont.truetype("C:/Windows/Fonts/malgun.ttf", 12)
 F2 = ImageFont.truetype("C:/Windows/Fonts/malgun.ttf", 11)
 UP, R = 4, 16
-BASE = "lee001_gpu1024"
+BASE = "lee003_gpu640"
 SCALE_COLOR = {1.0: (235, 80, 80), 0.7: (240, 150, 60), 0.5: (240, 210, 60), 0.35: (140, 220, 90), 0.25: (60, 200, 120), None: (120, 120, 130)}
 
 

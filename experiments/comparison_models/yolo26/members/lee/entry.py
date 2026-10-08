@@ -3,7 +3,7 @@
 model 영역 (configs):
   arch: yolo26n          # 사전학습 가중치 이름 → YOLO("yolo26n.pt")
         yolo26n-p2.yaml  # 구조 yaml → YOLO(yaml) 에 같은 크기 사전학습 가중치(yolo26n.pt)를 옮겨 싣는다
-  imgsz: 1024
+  imgsz: 640
   epochs: 40
   batch: 8
   conf_min: 0.001        # 예측 때 남길 최소 확신도 (채점이 임계값을 고른다)
@@ -64,7 +64,7 @@ PREDICT_CHUNK = 8
 
 def predict_chunked(model, paths: list[str], imgsz: int, conf: float, max_det: int, chunk: int = PREDICT_CHUNK):
     """경로 목록을 chunk 장씩 끊어 예측한다. ultralytics 8.4 는 목록 전체를 한 묶음으로 GPU 에 올려서
-    369장을 한 번에 넘기면 6GB GPU 에서 메모리가 터진다 (2026-10-05 lee_001 에서 확인)."""
+    369장을 한 번에 넘기면 6GB GPU 에서 메모리가 터진다 (실측으로 확인)."""
     for s in range(0, len(paths), chunk):
         yield from model.predict(paths[s:s + chunk], imgsz=imgsz, conf=conf, max_det=max_det, verbose=False, stream=True)
 
@@ -74,7 +74,7 @@ def run_split(cfg: dict, data: dict, seed: int, out_dir: Path) -> Path:
 
     m = cfg.get("model", {})
     arch = str(m.get("arch", "yolo26n"))
-    imgsz = int(m.get("imgsz", 1024))
+    imgsz = int(m.get("imgsz", 640))
     epochs = int(m.get("epochs", 40))
     batch = int(m.get("batch", 8))
     conf_min = float(m.get("conf_min", 0.001))

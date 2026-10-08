@@ -1,6 +1,6 @@
 """하네스 실험(runs/<exp_id>)을 팀 저장소(hmy7788/kamp_xray_detection) 형식으로 내보낸다.
 
-사용: python members/lee/export_to_team.py lee_001 01_yolo26n_img1024 [--team <팀 저장소 경로>]  (기본: 하네스 옆의 KAMP/)
+사용: python members/lee/export_to_team.py lee_003 08_yolo26n_img640 [--team <팀 저장소 경로>]  (기본: 하네스 옆의 KAMP/)
 
 팀 저장소 규칙 (CONTRIBUTING.md, docs/README.md "실험 지표 기록 가이드"):
 - runs/chong/<번호>_<모델>_<설정>/ 에 실험 하나. 가중치·work/ 제외. 로컬 경로는 <KAMP>/<HOME> 로 치환.
@@ -69,7 +69,7 @@ def preds_json(exp_dir: Path, split_ids: list[str], seed: int) -> list[dict]:
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("exp_id")
-    ap.add_argument("team_name", help="예: 01_yolo26n_img1024")
+    ap.add_argument("team_name", help="예: 08_yolo26n_img640")
     ap.add_argument("--team", default=str(TEAM_DEFAULT))
     ap.add_argument("--seed", type=int, default=None)
     ap.add_argument("--force", action="store_true")

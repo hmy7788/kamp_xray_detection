@@ -12,7 +12,7 @@ report   : 여러 tag 를 한 표로. runs/synth_band/compare.md
 
 사용 (저장소 루트, KAMP_MEMBER=lee PYTHONUTF8=1):
   python members/lee/synth_band.py build
-  python members/lee/synth_band.py evaluate --tag lee001_gpu1024 --weights runs/lee_001/work/seed42/train/weights/best.pt --imgsz 1024
+  python members/lee/synth_band.py evaluate --tag lee003_gpu640 --weights runs/lee_003/work/seed42/train/weights/best.pt --imgsz 640
   python members/lee/synth_band.py evaluate --tag lee001_gpu640  --weights ... --imgsz 640
   python members/lee/synth_band.py evaluate --tag lee001_onnx640_t4 --weights <onnx> --imgsz 640 --device cpu --threads 4
   python members/lee/synth_band.py report
@@ -458,7 +458,7 @@ def main():
     sub.add_parser("build")
     e = sub.add_parser("evaluate")
     e.add_argument("--tag", required=True); e.add_argument("--weights", type=Path, required=True)
-    e.add_argument("--imgsz", type=int, default=1024); e.add_argument("--device", default="0")
+    e.add_argument("--imgsz", type=int, default=640); e.add_argument("--device", default="0")
     e.add_argument("--threads", type=int, default=4); e.add_argument("--cpu-images", type=int, default=60)
     e.add_argument("--speed-only", action="store_true")
     sub.add_parser("report")

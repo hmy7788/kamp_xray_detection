@@ -1,7 +1,0 @@
-PASS: lee_001 예측 형식
-lee_001 [val]: map50 0.982±0.000 | box_recall 0.988 | center_hit_recall 1.000 | img_f1 1.000 | thr 0.1 | safety {'target_recall': 0.99, 'threshold': None, 'recheck_rate': None, 'note': '어느 임계값에서도 목표 재현율에 못 미침'}
-저장: <KAMP-harness>\runs\lee_001\metrics.json
-공유 표: <KAMP-harness>\reports\experiments.csv (2줄)
-검사 통과: lee_001 (seeds [42])
-[entry] 학습 완료본이 있어 학습을 건너뛴다: <KAMP-harness>\runs\lee_001\work\seed42\train\weights\best.pt
-seed 42 ok (0.11 분)

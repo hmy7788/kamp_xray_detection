@@ -22,7 +22,7 @@
 | 표 2-3 | 실행 환경 | `requirements.txt`, `results/<모델>/eval_report_test.json`의 `env` |
 | 표 2-4 | 모델별 학습 설정 | `configs/`, `results/<모델>/original_run/config.json`, `results/comparison_models/*/config.json` |
 | 표 2-5 | 모델별 test 성능 | 최종·베이스라인: `results/dfine_n/eval_report_test.json`, `results/yolov3_tiny/eval_report_test.json` / 비교 모델: `results/comparison_models/six_models/summary.json`, YOLO26n은 `results/comparison_models/yolo26n_img640/common_eval_report_test.json` / 표: `results/model_comparison.md` |
-| 2.3절 | YOLO26 입력 640 vs 1024 | `results/comparison_models/yolo26n_img640/`, `results/comparison_models/yolo26n_img1024/` |
+| 2.3절 | YOLO26n 입력 640 | `results/comparison_models/yolo26n_img640/` |
 | 그림 2-1 | 정확도와 속도 | `results/model_comparison.md`, `results/<모델>/speed.json`, `results/comparison_models/six_models/fps_all.json` |
 | 2.4절 | 최종 모델 선정 근거 (합성 이물질 AP, 속도, NMS 없음) | `results/comparison_models/six_models/summary.json`, `results/analysis/11_synth_insert_6models_v1/` |
 

@@ -14,13 +14,13 @@ member: lee              # KAMP_MEMBER 와 같아야 한다
 family: yolo_ref         # 모델 계열 이름
 seeds: [42]              # 노이즈 바닥·최종 후보는 [42, 7, 2024] (시드별로 학습·채점해 평균·표준편차)
 parent_exp: null         # 이 실험이 무엇을 바꾼 실험인지. 첫 실험만 null
-change: "입력 해상도 640 -> 1024"   # 변경점 하나를 한 줄로. parent 대비 model 영역 diff 가 한 항목이어야 한다
+change: "입력 해상도 변경"   # 변경점 하나를 한 줄로. parent 대비 model 영역 diff 가 한 항목이어야 한다
 rubric_items: [2, 3]     # 평가표 1~6 중 이 실험이 근거가 되는 항목
 reason: ""               # 사람이 이 실험을 고른 이유. 비어 있으면 run.py 가 거부한다
 entry: members/lee/entry.py   # 진입점. 공용 기준선은 common/baselines/<이름>/entry.py
 model:                   # 자유 영역. 멤버 코드만 읽는다
   arch: yolov8n
-  imgsz: 1024
+  imgsz: 640
   epochs: 50
 ```
 

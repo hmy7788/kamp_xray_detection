@@ -13,9 +13,8 @@
 | Faster R-CNN, ResNet-50 FPN | comparison_models/faster_rcnn | results/comparison_models/faster_rcnn_r50 | 허민엽 |
 | Faster R-CNN, MobileNetV3 FPN | comparison_models/faster_rcnn_mobilenet | results/comparison_models/faster_rcnn_mobilenetv3 | 허민엽 |
 | RT-DETR-l | comparison_models/rtdetr | results/comparison_models/rtdetr_l | 정연창 |
-| YOLO26n | comparison_models/yolo26 | results/comparison_models/yolo26n_img640, yolo26n_img1024 | 이총 |
+| YOLO26n | comparison_models/yolo26 | results/comparison_models/yolo26n_img640 | 이총 |
 
-- YOLO26n은 입력 640과 1024로 각각 학습했으며, 성능표에는 기본 입력 크기인 640 모델을 사용함
 - comparison_models/yolo26/rescore_common.py로 YOLO26n을 공통 채점 코드로 다시 채점함
 
 ## 분석 실험
